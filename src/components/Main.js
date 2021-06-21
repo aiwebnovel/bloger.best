@@ -87,7 +87,7 @@ class Main extends Component {
       <div class="mainpage">
         <div class="main">
           {this.state.loading ? <div class="loading"> <Spinner size='8px' color='#3b2479'/> </div> : null}
-          <input class="sub_input_text" value={this.state.story} onChange={this.handleChange} name='story' placeholder="주제"></input>
+          <textarea class="sub_input_text" value={this.state.story} onChange={this.handleChange} name='story' placeholder="주제"></textarea>
           <button class="start" onClick = {this.requestcontents}>만들기</button>
 
           <div class="outputDiv">
