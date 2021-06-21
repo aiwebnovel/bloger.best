@@ -62,8 +62,8 @@ class Main extends Component {
       { headers: { timeout: 100000 } })
     .then((response) => {
       console.log(response.data);
-      this.setState({ outputAfterTlanslate: this.state.outputAfterTlanslate + response.data[0]});
-      this.setState({ outputBeforeTlanslate: this.state.outputBeforeTlanslate + response.data[1]});
+      this.setState({ outputAfterTlanslate: response.data[0]});
+      this.setState({ outputBeforeTlanslate: response.data[1]});
       this.setState({loading: false});
     }).catch((error) => {
       if (error.response.status === 412) {
