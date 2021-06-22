@@ -25,10 +25,10 @@ class Main extends Component {
   handleChange(e){
     if(e.target.value.length < 20 && e.target.name === 'Main_Events'){   
       this.setState({[e.target.name]: e.target.value});
-    } else if(e.target.value.length < 10){
+    } else if(e.target.value.split(' ').length < 7){
       this.setState({[e.target.name]: e.target.value});
     }else{
-      toast.error(`🦄 ${e.target.value.length}글자를 넘어갈 수 없어요!`, {
+      toast.error(`🦄 ${e.target.value.split(' ').length}단어를 넘어갈 수 없어요!`, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
