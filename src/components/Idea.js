@@ -24,6 +24,7 @@ class Idea extends Component {
     this.state = {
       loginModalOpen: false,
       loading: false,
+      isStart: false,
       outputKr: ["a", "b", "c", "d", "e"],
       outputEn: ["a", "b", "c", "d", "e"],
       input: " ",
@@ -109,7 +110,7 @@ class Idea extends Component {
         return;
       }
       this.setState({ loading: true });
-      axios
+    await axios
         .post(
           `${config.SERVER_URL}/blog/idea`,
           {
@@ -119,7 +120,7 @@ class Idea extends Component {
             headers: { authentication: localStorage.getItem("token") },
           }
         )
-        .then(async(response) => {
+        .then(async (response) => {
           let resK = [];
           let resE = [];
           for (let i = 0; i < response.data.length; i++) {
@@ -161,6 +162,7 @@ class Idea extends Component {
           }
         });
     }
+    this.setState({ isStart: true });
   }
 
   render() {
@@ -191,42 +193,44 @@ class Idea extends Component {
                 create
               </button>
             </div>
-            <div class="ideaOutput">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>결과값 1</td>
-                    <td>{this.state.outputKr[0]}</td>
-                    <td>{this.state.outputEn[0]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                  <tr>
-                    <td>결과값 2</td>
-                    <td>{this.state.outputKr[1]}</td>
-                    <td>{this.state.outputEn[1]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                  <tr>
-                    <td>결과값 3</td>
-                    <td>{this.state.outputKr[2]}</td>
-                    <td>{this.state.outputEn[2]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                  <tr>
-                    <td>결과값 4</td>
-                    <td>{this.state.outputKr[3]}</td>
-                    <td>{this.state.outputEn[3]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                  <tr>
-                    <td>결과값 5</td>
-                    <td>{this.state.outputKr[4]}</td>
-                    <td>{this.state.outputEn[4]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                </tbody>
-              </table>{" "}
-            </div>
+            {this.state.isStart ? (
+              <div class="ideaOutput">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>결과값 1</td>
+                      <td>{this.state.outputKr[0]}</td>
+                      <td>{this.state.outputEn[0]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                    <tr>
+                      <td>결과값 2</td>
+                      <td>{this.state.outputKr[1]}</td>
+                      <td>{this.state.outputEn[1]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                    <tr>
+                      <td>결과값 3</td>
+                      <td>{this.state.outputKr[2]}</td>
+                      <td>{this.state.outputEn[2]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                    <tr>
+                      <td>결과값 4</td>
+                      <td>{this.state.outputKr[3]}</td>
+                      <td>{this.state.outputEn[3]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                    <tr>
+                      <td>결과값 5</td>
+                      <td>{this.state.outputKr[4]}</td>
+                      <td>{this.state.outputEn[4]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                  </tbody>
+                </table>{" "}
+              </div>
+            ) : null}
           </div>
         </div>
         {this.state.loading ? (
