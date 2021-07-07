@@ -1,16 +1,17 @@
 import React from 'react';
 import Header from '../components/Header.js';
-import Mainapi from '../components/Main.js';
+import Landingp from '../components/Landing.js';
 import Footer from '../components/Footer.js';
 
 
-const Main = () => {
+const Landing = () => {
   return (
     <div>
       <Header/>
+      <Landingp/>
       <Footer/>
     </div>
   );
 };
 
-export default Main;
+export default Landing;
