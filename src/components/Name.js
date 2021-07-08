@@ -19,7 +19,7 @@ import "../style/Idea.css";
 import "react-table-v6/react-table.css";
 const LanguageDetect = require("languagedetect");
 
-class Idea extends Component {
+class Name extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -113,7 +113,7 @@ class Idea extends Component {
       this.setState({ loading: true });
       await axios
         .post(
-          `${config.SERVER_URL}/blog/idea`,
+          `${config.SERVER_URL}/blog/name`,
           {
             story: story,
           },
@@ -184,7 +184,7 @@ class Idea extends Component {
           </div>
           <div class="ideaRight">
             <div class="ideaInput">
-              <p>블로그 아이디어</p>
+              <p>블로그 개요</p>
               <textarea
                 class="ideaInput1"
                 value={this.state.input}
@@ -245,4 +245,4 @@ class Idea extends Component {
   }
 }
 
-export default Idea;
+export default Name;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { Main, Membership, Landing, Idea } from "../pages/index.js";
+import { Main, Membership, Landing, Idea, Name } from "../pages/index.js";
 
 class App extends Component {
   render() {
@@ -9,6 +9,7 @@ class App extends Component {
         <Route exact path="/" component={Landing} />
         <Route exact path="/membership" component={Membership} />
         <Route exact path="/idea" component={Idea} />
+        <Route exact path="/name" component={Name} />
       </div>
     );
   }
