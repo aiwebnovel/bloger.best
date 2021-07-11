@@ -172,7 +172,7 @@ class Domain extends Component {
           </div>
           <div class="ideaRight">
             <div class="ideaInput">
-              <p>블로그 주제</p>
+              <p>블로그 아이디/도메인</p>
               <textarea
                 class="ideaInput1"
                 name="input"
