@@ -72,18 +72,6 @@ class Name extends Component {
         //console.log(credential.idToken);
         await localStorage.setItem("token", user.za);
         this.setState({ user: true });
-        toast(
-          `Thank you for visiting our site. The service is currently awaiting approval. I'll let you know as soon as it starts.`,
-          {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          }
-        );
         this.requestProfile();
       })
       .catch((error) => {
@@ -174,9 +162,9 @@ class Name extends Component {
             <div class="ideaLink">
               <Link to="/idea">블로그 아이디어</Link> <br /> <br />
               <Link to="/name">블로그 개요</Link> <br /> <br />
-              블로그 제목 <br /> <br />
-              블로그 도입부 <br /> <br />
-              블로그 아이디/도메인 <br /> <br />
+              <Link to="/title">블로그 제목</Link> <br /> <br />
+              <Link to="/intro">블로그 도입부</Link> <br /> <br />
+              <Link to="/domain">블로그 아이디/도메인</Link> <br /> <br />
               블로그 이어쓰기 <br /> <br />
               <br /> <br />
               최근 저장 기록

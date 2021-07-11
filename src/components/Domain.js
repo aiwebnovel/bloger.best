@@ -19,7 +19,7 @@ import "../style/Idea.css";
 import "react-table-v6/react-table.css";
 const LanguageDetect = require("languagedetect");
 
-class Idea extends Component {
+class Domain extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,7 +47,7 @@ class Idea extends Component {
   };
 
   async handle(e) {
-    this.setState({ input: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   async signIn(event) {
@@ -86,8 +86,8 @@ class Idea extends Component {
     if (localStorage.getItem("token") !== undefined) {
       let story = this.state.input;
 
-      if (story === " " || story === " ") {
-        toast.error(`주제를 입력해 주세요!`, {
+      if (story === " ") {
+        toast.error(`공백인 칸이 있습니다!`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -101,7 +101,7 @@ class Idea extends Component {
       this.setState({ loading: true });
       await axios
         .post(
-          `${config.SERVER_URL}/blog/idea`,
+          `${config.SERVER_URL}/blog/domain`,
           {
             story: story,
           },
@@ -172,12 +172,15 @@ class Idea extends Component {
           </div>
           <div class="ideaRight">
             <div class="ideaInput">
-              <p>블로그 아이디어</p>
+              <p>블로그 주제</p>
               <textarea
                 class="ideaInput1"
+                name="input"
                 value={this.state.input}
                 onChange={this.handle}
               />
+              <br />
+              <br />
               <button class="start" onClick={this.requestcontents}>
                 create
               </button>
@@ -233,4 +236,4 @@ class Idea extends Component {
   }
 }
 
-export default Idea;
+export default Domain;
