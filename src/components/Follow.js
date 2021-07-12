@@ -192,7 +192,7 @@ class Follow extends Component {
                   onChange={this.handle}
                 />
                 <textarea
-                  class="ideaOutput"
+                  class="ideaOutput1"
                   value={this.state.outputEn}
                   readOnly
                 />

@@ -192,42 +192,67 @@ class Domain extends Component {
                       <td>1</td>
                       <td>{this.state.outputKr[0]}</td>
                       <td>{this.state.outputEn[0]}</td>
-                      <td>copy, save</td>
+                      <td>
+                        <CopyToClipboard text={this.state.outputKr[0]}>
+                          <img src={copyicon} class="reseticon" />
+                        </CopyToClipboard>
+                        save
+                      </td>
                     </tr>
                     <tr>
                       <td>2</td>
                       <td>{this.state.outputKr[1]}</td>
                       <td>{this.state.outputEn[1]}</td>
-                      <td>copy, save</td>
+                      <td>
+                        <CopyToClipboard text={this.state.outputKr[1]}>
+                          <img src={copyicon} class="reseticon" />
+                        </CopyToClipboard>
+                        save
+                      </td>
                     </tr>
                     <tr>
                       <td>3</td>
                       <td>{this.state.outputKr[2]}</td>
                       <td>{this.state.outputEn[2]}</td>
-                      <td>copy, save</td>
+                      <td>
+                        <CopyToClipboard text={this.state.outputKr[2]}>
+                          <img src={copyicon} class="reseticon" />
+                        </CopyToClipboard>
+                        save
+                      </td>
                     </tr>
                     <tr>
                       <td>4</td>
                       <td>{this.state.outputKr[3]}</td>
                       <td>{this.state.outputEn[3]}</td>
-                      <td>copy, save</td>
+                      <td>
+                        <CopyToClipboard text={this.state.outputKr[3]}>
+                          <img src={copyicon} class="reseticon" />
+                        </CopyToClipboard>
+                        save
+                      </td>
                     </tr>
                     <tr>
                       <td>5</td>
                       <td>{this.state.outputKr[4]}</td>
                       <td>{this.state.outputEn[4]}</td>
-                      <td>copy, save</td>
+                      <td>
+                        <CopyToClipboard text={this.state.outputKr[4]}>
+                          <img src={copyicon} class="reseticon" />
+                        </CopyToClipboard>
+                        save
+                      </td>
                     </tr>
                   </tbody>
-                </table>{" "}
+                </table>
               </div>
             ) : null}
           </div>
         </div>
         {this.state.loading ? (
           <div class="loading">
-            {" "}
-            <Spinner size="8px" color="#3b2479" />{" "}
+            
+            <Spinner size="8px" color="#3b2479" />
           </div>
         ) : null}
       </Fragment>
