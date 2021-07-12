@@ -178,50 +178,50 @@ class Intro extends Component {
                 value={this.state.input}
                 onChange={this.handle}
               />
+              <br />
               <button class="start" onClick={this.requestcontents}>
                 create
               </button>
             </div>
-            {this.state.isStart ? (
-              <div class="ideaOutput">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>결과값 1</td>
-                      <td>{this.state.outputKr[0]}</td>
-                      <td>{this.state.outputEn[0]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                    <tr>
-                      <td>결과값 2</td>
-                      <td>{this.state.outputKr[1]}</td>
-                      <td>{this.state.outputEn[1]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                    <tr>
-                      <td>결과값 3</td>
-                      <td>{this.state.outputKr[2]}</td>
-                      <td>{this.state.outputEn[2]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                    <tr>
-                      <td>결과값 4</td>
-                      <td>{this.state.outputKr[3]}</td>
-                      <td>{this.state.outputEn[3]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                    <tr>
-                      <td>결과값 5</td>
-                      <td>{this.state.outputKr[4]}</td>
-                      <td>{this.state.outputEn[4]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                  </tbody>
-                </table>{" "}
-              </div>
-            ) : null}
+            <div class="ideaOutput">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>{this.state.outputKr[0]}</td>
+                    <td>{this.state.outputEn[0]}</td>
+                    <td>copy, save</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>{this.state.outputKr[1]}</td>
+                    <td>{this.state.outputEn[1]}</td>
+                    <td>copy, save</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>{this.state.outputKr[2]}</td>
+                    <td>{this.state.outputEn[2]}</td>
+                    <td>copy, save</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>{this.state.outputKr[3]}</td>
+                    <td>{this.state.outputEn[3]}</td>
+                    <td>copy, save</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>{this.state.outputKr[4]}</td>
+                    <td>{this.state.outputEn[4]}</td>
+                    <td>copy, save</td>
+                  </tr>
+                </tbody>
+              </table>{" "}
+            </div>
           </div>
         </div>
+        <br />
         {this.state.loading ? (
           <div class="loading">
             {" "}

@@ -166,6 +166,7 @@ class Domain extends Component {
               <Link to="/intro">블로그 도입부</Link> <br /> <br />
               <Link to="/domain">블로그 아이디/도메인</Link> <br /> <br />
               블로그 이어쓰기 <br /> <br />
+              <br /> <br />
               최근 저장 기록
             </div>
           </div>
@@ -179,7 +180,6 @@ class Domain extends Component {
                 onChange={this.handle}
               />
               <br />
-              <br />
               <button class="start" onClick={this.requestcontents}>
                 create
               </button>
@@ -189,31 +189,31 @@ class Domain extends Component {
                 <table>
                   <tbody>
                     <tr>
-                      <td>결과값 1</td>
+                      <td>1</td>
                       <td>{this.state.outputKr[0]}</td>
                       <td>{this.state.outputEn[0]}</td>
                       <td>copy, save</td>
                     </tr>
                     <tr>
-                      <td>결과값 2</td>
+                      <td>2</td>
                       <td>{this.state.outputKr[1]}</td>
                       <td>{this.state.outputEn[1]}</td>
                       <td>copy, save</td>
                     </tr>
                     <tr>
-                      <td>결과값 3</td>
+                      <td>3</td>
                       <td>{this.state.outputKr[2]}</td>
                       <td>{this.state.outputEn[2]}</td>
                       <td>copy, save</td>
                     </tr>
                     <tr>
-                      <td>결과값 4</td>
+                      <td>4</td>
                       <td>{this.state.outputKr[3]}</td>
                       <td>{this.state.outputEn[3]}</td>
                       <td>copy, save</td>
                     </tr>
                     <tr>
-                      <td>결과값 5</td>
+                      <td>5</td>
                       <td>{this.state.outputKr[4]}</td>
                       <td>{this.state.outputEn[4]}</td>
                       <td>copy, save</td>
