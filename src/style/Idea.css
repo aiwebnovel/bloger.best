@@ -35,8 +35,7 @@
 .ideaInput1 {
   padding: 1vw;
   width: 40vw;
-  height: 7vh;
-  max-height: 70vh;
+  height: 6vh;
   margin-top: 5px;
   border-radius: 1vh;
   resize: none;
@@ -57,9 +56,6 @@
 .ideaOutput > table {
   border: 1px solid #444444;
   border-collapse: collapse;
-}
-
-.ideaOutput > tr {
 }
 
 th,

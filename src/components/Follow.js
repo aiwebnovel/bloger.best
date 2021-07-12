@@ -187,7 +187,7 @@ class Follow extends Component {
               <p>블로그 이어쓰기</p>
               <div class="ideaText">
                 <textarea
-                  class="ideaInput1"
+                  class="ideaInput2"
                   value={this.state.outputKr}
                   onChange={this.handle}
                 />
