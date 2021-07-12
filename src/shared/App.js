@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { Main, Membership, Landing, Idea, Name, Title, Intro, Domain } from "../pages/index.js";
+import {
+  Main,
+  Membership,
+  Landing,
+  Idea,
+  Name,
+  Title,
+  Intro,
+  Domain,
+  Follow,
+} from "../pages/index.js";
 
 class App extends Component {
   render() {
@@ -13,7 +23,7 @@ class App extends Component {
         <Route exact path="/title" component={Title} />
         <Route exact path="/intro" component={Intro} />
         <Route exact path="/domain" component={Domain} />
-        
+        <Route exact path="/follow" component={Follow} />
       </div>
     );
   }

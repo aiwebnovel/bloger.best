@@ -165,7 +165,7 @@ class Name extends Component {
               <Link to="/title">블로그 제목</Link> <br /> <br />
               <Link to="/intro">블로그 도입부</Link> <br /> <br />
               <Link to="/domain">블로그 아이디/도메인</Link> <br /> <br />
-              블로그 이어쓰기 <br /> <br />
+              <Link to="/follow">블로그 이어쓰기</Link> <br /> <br />
               <br /> <br />
               최근 저장 기록
             </div>

@@ -15,20 +15,22 @@ import Modal from "./Modal";
 import facebookicon from "../public/facebook.png";
 import googleicon from "../public/google.png";
 import "react-toastify/dist/ReactToastify.css";
-import "../style/Idea.css";
+import "../style/Follow.css";
 import "react-table-v6/react-table.css";
 const LanguageDetect = require("languagedetect");
 
-class Idea extends Component {
+class Follow extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loginModalOpen: false,
       loading: false,
       isStart: false,
-      outputKr: ["a", "b", "c", "d", "e"],
-      outputEn: ["a", "b", "c", "d", "e"],
-      input: " ",
+      outputKr: "",
+      outputLength: 0,
+      outputEn: "",
+      isHuman: true,
+      tempLength: 0,
     };
     this.signIn = this.signIn.bind(this);
     this.openModal = this.openModal.bind(this);
@@ -47,7 +49,11 @@ class Idea extends Component {
   };
 
   async handle(e) {
-    this.setState({ input: e.target.value });
+    this.setState({ outputKr: e.target.value });
+    this.setState({
+      tempLength:
+        ((this.state.outputKr.length - this.state.outputLength) * 100) / 100,
+    });
   }
 
   async signIn(event) {
@@ -85,9 +91,20 @@ class Idea extends Component {
   async requestcontents() {
     if (localStorage.getItem("token") !== undefined) {
       let story = this.state.input;
-
-      if (story === " " || story === " ") {
-        toast.error(`주제를 입력해 주세요!`, {
+      if (this.state.tempLength < 100) {
+        toast.error(`추가 내용을 더 입력해 주세요!`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        return;
+      }
+      if (story === " ") {
+        toast.error(`내용을 입력해 주세요!`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -101,7 +118,7 @@ class Idea extends Component {
       this.setState({ loading: true });
       await axios
         .post(
-          `${config.SERVER_URL}/blog/idea`,
+          `${config.SERVER_URL}/blog/follow`,
           {
             story: story,
           },
@@ -110,16 +127,11 @@ class Idea extends Component {
           }
         )
         .then(async (response) => {
-          let resK = [];
-          let resE = [];
-          for (let i = 0; i < response.data.length; i++) {
-            await resK.push(response.data[i][0]);
-            await resE.push(response.data[i][1]);
-          }
-          this.setState({ outputKr: resK });
-          this.setState({ outputEn: resE });
-
+          this.setState({ outputKr: this.state.outputKr + response.data[0] });
+          this.setState({ outputEn: this.state.outputEn + response.data[1] });
+          this.setState({ outputLength: response.data[0].length });
           this.setState({ loading: false });
+          this.setState({ tempLength: 0 });
         })
         .catch((error) => {
           //console.log(error);
@@ -172,57 +184,35 @@ class Idea extends Component {
           </div>
           <div class="ideaRight">
             <div class="ideaInput">
-              <p>블로그 아이디어</p>
-              <textarea
-                class="ideaInput1"
-                value={this.state.input}
-                onChange={this.handle}
-              />
+              <p>블로그 이어쓰기</p>
+              <div class="ideaText">
+                <textarea
+                  class="ideaInput1"
+                  value={this.state.outputKr}
+                  onChange={this.handle}
+                />
+                <textarea
+                  class="ideaOutput"
+                  value={this.state.outputEn}
+                  readOnly
+                />
+              </div>
+              <br />
+              <div class="progress">
+                <ProgressBar
+                  completed={this.state.tempLength}
+                  height="8px"
+                  isLabelVisible={false}
+                />
+              </div>
               <br />
               <button class="start" onClick={this.requestcontents}>
                 create
               </button>
             </div>
-            {this.state.isStart ? (
-              <div class="ideaOutput">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>결과값 1</td>
-                      <td>{this.state.outputKr[0]}</td>
-                      <td>{this.state.outputEn[0]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                    <tr>
-                      <td>결과값 2</td>
-                      <td>{this.state.outputKr[1]}</td>
-                      <td>{this.state.outputEn[1]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                    <tr>
-                      <td>결과값 3</td>
-                      <td>{this.state.outputKr[2]}</td>
-                      <td>{this.state.outputEn[2]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                    <tr>
-                      <td>결과값 4</td>
-                      <td>{this.state.outputKr[3]}</td>
-                      <td>{this.state.outputEn[3]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                    <tr>
-                      <td>결과값 5</td>
-                      <td>{this.state.outputKr[4]}</td>
-                      <td>{this.state.outputEn[4]}</td>
-                      <td>copy, save</td>
-                    </tr>
-                  </tbody>
-                </table>{" "}
-              </div>
-            ) : null}
           </div>
         </div>
+        <br />
         {this.state.loading ? (
           <div class="loading">
             {" "}
@@ -234,4 +224,4 @@ class Idea extends Component {
   }
 }
 
-export default Idea;
+export default Follow;

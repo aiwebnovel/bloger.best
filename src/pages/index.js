@@ -6,3 +6,5 @@ export { default as Name } from "./Name";
 export { default as Title } from "./Title";
 export { default as Intro } from "./Intro";
 export { default as Domain } from "./Domain";
+export { default as Follow } from "./Follow";
+
