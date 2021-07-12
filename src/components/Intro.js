@@ -183,42 +183,44 @@ class Intro extends Component {
                 create
               </button>
             </div>
-            <div class="ideaOutput">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>{this.state.outputKr[0]}</td>
-                    <td>{this.state.outputEn[0]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>{this.state.outputKr[1]}</td>
-                    <td>{this.state.outputEn[1]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>{this.state.outputKr[2]}</td>
-                    <td>{this.state.outputEn[2]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>{this.state.outputKr[3]}</td>
-                    <td>{this.state.outputEn[3]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>{this.state.outputKr[4]}</td>
-                    <td>{this.state.outputEn[4]}</td>
-                    <td>copy, save</td>
-                  </tr>
-                </tbody>
-              </table>{" "}
-            </div>
+            {this.state.isStart ? (
+              <div class="ideaOutput">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>{this.state.outputKr[0]}</td>
+                      <td>{this.state.outputEn[0]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>{this.state.outputKr[1]}</td>
+                      <td>{this.state.outputEn[1]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>{this.state.outputKr[2]}</td>
+                      <td>{this.state.outputEn[2]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>{this.state.outputKr[3]}</td>
+                      <td>{this.state.outputEn[3]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>{this.state.outputKr[4]}</td>
+                      <td>{this.state.outputEn[4]}</td>
+                      <td>copy, save</td>
+                    </tr>
+                  </tbody>
+                </table>{" "}
+              </div>
+            ) : null}
           </div>
         </div>
         <br />

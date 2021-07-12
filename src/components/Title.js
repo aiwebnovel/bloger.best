@@ -178,6 +178,7 @@ class Title extends Component {
                 value={this.state.input}
                 onChange={this.handle}
               />
+              <br/>
               <button class="start" onClick={this.requestcontents}>
                 create
               </button>
