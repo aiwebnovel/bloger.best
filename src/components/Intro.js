@@ -30,11 +30,11 @@ class Intro extends Component {
       outputEn: ["a", "b", "c", "d", "e"],
       input: " ",
     };
-    this.signIn = this.signIn.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
+    this.savecontents = this.savecontents.bind(this);
   }
 
   openModal = (event) => {
@@ -50,36 +50,55 @@ class Intro extends Component {
     this.setState({ input: e.target.value });
   }
 
-  async signIn(event) {
-    const {
-      target: { name },
-    } = event;
-    let provider = new firebaseInstance.auth.GoogleAuthProvider();
-    if (name === "Facebook") {
-      provider = new firebaseInstance.auth.FacebookAuthProvider();
-    } else if (name === "Google") {
-      provider = new firebaseInstance.auth.GoogleAuthProvider();
+  async savecontents(e) {
+    if (localStorage.getItem("token") !== undefined) {
+      let story = this.state.outputKr[Number(e.target.name)];
+      this.setState({ loading: true });
+      await axios
+        .post(
+          `${config.SERVER_URL}/blog/save`,
+          {
+            story: story,
+            category: "intro",
+          },
+          {
+            headers: { authentication: localStorage.getItem("token") },
+          }
+        )
+        .then(async (response) => {
+          this.setState({ loading: false });
+        })
+        .catch((error) => {
+          //console.log(error);
+          if (error.response.status === 412) {
+            this.setState({ loading: false });
+            toast.error(`로그인이 필요합니다!`, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+            localStorage.removeItem("token");
+          } else {
+            if (error.response.status === 403) {
+              this.setState({ loading: false });
+              toast.error(`더 이상 저장할 수 없습니다`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+            }
+          }
+        });
     }
-
-    await authService
-      .signInWithPopup(provider)
-      .then(async (result) => {
-        /** @type {firebase.auth.OAuthCredential} */
-        let credential = result.credential;
-        let user = result.user;
-        //console.log(credential);
-        //console.log(user.za);
-        //console.log(credential.idToken);
-        await localStorage.setItem("token", user.za);
-        this.setState({ user: true });
-        this.requestProfile();
-      })
-      .catch((error) => {
-        let errorCode = error.code;
-        let errorMessage = error.message;
-        let email = error.email;
-        let credential = error.credential;
-      });
+    this.setState({ isStart: true });
   }
 
   async requestcontents() {
@@ -195,7 +214,13 @@ class Intro extends Component {
                         <CopyToClipboard text={this.state.outputKr[0]}>
                           <img src={copyicon} class="reseticon" />
                         </CopyToClipboard>
-                        save
+                        <button
+                          name="0"
+                          onClick={this.savecontents}
+                          className="save"
+                        >
+                          save
+                        </button>
                       </td>
                     </tr>
                     <tr>
@@ -206,7 +231,13 @@ class Intro extends Component {
                         <CopyToClipboard text={this.state.outputKr[1]}>
                           <img src={copyicon} class="reseticon" />
                         </CopyToClipboard>
-                        save
+                        <button
+                          name="1"
+                          onClick={this.savecontents}
+                          className="save"
+                        >
+                          save
+                        </button>
                       </td>
                     </tr>
                     <tr>
@@ -217,7 +248,13 @@ class Intro extends Component {
                         <CopyToClipboard text={this.state.outputKr[2]}>
                           <img src={copyicon} class="reseticon" />
                         </CopyToClipboard>
-                        save
+                        <button
+                          name="2"
+                          onClick={this.savecontents}
+                          className="save"
+                        >
+                          save
+                        </button>
                       </td>
                     </tr>
                     <tr>
@@ -228,7 +265,13 @@ class Intro extends Component {
                         <CopyToClipboard text={this.state.outputKr[3]}>
                           <img src={copyicon} class="reseticon" />
                         </CopyToClipboard>
-                        save
+                        <button
+                          name="3"
+                          onClick={this.savecontents}
+                          className="save"
+                        >
+                          save
+                        </button>
                       </td>
                     </tr>
                     <tr>
@@ -239,7 +282,13 @@ class Intro extends Component {
                         <CopyToClipboard text={this.state.outputKr[4]}>
                           <img src={copyicon} class="reseticon" />
                         </CopyToClipboard>
-                        save
+                        <button
+                          name="4"
+                          onClick={this.savecontents}
+                          className="save"
+                        >
+                          save
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -251,7 +300,6 @@ class Intro extends Component {
         <br />
         {this.state.loading ? (
           <div class="loading">
-            
             <Spinner size="8px" color="#3b2479" />
           </div>
         ) : null}

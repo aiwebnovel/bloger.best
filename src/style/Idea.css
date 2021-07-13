@@ -60,7 +60,11 @@
 
 th,
 td {
-  min-width: 2vw;
+  min-width: 4.5vw;
   max-width: 20vw;
   border: 1px solid #444444;
+}
+
+.save{
+  float: right;
 }
