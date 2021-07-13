@@ -33,20 +33,11 @@ class Follow extends Component {
       tempLength: 0,
     };
     this.signIn = this.signIn.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
   }
 
-  openModal = (event) => {
-    this.setState({ [event.target.name]: true });
-  };
 
-  closeModal = () => {
-    this.setState({ priceModalOpen: false });
-    this.setState({ loginModalOpen: false });
-  };
 
   async handle(e) {
     this.setState({ outputKr: e.target.value });
@@ -90,7 +81,7 @@ class Follow extends Component {
 
   async requestcontents() {
     if (localStorage.getItem("token") !== undefined) {
-      let story = this.state.input;
+      let story = this.state.input.trim();
       if (this.state.tempLength < 100) {
         toast.error(`추가 내용을 더 입력해 주세요!`, {
           position: "top-right",
@@ -179,7 +170,7 @@ class Follow extends Component {
               <Link to="/domain">블로그 아이디/도메인</Link> <br /> <br />
               <Link to="/follow">블로그 이어쓰기</Link> <br /> <br />
               <br /> <br />
-              최근 저장 기록
+              <Link to="/save">최근 저장 기록</Link> <br /> <br />
             </div>
           </div>
           <div class="ideaRight">

@@ -10,6 +10,7 @@ import {
   Intro,
   Domain,
   Follow,
+  Save,
 } from "../pages/index.js";
 
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
         <Route exact path="/intro" component={Intro} />
         <Route exact path="/domain" component={Domain} />
         <Route exact path="/follow" component={Follow} />
+        <Route exact path="/save" component={Save} />
       </div>
     );
   }

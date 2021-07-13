@@ -61,7 +61,8 @@
 th,
 td {
   min-width: 4.5vw;
-  max-width: 20vw;
+  max-width: 45vw;
+  min-height: 15vh;
   border: 1px solid #444444;
 }
 

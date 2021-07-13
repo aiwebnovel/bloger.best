@@ -1,5 +1,5 @@
 import { Component, Fragment } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { authService, firebaseInstance } from "../public/firebaseConfig";
 import * as config from "../config";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,62 +16,6 @@ class Landing extends Component {
     this.state = {
       loginModalOpen: false,
     };
-    this.signIn = this.signIn.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-  }
-
-  openModal = (event) => {
-    this.setState({ [event.target.name]: true });
-  };
-
-  closeModal = () => {
-    this.setState({ priceModalOpen: false });
-    this.setState({ loginModalOpen: false });
-  };
-
-  async signIn(event) {
-    const {
-      target: { name },
-    } = event;
-    let provider = new firebaseInstance.auth.GoogleAuthProvider();
-    if (name === "Facebook") {
-      provider = new firebaseInstance.auth.FacebookAuthProvider();
-    } else if (name === "Google") {
-      provider = new firebaseInstance.auth.GoogleAuthProvider();
-    }
-
-    await authService
-      .signInWithPopup(provider)
-      .then(async (result) => {
-        /** @type {firebase.auth.OAuthCredential} */
-        let credential = result.credential;
-        let user = result.user;
-        //console.log(credential);
-        //console.log(user.za);
-        //console.log(credential.idToken);
-        await localStorage.setItem("token", user.za);
-        this.setState({ user: true });
-        toast(
-          `Thank you for visiting our site. The service is currently awaiting approval. I'll let you know as soon as it starts.`,
-          {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          }
-        );
-        this.requestProfile();
-      })
-      .catch((error) => {
-        let errorCode = error.code;
-        let errorMessage = error.message;
-        let email = error.email;
-        let credential = error.credential;
-      });
   }
 
   render() {

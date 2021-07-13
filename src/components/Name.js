@@ -30,21 +30,11 @@ class Name extends Component {
       outputEn: ["a", "b", "c", "d", "e"],
       input: " ",
     };
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
     this.savecontents = this.savecontents.bind(this);
   }
 
-  openModal = (event) => {
-    this.setState({ [event.target.name]: true });
-  };
-
-  closeModal = () => {
-    this.setState({ priceModalOpen: false });
-    this.setState({ loginModalOpen: false });
-  };
 
   async handle(e) {
     this.setState({ input: e.target.value });
@@ -186,13 +176,13 @@ class Name extends Component {
               <Link to="/domain">블로그 아이디/도메인</Link> <br /> <br />
               <Link to="/follow">블로그 이어쓰기</Link> <br /> <br />
               <br /> <br />
-              최근 저장 기록
+              <Link to="/save">최근 저장 기록</Link> <br /> <br />
             </div>
           </div>
           <div class="ideaRight">
             <div class="ideaInput">
               <p>블로그 개요</p>
-              <textarea
+              <input
                 class="ideaInput1"
                 value={this.state.input}
                 onChange={this.handle}
