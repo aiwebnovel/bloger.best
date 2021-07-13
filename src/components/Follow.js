@@ -37,8 +37,6 @@ class Follow extends Component {
     this.requestcontents = this.requestcontents.bind(this);
   }
 
-
-
   async handle(e) {
     this.setState({ outputKr: e.target.value });
     this.setState({
@@ -81,7 +79,9 @@ class Follow extends Component {
 
   async requestcontents() {
     if (localStorage.getItem("token") !== undefined) {
-      let story = this.state.input.trim();
+      let story = String(this.state.input).trim();
+      console.log(story.length);
+      console.log(story);
       if (this.state.tempLength < 100) {
         toast.error(`추가 내용을 더 입력해 주세요!`, {
           position: "top-right",
@@ -94,7 +94,7 @@ class Follow extends Component {
         });
         return;
       }
-      if (story === " ") {
+      if (story === " " || story === "" || story === "undefined") {
         toast.error(`내용을 입력해 주세요!`, {
           position: "top-right",
           autoClose: 3000,

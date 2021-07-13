@@ -49,7 +49,7 @@ class Save extends Component {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then(async (response) => {
-          this.setState({ output: response.data });
+          await this.setState({ output: response.data.save });
           this.setState({ loading: false });
         })
         .catch((error) => {
