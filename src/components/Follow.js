@@ -79,7 +79,12 @@ class Follow extends Component {
 
   async requestcontents() {
     if (localStorage.getItem("token") !== undefined) {
-      let story = String(this.state.input).trim();
+      let story = String(this.state.outputKr).trim();
+      this.setState({ outputKr: story });
+      this.setState({
+        tempLength:
+          ((this.state.outputKr.length - this.state.outputLength) * 100) / 100,
+      });
       console.log(story.length);
       console.log(story);
       if (this.state.tempLength < 100) {

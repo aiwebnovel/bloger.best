@@ -101,6 +101,7 @@ class Save extends Component {
                   <tbody>
                     <tr>
                       <td>1</td>
+                      <td>{this.state.output[0]["category"]}</td>
                       <td>{this.state.output[0]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[0]["content"]}>
@@ -110,6 +111,7 @@ class Save extends Component {
                     </tr>
                     <tr>
                       <td>2</td>
+                      <td>{this.state.output[1]["category"]}</td>
                       <td>{this.state.output[1]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[1]["content"]}>
@@ -119,6 +121,7 @@ class Save extends Component {
                     </tr>
                     <tr>
                       <td>3</td>
+                      <td>{this.state.output[2]["category"]}</td>
                       <td>{this.state.output[2]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[2]["content"]}>
@@ -128,6 +131,7 @@ class Save extends Component {
                     </tr>
                     <tr>
                       <td>4</td>
+                      <td>{this.state.output[3]["category"]}</td>
                       <td>{this.state.output[3]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[3]["content"]}>
@@ -137,6 +141,7 @@ class Save extends Component {
                     </tr>
                     <tr>
                       <td>5</td>
+                      <td>{this.state.output[4]["category"]}</td>
                       <td>{this.state.output[4]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[4]["content"]}>
@@ -146,6 +151,7 @@ class Save extends Component {
                     </tr>
                     <tr>
                       <td>6</td>
+                      <td>{this.state.output[5]["category"]}</td>
                       <td>{this.state.output[5]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[5]["content"]}>
@@ -155,6 +161,7 @@ class Save extends Component {
                     </tr>
                     <tr>
                       <td>7</td>
+                      <td>{this.state.output[6]["category"]}</td>
                       <td>{this.state.output[6]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[6]["content"]}>
@@ -164,6 +171,7 @@ class Save extends Component {
                     </tr>
                     <tr>
                       <td>8</td>
+                      <td>{this.state.output[7]["category"]}</td>
                       <td>{this.state.output[7]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[7]["content"]}>
@@ -173,6 +181,7 @@ class Save extends Component {
                     </tr>
                     <tr>
                       <td>9</td>
+                      <td>{this.state.output[8]["category"]}</td>
                       <td>{this.state.output[8]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[8]["content"]}>
@@ -182,6 +191,7 @@ class Save extends Component {
                     </tr>
                     <tr>
                       <td>10</td>
+                      <td>{this.state.output[9]["category"]}</td>
                       <td>{this.state.output[9]["content"]}</td>
                       <td>
                         <CopyToClipboard text={this.state.output[9]["content"]}>
