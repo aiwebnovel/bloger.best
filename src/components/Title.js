@@ -120,6 +120,9 @@ class Title extends Component {
         .then(async (response) => {
           let resK = [];
           let resE = [];
+            console.log(response.data.length);
+            console.log(response.data);
+
           for (let i = 0; i < response.data.length; i++) {
             await resK.push(response.data[i][0]);
             await resE.push(response.data[i][1]);
