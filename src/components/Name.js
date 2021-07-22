@@ -198,8 +198,8 @@ class Name extends Component {
                   <tbody>
                     <tr>
                       <td>1</td>
-                      <td>{this.state.outputKr[0]}</td>
-                      <td>{this.state.outputEn[0]}</td>
+                      <td>1.{this.state.outputKr[0].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
+                      <td>1.{this.state.outputEn[0].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
                       <td>
                         <CopyToClipboard text={this.state.outputKr[0]}>
                           <img src={copyicon} class="reseticon" />
@@ -215,8 +215,8 @@ class Name extends Component {
                     </tr>
                     <tr>
                       <td>2</td>
-                      <td>{this.state.outputKr[1]}</td>
-                      <td>{this.state.outputEn[1]}</td>
+                      <td>1.{this.state.outputKr[1].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
+                      <td>1.{this.state.outputEn[1].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
                       <td>
                         <CopyToClipboard text={this.state.outputKr[1]}>
                           <img src={copyicon} class="reseticon" />
@@ -232,8 +232,8 @@ class Name extends Component {
                     </tr>
                     <tr>
                       <td>3</td>
-                      <td>{this.state.outputKr[2]}</td>
-                      <td>{this.state.outputEn[2]}</td>
+                      <td>1.{this.state.outputKr[2].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
+                      <td>1.{this.state.outputEn[2].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
                       <td>
                         <CopyToClipboard text={this.state.outputKr[2]}>
                           <img src={copyicon} class="reseticon" />
@@ -249,8 +249,8 @@ class Name extends Component {
                     </tr>
                     <tr>
                       <td>4</td>
-                      <td>{this.state.outputKr[3]}</td>
-                      <td>{this.state.outputEn[3]}</td>
+                      <td>1.{this.state.outputKr[3].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
+                      <td>1.{this.state.outputEn[3].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
                       <td>
                         <CopyToClipboard text={this.state.outputKr[3]}>
                           <img src={copyicon} class="reseticon" />
@@ -266,8 +266,8 @@ class Name extends Component {
                     </tr>
                     <tr>
                       <td>5</td>
-                      <td>{this.state.outputKr[4]}</td>
-                      <td>{this.state.outputEn[4]}</td>
+                      <td>1.{this.state.outputKr[4].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
+                      <td>1.{this.state.outputEn[4].split('\n').map( line => { return (<span>{line}<br/></span>) }) }</td>
                       <td>
                         <CopyToClipboard text={this.state.outputKr[4]}>
                           <img src={copyicon} class="reseticon" />
