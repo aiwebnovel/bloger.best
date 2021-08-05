@@ -20,3 +20,30 @@
   font-size: 2rem;
   float: right;
 }
+
+@media (max-width: 700px) {
+  .infomationMain {
+    width: 90vw;
+    height: 60vh;
+    margin-top: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .infomation {
+    width: 82vw;
+    height: 50vh;
+    font-size: 1.2rem;
+    float: left;
+  }
+  
+
+  .infomationLogin{
+    margin-top: 5vh;
+    width: 30vw;
+    height: 7vh;
+    font-size: 1.5rem;
+    float: left;
+
+  }
+}
