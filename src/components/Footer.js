@@ -11,7 +11,7 @@ class Footer extends Component {
     <p class="info">
       <a href="mailto:support@appplatform.co.kr" class='email'>support@appplatform.co.kr </a>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="https://www.notion.so/appplatform/d99f247a66d141bbbdf227739861a0a2" class='email'> 개인정보 처리방침</a><br/>
+      <a href="https://appplatform.notion.site/e658644587444247a00af2d05dd69b30" class='email'> 개인정보 처리방침</a><br/>
       <a href="https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b" class='email'> 이용약관 </a><br/>
       
       Address: #702 BS B/D seocho-daero 334 ,Seocho-gu, Seoul, Korea<br/>

@@ -28,13 +28,13 @@ class Domain extends Component {
       isStart: false,
       outputKr: ["a", "b", "c", "d", "e"],
       outputEn: ["a", "b", "c", "d", "e"],
-      input: " ",
+      desc: "",
+      keyword: "",
     };
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
     this.savecontents = this.savecontents.bind(this);
   }
-
 
   async handle(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -42,9 +42,9 @@ class Domain extends Component {
 
   async requestcontents() {
     if (localStorage.getItem("token") !== undefined) {
-      let story = this.state.input;
+      let story = { desc: this.state.desc, keyword: this.state.keyword };
 
-      if (story === " ") {
+      if (story.desc === "" || story.keyword === "") {
         toast.error(`공백인 칸이 있습니다!`, {
           position: "top-right",
           autoClose: 3000,
@@ -58,15 +58,9 @@ class Domain extends Component {
       }
       this.setState({ loading: true });
       await axios
-        .post(
-          `${config.SERVER_URL}/blog/domain`,
-          {
-            story: story,
-          },
-          {
-            headers: { authentication: localStorage.getItem("token") },
-          }
-        )
+        .post(`${config.SERVER_URL}/blog/domain`, story, {
+          headers: { authentication: localStorage.getItem("token") },
+        })
         .then(async (response) => {
           let resK = [];
           let resE = [];
@@ -181,11 +175,18 @@ class Domain extends Component {
           </div>
           <div class="ideaRight">
             <div class="ideaInput">
-              <p>블로그 아이디/도메인</p>
+              <p>블로그 설명</p>
               <input
                 class="ideaInput1"
-                name="input"
-                value={this.state.input}
+                name="desc"
+                value={this.state.desc}
+                onChange={this.handle}
+              />
+              <p>블로그 주요 키워드</p>
+              <input
+                class="ideaInput1"
+                name="keyword"
+                value={this.state.keyword}
                 onChange={this.handle}
               />
               <br />
