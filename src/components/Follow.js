@@ -210,8 +210,7 @@ class Follow extends Component {
         <br />
         {this.state.loading ? (
           <div class="loading">
-            {" "}
-            <Spinner size="8px" color="#3b2479" />{" "}
+            <Spinner size="8px" color="#3b2479" />
           </div>
         ) : null}
       </Fragment>
