@@ -147,6 +147,20 @@ class Follow extends Component {
           }
         )
         .then(async (response) => {
+          if (response.data[2] >= 2) {
+            toast.error(
+              `결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요`,
+              {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              }
+            );
+          }
           this.setState({ outputKr: this.state.outputKr + response.data[0] });
           this.setState({ outputEn: this.state.outputEn + response.data[1] });
           this.setState({ outputLength: response.data[0].length });

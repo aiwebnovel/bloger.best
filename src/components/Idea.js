@@ -93,6 +93,20 @@ class Idea extends Component {
         .then(async (response) => {
           let resK = [];
           let resE = [];
+          if (response.data[2] >= 2) {
+            toast.error(
+              `결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요`,
+              {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              }
+            );
+          }
           for (let i = 0; i < response.data.length; i++) {
             await resK.push(response.data[i][0]);
             await resE.push(response.data[i][1]);
