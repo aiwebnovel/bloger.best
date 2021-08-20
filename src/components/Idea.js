@@ -35,8 +35,6 @@ class Idea extends Component {
     this.savecontents = this.savecontents.bind(this);
   }
 
-
-
   async handle(e) {
     this.setState({ input: e.target.value });
   }
@@ -44,6 +42,30 @@ class Idea extends Component {
   async requestcontents() {
     if (localStorage.getItem("token") !== undefined) {
       let story = this.state.input;
+
+      const date = new Date();
+      let time = localStorage.getItem("time");
+
+      if (time !== undefined && time !== null && time !== "") {
+        const timeD = -(Date.parse(time) - date.getTime());
+        console.log(timeD);
+        if (timeD < 6500) {
+          toast.error(
+            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`,
+            {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          return;
+        }
+      }
+      localStorage.setItem("time", date);
 
       if (story === " " || story === " ") {
         toast.error(`주제를 입력해 주세요!`, {

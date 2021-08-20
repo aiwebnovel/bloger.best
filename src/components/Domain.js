@@ -42,7 +42,30 @@ class Domain extends Component {
 
   async requestcontents() {
     if (localStorage.getItem("token") !== undefined) {
+      const date = new Date();
+      let time = localStorage.getItem("time");
       let story = { desc: this.state.desc, keyword: this.state.keyword };
+
+      if (time !== undefined && time !== null && time !== "") {
+        const timeD = -(Date.parse(time) - date.getTime());
+        console.log(timeD);
+        if (timeD < 6500) {
+          toast.error(
+            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`,
+            {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          return;
+        }
+      }
+      localStorage.setItem("time", date);
 
       if (story.desc === "" || story.keyword === "") {
         toast.error(`공백인 칸이 있습니다!`, {
