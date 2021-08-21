@@ -156,17 +156,17 @@ class Header extends Component {
   render() {
     return (
       <header>
-      <Link to="/"><span class="logo">Bloggy</span></Link>
+      <Link to="/"><span class="logo">Bloger</span></Link>
         <div class="loginProfile">
           <Link to="/membership"><span className='links' >membership</span></Link>
 
           { localStorage.getItem('token') ? 
-            <div class="profile">
+            <div class="profile hover">
               <a onClick={this.showMenu}>
                 <img  src={this.state.userImage} class="profileicon"/>
               </a>
             </div>
-            : <button className='login' onClick={ this.openModal } name='loginModalOpen'>login</button>
+            : <button className='login hover' onClick={ this.openModal } name='loginModalOpen'>login</button>
           }
 
           <Modal open={ this.state.loginModalOpen } close={ this.closeModal } title="Login">
@@ -190,7 +190,7 @@ class Header extends Component {
                   <ProgressBar completed={this.state.userTokenP} height="8px" isLabelVisible={false}/>
                   <span>{this.state.userToken} token</span>
                 </div>
-                <button onClick={this.signOut} class="logout">logout</button>
+                <button onClick={this.signOut} class="logout hover">logout</button>
               </div>
             </div> ) : (null)
           }

@@ -107,6 +107,7 @@ td {
 
 .save {
   float: right;
+  cursor: pointer;
 }
 
 @media (max-width: 700px) {
@@ -162,5 +163,4 @@ td {
   .progress {
     width: 90%;
   }
-
 }

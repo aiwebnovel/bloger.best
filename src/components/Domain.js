@@ -236,10 +236,9 @@ class Domain extends Component {
                 <table>
                   <tbody>
                     <tr>
-                      <td>1</td>
                       <td>{this.state.outputKr[0]}</td>
                       <td>{this.state.outputEn[0]}</td>
-                      <td>
+                      <td class="hover">
                         <CopyToClipboard text={this.state.outputKr[0]}>
                           <img src={copyicon} class="reseticon" />
                         </CopyToClipboard>

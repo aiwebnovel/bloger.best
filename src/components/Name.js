@@ -234,7 +234,6 @@ class Name extends Component {
                 <table>
                   <tbody>
                     <tr>
-                      <td>1</td>
                       <td>
                         1.
                         {this.state.outputKr[0].split("\n").map((line) => {
@@ -257,7 +256,7 @@ class Name extends Component {
                           );
                         })}
                       </td>
-                      <td>
+                      <td class="hover">
                         <CopyToClipboard text={this.state.outputKr[0]}>
                           <img src={copyicon} class="reseticon" />
                         </CopyToClipboard>
