@@ -1,5 +1,6 @@
 {
   "files": {
+<<<<<<< Updated upstream
     "main.css": "/static/css/main.cd2a66de.chunk.css",
     "main.js": "/static/js/main.aa45cd33.chunk.js",
     "main.js.map": "/static/js/main.aa45cd33.chunk.js.map",
@@ -12,15 +13,36 @@
     "static/css/2.a79f31f0.chunk.css.map": "/static/css/2.a79f31f0.chunk.css.map",
     "static/css/main.cd2a66de.chunk.css.map": "/static/css/main.cd2a66de.chunk.css.map",
     "static/js/2.113a768f.chunk.js.LICENSE.txt": "/static/js/2.113a768f.chunk.js.LICENSE.txt",
+=======
+    "main.css": "/static/css/main.742b6e85.chunk.css",
+    "main.js": "/static/js/main.cd730635.chunk.js",
+    "main.js.map": "/static/js/main.cd730635.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.3820b12c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.3820b12c.js.map",
+    "static/css/2.37e01358.chunk.css": "/static/css/2.37e01358.chunk.css",
+    "static/js/2.fc6e343d.chunk.js": "/static/js/2.fc6e343d.chunk.js",
+    "static/js/2.fc6e343d.chunk.js.map": "/static/js/2.fc6e343d.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.37e01358.chunk.css.map": "/static/css/2.37e01358.chunk.css.map",
+    "static/css/main.742b6e85.chunk.css.map": "/static/css/main.742b6e85.chunk.css.map",
+    "static/js/2.fc6e343d.chunk.js.LICENSE.txt": "/static/js/2.fc6e343d.chunk.js.LICENSE.txt",
+>>>>>>> Stashed changes
     "static/media/facebook.7692d6c3.png": "/static/media/facebook.7692d6c3.png",
     "static/media/trash.714fb76f.jpg": "/static/media/trash.714fb76f.jpg",
     "static/media/user.f4aa51de.png": "/static/media/user.f4aa51de.png"
   },
   "entrypoints": [
     "static/js/runtime-main.3820b12c.js",
+<<<<<<< Updated upstream
     "static/css/2.a79f31f0.chunk.css",
     "static/js/2.113a768f.chunk.js",
     "static/css/main.cd2a66de.chunk.css",
     "static/js/main.aa45cd33.chunk.js"
+=======
+    "static/css/2.37e01358.chunk.css",
+    "static/js/2.fc6e343d.chunk.js",
+    "static/css/main.742b6e85.chunk.css",
+    "static/js/main.cd730635.chunk.js"
+>>>>>>> Stashed changes
   ]
 }

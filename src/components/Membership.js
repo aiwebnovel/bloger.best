@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import CreditCardInput from "react-credit-card-input";
 import { authService, firebaseInstance } from "../public/firebaseConfig";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,135 +18,155 @@ class Membership extends Component {
       free: "currunt",
       basic: "change",
       premium: "change",
+      cardNum: "",
+      buyerName: "",
+      idNum: "",
+      cardExpire: "",
+      cardCvc: "",
+      cardPwd: "",
+      Price: "",
     };
-    //this.openModal = this.openModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleNumber = this.handleNumber.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.onClickPayment = this.onClickPayment.bind(this);
-    this.requestPay = this.requestPay.bind(this);
+    this.requestBill = this.requestBill.bind(this);
+    this.changeBill = this.changeBill.bind(this);
     this.requestProfile = this.requestProfile.bind(this);
   }
-/*
-  openModal = async (e) => {
-    const token = localStorage.getItem("token");
-    axios
-      .post(
-        `${config.SERVER_URL}/event`,
-        {},
-        { headers: { authentication: token } }
-      )
-      .then((response) => {
-        toast(
-          `감사합니다~유료로 가입을 원하시는 분들께 아래 내용을 알려드립니다.  
-당사는 SMART TECH KOREA 2021 행사 참여 기념으로 유료 가입자들에게는
-6월23일~6월30일까지 무료 체험 사용에 대한 보너스를 드릴 예정입니다
-유료 결재를 원하시는 분은 무료 체험을 해보시고 
-7월1일 이후 구독 결재를 선택해 주시면 됩니다. 
-가입하신 메일에 안내를 드리겠습니다.`,
-          {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          }
-        );
-      })
-      .catch((error) => {
-        if (error.response.status === 412) {
-          this.setState({ loading: false });
-          toast.error(`로그인이 필요합니다.`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleNumber(e) {
+    if (isNaN(e.target.value) === false) {
+      this.setState({ [e.target.name]: e.target.value });
+    }
+  }
+
+  openModal = (e) => {
+    authService.onAuthStateChanged(async (user) => {
+      if (authService.currentUser) {
+        authService.currentUser
+          .getIdToken()
+          .then(async (data) => {
+            await localStorage.setItem("token", data);
+            console.log(e.target.name.split(" ")[0]);
+            console.log(e.target.name.split(" ")[1]);
+            this.setState({ plan: e.target.name.split(" ")[0] });
+            this.setState({ Price: e.target.name.split(" ")[1] });
+            this.setState({ showMenu: true });
+          })
+          .catch(async (error) => {
+            toast.error(`로그인이 필요합니다.`, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           });
-          localStorage.removeItem("token");
-        } else {
-          this.setState({ loading: false });
-          toast.error(`중복 결제는 불가능합니다!`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-      });
+      } else {
+        toast.error(`로그인이 필요합니다.`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    });
   };
-*/
+
+  openModalPay = (e) => {
+    this.setState({ showMenu: true });
+  };
+
   closeModal = () => {
     this.setState({ showMenu: false });
   };
 
-  onClickPayment(e) {
-    /* 1. 가맹점 식별하기 */
-    const { IMP } = window;
-    IMP.init("imp33624147");
-
-    let amount = 0;
-    if (this.state.plan === "basic") {
-      amount = 10000;
-    } else if (this.state.plan === "premium") {
-      amount = 29000;
-    } else {
-      return;
+  async requestBill() {
+    let user = await localStorage.getItem("token");
+    if (user !== undefined) {
+      const now = new Date();
+      const option = {
+        arsUseYn: "N",
+        buyerName: this.state.buyerName, //등록자 이름
+        cardExpire:
+          this.state.cardExpire.split(" / ")[1] +
+          this.state.cardExpire.split(" / ")[0], //유효기간
+        cardNum: this.state.cardNum.replaceAll(" ", ""), //카드번호 (숫자)
+        cardPwd: this.state.cardPwd, //카드 비밀번호 앞 2 자리
+        idNum: this.state.idNum, //주민번호 앞 6 자리
+        mid: "pgapppla1m", //상점 아이디
+        moid:
+          now.getFullYear() +
+          "" +
+          (now.getMonth() + 1) +
+          now.getDate() +
+          now.getHours() +
+          now.getMinutes() +
+          now.getSeconds(), //가맹점 주문번호
+        userId: (await localStorage.getItem("userUid")) + Math.random(),
+      };
+      console.log(option);
+      axios
+        .post(`https://api.innopay.co.kr/api/regAutoCardBill`, option)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.resultCode === "0000") {
+            axios
+              .post(
+                `${config.SERVER_URL}/pay`,
+                {
+                  billKey: response.data.billKey,
+                  plan: this.state.plan,
+                  name: this.state.buyerName,
+                },
+                { headers: { authentication: user } }
+              )
+              .then((response) => {
+                console.log(response);
+                this.closeModal();
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            throw new Error();
+          }
+          this.closeModal();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.closeModal();
+        });
     }
-    /* 2. 결제 데이터 정의하기 */
-    const data = {
-      //pg: 'kakaopay',
-      pg: e.target.name,
-      pay_method: "card", // "card"만 지원됩니다
-      merchant_uid: "merchant_" + new Date().getTime(), // 빌링키 발급용 주문번호
-      //customer_uid: "gildong_0001_1234", // 카드(빌링키)와 1:1로 대응하는 값
-      name: this.state.plan,
-      amount: amount, // 0 으로 설정하여 빌링키 발급만 진행합니다.
-      buyer_Uid: localStorage.getItem("userUid"),
-    };
-
-    /* 4. 결제 창 호출하기 */
-    IMP.request_pay(data, (response) => {
-      const { success, merchant_uid, imp_uid, error_msg } = response;
-
-      if (success) {
-        //console.log(success);
-        //console.log(merchant_uid);
-        //console.log(imp_uid);
-        //console.log(response);
-        alert("결제 성공");
-        this.requestPay(this.state.plan, imp_uid, merchant_uid);
-      } else {
-        alert(`결제 실패: ${error_msg}`);
-      }
-    });
   }
 
-  async requestPay(plan, imp_uid, merchant_uid) {
+  async changeBill() {
     let user = await localStorage.getItem("token");
-
     if (user !== undefined) {
       axios
-        .post(
+        .put(
           `${config.SERVER_URL}/pay`,
           {
-            imp_uid: imp_uid,
-            merchant_uid: merchant_uid,
-            plan: plan,
+            plan: this.state.plan,
           },
           { headers: { authentication: user } }
         )
         .then((response) => {
-          //console.log(response.data);
+          console.log(response);
           this.closeModal();
         })
         .catch((error) => {
-          //console.log(error);
+          console.log(error);
         });
     }
   }
@@ -159,7 +180,7 @@ class Membership extends Component {
           headers: { authentication: user },
         })
         .then((response) => {
-          localStorage.setItem("userUid", response.data.Uid);
+          localStorage.setItem("userUid", response.data.uid);
           localStorage.setItem("plan", response.data.plan);
           this.closeModal();
         })
@@ -172,75 +193,135 @@ class Membership extends Component {
     this.setState({ free: "change" });
     this.setState({ [localStorage.getItem("plan")]: "currunt" });
   }
+
   render() {
     return (
       <div class="pricingDiv">
         <div class="pricing">
-          <h3 class="priceTitle">free</h3>
+          <h3 class="priceTitle">monthly</h3>
           <div class="priceDiv">
             <span class="price1">₩</span>
-            <span class="price2">0</span>
+            <span class="price2">45,000</span>
             <span class="price3">/mo</span>
           </div>
-          <a class="pricebutton" onClick={this.openModal} name="free">
+          <a class="pricebutton" onClick={this.openModal} name="free 0">
             {this.state.free}
           </a>
-          <p>✔ 장르 선택 및 주인공 입력 가능</p>
-          <p>✔ 장소, 시간, 주제, 사건 입력 가능</p>
-          <p>✔ 이어쓰기 2-3회 제공</p>
+          <p>✔ 무제한 사용</p>
+          <p>
+            ✔ 블로그 아이디어, 개요, 제목, 도입부,
+            <br /> 이어쓰기
+          </p>
+          <p>✔ 인공지능 결과 저장</p>
+          <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
         </div>
 
         <div class="pricing">
-          <h3 class="priceTitle">basic</h3>
+          <h3 class="priceTitle">annual</h3>
           <div class="priceDiv">
             <span class="price1">₩</span>
-            <span class="price2">10000</span>
-            <span class="price3">/mo</span>
+            <span class="price2">39,000</span>
+            <span class="price3">/mo(1개월)</span>
+            <br />
+            <span>₩420,000 일시결제</span>
           </div>
-          <a class="pricebutton" onClick={this.openModal} name="basic">
+
+          <a class="pricebutton" onClick={this.openModal} name="basic 10000">
             {this.state.basic}
           </a>
-          <p>✔ 장르 선택 및 주인공 입력 가능</p>
-          <p>✔ 장소, 시간, 주제, 사건 입력 가능</p>
-          <p>✔ 이어쓰기 및 이야기 완성 가능</p>
+          <p>✔ 무제한 사용</p>
           <p>
-            ✔ 이야기 2개 이상 창작 가능
-            <br />
-            (이야기 한개당 최대 길이 a4 2장)
+            ✔ 블로그 아이디어, 개요, 제목, 도입부,
+            <br /> 이어쓰기
           </p>
+          <p>✔ 인공지능 결과 저장</p>
+          <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
+          <p>✔ 3개월 무료</p>
         </div>
 
         <div class="pricing">
-          <h3 class="priceTitle">premium</h3>
+          <h3 class="priceTitle">enterprise</h3>
           <div class="priceDiv">
-            <span class="price1">₩</span>
-            <span class="price2">30000</span>
-            <span class="price3">/mo</span>
+            <span class="price2">Costom</span>
           </div>
-          <a class="pricebutton" onClick={this.openModal} name="premium">
+          <a href="mailto:support@appplatform.co.kr" class="pricebutton">
             {this.state.premium}
           </a>
-          <p>✔ 장르 선택 및 주인공 입력 가능</p>
-          <p>✔ 장소, 시간, 주제, 사건 입력 가능</p>
-          <p>✔ 이어쓰기 및 이야기 완성 가능</p>
+          <p>✔ 무제한 사용</p>
           <p>
-            ✔ 이야기 7개 이상 창작 가능
-            <br />
-            (이야기 한개당 최대 길이 a4 2장)
+            ✔ 블로그 아이디어, 개요, 제목, 도입부,
+            <br /> 이어쓰기
           </p>
+          <p>✔ 인공지능 결과 저장</p>
+          <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
+          <p>✔ 기업 맞춤형 플랜 제공</p>
         </div>
 
         <Modal open={this.state.showMenu} close={this.closeModal} title="Price">
-          <a
-            class="pricebutton"
-            onClick={this.onClickPayment}
-            name="html5_inicis"
-          >
-            일반결제
-          </a>
-          <a class="pricebutton" onClick={this.onClickPayment} name="kakaopay">
-            카카오
-          </a>
+          {localStorage.getItem("isBill") !== "true" ? (
+            <div class="creditCard">
+              <CreditCardInput
+                cardNumberInputProps={{
+                  value: this.state.cardNum,
+                  onChange: this.handleChange,
+                  name: "cardNum",
+                }}
+                cardExpiryInputProps={{
+                  value: this.state.cardExpire,
+                  onChange: this.handleChange,
+                  name: "cardExpire",
+                }}
+                cardCVCInputProps={{
+                  value: this.state.cardCvc,
+                  onChange: this.handleChange,
+                  name: "cardCvc",
+                }}
+                fieldClassName="input"
+              />
+              <div class="creditCardDiv">
+                <span>비밀번호</span>
+                <input
+                  class="creditCardPwd"
+                  value={this.state.cardPwd}
+                  onChange={this.handleNumber}
+                  name="cardPwd"
+                  maxLength="2"
+                ></input>
+                <span>**</span>
+              </div>
+              <div class="creditCardDiv">
+                <span>주민번호</span>
+                <input
+                  class="creditCardPwd"
+                  value={this.state.idNum}
+                  onChange={this.handleNumber}
+                  name="idNum"
+                  maxLength="6"
+                ></input>
+                <span>-*******</span>
+              </div>
+              <div class="creditCardDiv">
+                <span>이름</span>
+                <input
+                  class="creditCardPwd"
+                  value={this.state.buyerName}
+                  onChange={this.handleChange}
+                  name="buyerName"
+                  maxLength="4"
+                ></input>
+              </div>
+
+              <a class="creditCardButton" onClick={this.requestBill}>
+                {this.state.Price}원 결제하기
+              </a>
+            </div>
+          ) : (
+            <div class="creditCard">
+              <a class="changeButton" onClick={this.changeBill}>
+                플랜 바꾸기
+              </a>
+            </div>
+          )}
         </Modal>
 
         <ToastContainer
