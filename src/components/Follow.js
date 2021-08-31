@@ -24,7 +24,6 @@ class Follow extends Component {
     this.state = {
       loginModalOpen: false,
       loading: false,
-      isStart: false,
       outputKr: "",
       outputLength: 0,
       outputEn: "",
@@ -80,30 +79,6 @@ class Follow extends Component {
     if (localStorage.getItem("token") !== undefined) {
       let story = String(this.state.outputKr).trim();
 
-      const date = new Date();
-      let time = localStorage.getItem("time");
-
-      if (time !== undefined && time !== null && time !== "") {
-        const timeD = -(Date.parse(time) - date.getTime());
-        console.log(timeD);
-        if (timeD < 6500) {
-          toast.error(
-            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`,
-            {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            }
-          );
-          return;
-        }
-      }
-      localStorage.setItem("time", date);
-
       this.setState({ outputKr: story });
       this.setState({
         tempLength:
@@ -135,6 +110,28 @@ class Follow extends Component {
         });
         return;
       }
+      const date = new Date();
+      let time = localStorage.getItem("time");
+      if (time !== undefined && time !== null && time !== "") {
+        const timeD = -(Date.parse(time) - date.getTime());
+        console.log(timeD);
+        if (timeD < 6500) {
+          toast.error(
+            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`,
+            {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          return;
+        }
+      }
+      localStorage.setItem("time", date);
       this.setState({ loading: true });
       await axios
         .post(
@@ -161,9 +158,11 @@ class Follow extends Component {
               }
             );
           }
+          this.setState({
+            outputLength: this.state.outputKr.length + response.data[0].length,
+          });
           this.setState({ outputKr: this.state.outputKr + response.data[0] });
           this.setState({ outputEn: this.state.outputEn + response.data[1] });
-          this.setState({ outputLength: response.data[0].length });
           this.setState({ loading: false });
           this.setState({ tempLength: 0 });
         })
@@ -197,7 +196,6 @@ class Follow extends Component {
           }
         });
     }
-    this.setState({ isStart: true });
   }
 
   render() {
