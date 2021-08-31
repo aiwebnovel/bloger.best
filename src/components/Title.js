@@ -29,14 +29,22 @@ class Title extends Component {
       outputKr: ["a", "b", "c", "d", "e"],
       outputEn: ["a", "b", "c", "d", "e"],
       input: " ",
+      keyword: "",
+      keywordOutput: [],
     };
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
     this.savecontents = this.savecontents.bind(this);
+    this.handleState = this.handleState.bind(this);
+    this.requestkeywords = this.requestkeywords.bind(this);
   }
 
   async handle(e) {
     this.setState({ input: e.target.value });
+  }
+
+  async handleState(e) {
+    this.setState({ keyword: e.target.value });
   }
 
   async savecontents(e) {
@@ -199,11 +207,87 @@ class Title extends Component {
     this.setState({ isStart: true });
   }
 
+  async requestkeywords() {
+    if (localStorage.getItem("token") !== undefined) {
+      let keyword = this.state.keyword;
+      console.log(this.state.keyword);
+      console.log(keyword);
+      if (keyword === " " || keyword === "") {
+        toast.error(`키워드를 입력해 주세요!`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        return;
+      }
+      this.setState({ loading: true });
+      await axios
+        .get(`${config.SERVER_URL}/keyword/${keyword}`, {
+          headers: { authentication: localStorage.getItem("token") },
+        })
+        .then(async (response) => {
+          console.log(response.data.list);
+
+          this.setState({ keywordOutput: response.data.list });
+        })
+        .catch((error) => {
+          //console.log(error);
+          if (error.response.status === 412) {
+            this.setState({ loading: false });
+            toast.error(`로그인이 필요합니다!`, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+            localStorage.removeItem("token");
+          } else {
+            toast.error(`맞는 키워드가 없습니다`, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+        });
+    }
+    this.setState({ loading: false });
+  }
+
   render() {
     return (
       <Fragment>
         <div class="ideaMain">
           <div class="ideaLeft">
+            <div class="keywordDiv">
+              <div class="">
+                <input
+                  class=""
+                  value={this.state.keyword}
+                  onChange={this.handleState}
+                />
+                <button class="start" onClick={this.requestkeywords}>
+                  키워드 검색
+                </button>
+              </div>
+              {this.state.keywordOutput.map((data, i) => {
+                return (
+                  <button key={i} onClick={this.handle} value={data}>
+                    {data}
+                  </button>
+                );
+              })}
+            </div>
             <div class="ideaLink">
               <Link to="/idea">블로그 아이디어</Link> <br /> <br />
               <Link to="/name">블로그 개요</Link> <br /> <br />
