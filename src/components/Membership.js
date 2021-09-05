@@ -16,7 +16,7 @@ class Membership extends Component {
       showMenu: false,
       plan: "free",
       free: "currunt",
-      basic: "change",
+      basic: "결제하기",
       premium: "change",
       cardNum: "",
       buyerName: "",
@@ -123,7 +123,7 @@ class Membership extends Component {
           if (response.data.resultCode === "0000") {
             axios
               .post(
-                `${config.SERVER_URL}/pay`,
+                `${config.SERVER_URL}/pay/blog`,
                 {
                   billKey: response.data.billKey,
                   plan: this.state.plan,
@@ -155,7 +155,7 @@ class Membership extends Component {
     if (user !== undefined) {
       axios
         .put(
-          `${config.SERVER_URL}/pay`,
+          `${config.SERVER_URL}/pay/blog`,
           {
             plan: this.state.plan,
           },
@@ -198,10 +198,10 @@ class Membership extends Component {
     return (
       <div class="pricingDiv">
         <div class="pricing">
-          <h3 class="priceTitle">monthly</h3>
+          <h3 class="priceTitle">Free</h3>
           <div class="priceDiv">
             <span class="price1">₩</span>
-            <span class="price2">45,000</span>
+            <span class="price2">0</span>
             <span class="price3">/mo</span>
           </div>
           <a class="pricebutton" onClick={this.openModal} name="free 0">
@@ -220,13 +220,12 @@ class Membership extends Component {
           <h3 class="priceTitle">annual</h3>
           <div class="priceDiv">
             <span class="price1">₩</span>
-            <span class="price2">39,000</span>
-            <span class="price3">/mo(1개월)</span>
+            <span class="price2">45,000</span>
+            <span class="price3">/mo</span>
             <br />
-            <span>₩420,000 일시결제</span>
           </div>
 
-          <a class="pricebutton" onClick={this.openModal} name="basic 10000">
+          <a class="pricebutton" onClick={this.openModal} name="basic 45000">
             {this.state.basic}
           </a>
           <p>✔ 무제한 사용</p>
@@ -236,16 +235,15 @@ class Membership extends Component {
           </p>
           <p>✔ 인공지능 결과 저장</p>
           <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
-          <p>✔ 3개월 무료</p>
         </div>
 
         <div class="pricing">
           <h3 class="priceTitle">enterprise</h3>
           <div class="priceDiv">
-            <span class="price2">Costom</span>
+            <span class="price2">Custom</span>
           </div>
           <a href="mailto:support@appplatform.co.kr" class="pricebutton">
-            {this.state.premium}
+            문의하기
           </a>
           <p>✔ 무제한 사용</p>
           <p>
@@ -258,7 +256,7 @@ class Membership extends Component {
         </div>
 
         <Modal open={this.state.showMenu} close={this.closeModal} title="Price">
-          {localStorage.getItem("isBill") !== "true" ? (
+          {localStorage.getItem("isBill") !== "true" && this.state.Price > 0 ? (
             <div class="creditCard">
               <CreditCardInput
                 cardNumberInputProps={{
