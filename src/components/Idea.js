@@ -6,10 +6,8 @@ import { Spinner } from "react-loading-io";
 import { authService, firebaseInstance } from "../public/firebaseConfig";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import * as config from "../config";
-import reseticon from "../public/reset.png";
-import trashicon from "../public/trash.jpg";
 import copyicon from "../public/copy.png";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ProgressBar from "@ramonak/react-progress-bar";
 import Modal from "./Modal";
 import facebookicon from "../public/facebook.png";
@@ -17,6 +15,9 @@ import googleicon from "../public/google.png";
 import "react-toastify/dist/ReactToastify.css";
 import "../style/Idea.css";
 import "react-table-v6/react-table.css";
+
+import { Grid, Box, ResponsiveContext } from "grommet";
+
 const LanguageDetect = require("languagedetect");
 
 class Idea extends Component {
@@ -267,17 +268,57 @@ class Idea extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div class="ideaMain">
-          <div class="ideaLeft">
-            <div class="keywordDiv">
-              <div class="">
-                <input
-                  class=""
-                  value={this.state.keyword}
-                  onChange={this.handleState}
-                />
-                <button class="start" onClick={this.requestkeywords}>
+      <Box className='ideaMain'>
+        <Grid
+          fill
+          rows={this.props.sizes !== 'small' ? (["auto", "flex"]) : (["auto", "auto"])}
+          columns={this.props.sizes !== 'small' ? (["auto", "flex"]):(["auto"])}
+          areas={this.props.sizes !== 'small' ? 
+          ([
+            { name: "sideMenu", start: [0, 1], end: [0, 1] },
+            { name: "main", start: [1, 0], end: [1, 1] },
+          ]):
+          ([
+            { name: "sideMenu", start: [0, 0], end: [0, 0] },
+            { name: "main", start: [0, 1], end: [0, 1] },
+          ])}
+        > 
+          <Box
+          gridArea="sideMenu"
+          justify="center"
+          align="center"
+          background='#fff'
+          width='small'
+          className="SiderStyle"
+          >
+            <div className='ideaLink'>
+              <Link to='/idea'>
+                <p>블로그 아이디어</p>
+              </Link>
+              <Link to='/name'>
+                <p>블로그 개요</p>
+              </Link>
+              <Link to='/title'>
+                <p>블로그 제목</p>
+              </Link>
+              <Link to='/intro'>
+                <p>블로그 도입부</p>
+              </Link>
+              <Link to='/follow'>
+                <p>블로그 이어쓰기</p>
+              </Link>
+              <Link to='/save'>
+                <p>최근 저장 기록</p>
+              </Link>
+            </div>
+          </Box>
+          <Box
+          gridArea="main"
+          >
+            <div className='keywordDiv'>
+              <div>
+                <input value={this.state.keyword} onChange={this.handleState} />
+                <button className='start' onClick={this.requestkeywords}>
                   키워드 검색
                 </button>
               </div>
@@ -289,45 +330,39 @@ class Idea extends Component {
                 );
               })}
             </div>
-
-            <div class="ideaLink">
-              <Link to="/idea">블로그 아이디어</Link> <br /> <br />
-              <Link to="/name">블로그 개요</Link> <br /> <br />
-              <Link to="/title">블로그 제목</Link> <br /> <br />
-              <Link to="/intro">블로그 도입부</Link> <br /> <br />
-              <Link to="/follow">블로그 이어쓰기</Link> <br /> <br />
-              <br /> <br />
-              <Link to="/save">최근 저장 기록</Link> <br /> <br />
+            <div>
+              <div className='ideaInput'>
+                <p>블로그 아이디어</p>
+                <input
+                  className='ideaInput1'
+                  value={this.state.input}
+                  onChange={this.handle}
+                />
+                <br />
+                <button className='start' onClick={this.requestcontents}>
+                  create
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="ideaRight">
-            <div class="ideaInput">
-              <p>블로그 아이디어</p>
-              <input
-                class="ideaInput1"
-                value={this.state.input}
-                onChange={this.handle}
-              />
-              <br />
-              <button class="start" onClick={this.requestcontents}>
-                create
-              </button>
-            </div>
-            {this.state.isStart ? (
-              <div class="ideaOutput">
+            {this.state.isStart && (
+              <div className='ideaOutput'>
                 <table>
                   <tbody>
                     <tr>
                       <td>{this.state.outputKr[0]}</td>
                       <td>{this.state.outputEn[0]}</td>
-                      <td class="hover">
+                      <td className='hover'>
                         <CopyToClipboard text={this.state.outputKr[0]}>
-                          <img src={copyicon} class="reseticon" />
+                          <img
+                            alt='copy'
+                            src={copyicon}
+                            className='reseticon'
+                          />
                         </CopyToClipboard>
                         <button
-                          name="0"
+                          name='0'
                           onClick={this.savecontents}
-                          className="save"
+                          className='save'
                         >
                           save
                         </button>
@@ -336,16 +371,15 @@ class Idea extends Component {
                   </tbody>
                 </table>
               </div>
-            ) : null}
+            )}
+          </Box>
+        </Grid>
+        {this.state.loading && (
+          <div className='loading'>
+            <Spinner size={200} color='#3b2479' />
           </div>
-        </div>
-        {this.state.loading ? (
-          <div class="loading">
-            {" "}
-            <Spinner size="8px" color="#3b2479" />{" "}
-          </div>
-        ) : null}
-      </Fragment>
+        )}
+      </Box>
     );
   }
 }

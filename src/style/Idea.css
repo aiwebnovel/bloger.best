@@ -1,46 +1,40 @@
 .ideaMain {
-  width: 95vw;
-  overflow: hidden;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
+  height: 100vh;
 }
 
-.ideaLeft {
-  width: 15vw;
-  height: 100%;
-  float: left;
+.SiderStyle {
+  border-right: 1px solid #000;
 }
 
 .ideaLink {
-  width: 10vw;
+  /* width: 10vw;
   margin-top: 5vh;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: auto; */
 }
 
 .keywordDiv {
-  width: 10vw;
+  /* width: 10vw;
   margin-top: 5vh;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: auto; */
 }
 
 .ideaRight {
-  width: 70vw;
+  /* width: 70vw;
   height: 100%;
   float: left;
   margin-left: 5vw;
-  margin-right: 0;
+  margin-right: 0; */
 }
 
 .ideaInput {
-  margin-top: 10vh;
-  width: 60vw;
+  /* margin-top: 10vh;
+  width: 60vw; */
 }
 
 .ideaInput1 {
-  padding: 1vw;
+  /* padding: 1vw;
   width: 40vw;
   height: 7vh;
   margin-top: 5px;
@@ -49,19 +43,19 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8) inset,
     0px 0px 5px rgba(200, 200, 200, 0.5);
   outline: none;
-  border: 0;
+  border: 0; */
 }
 
 .ideaOutput {
-  margin-top: 1vh;
+  /* margin-top: 1vh;
   margin-bottom: 3vh;
   width: 60vw;
   min-height: 10vh;
-  max-height: 320vh;
+  max-height: 320vh; */
 }
 
 .ideaInput2 {
-  float: left;
+  /* float: left;
   padding: 1vw;
   width: 49%;
   height: 100%;
@@ -72,11 +66,11 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8) inset,
     0px 0px 5px rgba(200, 200, 200, 0.5);
   outline: none;
-  border: 0;
+  border: 0; */
 }
 
 .ideaOutput1 {
-  float: right;
+  /* float: right;
   padding: 1vw;
   width: 49%;
   height: 100%;
@@ -87,12 +81,12 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8) inset,
     0px 0px 5px rgba(200, 200, 200, 0.5);
   outline: none;
-  border: 0;
+  border: 0; */
 }
 
 .ideaText {
-  height: 45vh;
-  width: 60vw;
+  /* height: 45vh;
+  width: 60vw; */
 }
 
 .progress {
@@ -100,50 +94,50 @@
 }
 
 .ideaOutput > table {
-  border: 1px solid #444444;
-  border-collapse: collapse;
+  /* border: 1px solid #444444;
+  border-collapse: collapse; */
 }
 
 th,
 td {
-  min-width: 4.5vw;
+  /* min-width: 4.5vw;
   max-width: 55vw;
   min-height: 15vh;
-  border: 1px solid #444444;
+  border: 1px solid #444444; */
 }
 
 .save {
-  float: right;
-  cursor: pointer;
+  /* float: right;
+  cursor: pointer; */
 }
 
 @media (max-width: 700px) {
   .ideaLeft {
-    width: 95vw;
-    height: 100%;
+    /* width: 95vw;
+    height: 100%; */
   }
 
   .ideaRight {
-    width: 95vw;
+    /* width: 95vw;
     height: 100%;
     margin-left: 5vw;
-    margin-right: 0;
+    margin-right: 0; */
   }
 
   .ideaLink {
-    width: 95vw;
+    /* width: 95vw;
     margin-top: 5vh;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; */
   }
 
   .ideaInput {
-    margin-top: 5vh;
-    width: 95vw;
+    /* margin-top: 5vh;
+    width: 95vw; */
   }
 
   .ideaInput1 {
-    padding: 1vw;
+    /* padding: 1vw;
     width: 85vw;
     height: 7vh;
     border-radius: 1vh;
@@ -151,20 +145,20 @@ td {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8) inset,
       0px 0px 5px rgba(200, 200, 200, 0.5);
     outline: none;
-    border: 0;
+    border: 0; */
   }
 
   th,
   td {
-    min-width: 10vw;
+    /* min-width: 10vw;
     max-width: 55vw;
     min-height: 15vh;
-    border: 1px solid #444444;
+    border: 1px solid #444444; */
   }
 
   .ideaText {
-    height: 45vh;
-    width: 85vw;
+    /* height: 45vh;
+    width: 85vw; */
   }
 
   .progress {

@@ -6,23 +6,12 @@ import { ResponsiveContext } from "grommet";
 
 const Landing = () => {
   const size = useContext(ResponsiveContext);
-  
-  const mediumPoint = {
-    medium : {
-      value: 1024,
-        edgeSize: {
-          none: '0px',
-          small: '12px',
-          medium: '24px',
-          large: '48px',
-        },
-    }
-  }
+
 
   return (
     <div>
       <Header/>
-      <Home sizes={size} medium={mediumPoint}/>
+      <Home sizes={size}/>
       <Footer/>
     </div>
   );
