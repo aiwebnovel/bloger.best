@@ -14,12 +14,13 @@
 
 a {
   text-decoration: none;
-  color : #000
+  color : #000;
+  cursor: pointer;
 }
 
-a:hover {
+/* a:hover {
   font-weight: 600;
-}
+} */
 
 
 .footer-logo {
