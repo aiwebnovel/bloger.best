@@ -1,36 +1,113 @@
 .ideaMain {
-  height: 100vh;
-}
+  height: 80vh;
+} 
 
 .SiderStyle {
-  border-right: 1px solid #000;
+  box-shadow: 2px 3px 8px #EDEDED;
 }
 
-.ideaLink {
-  /* width: 10vw;
-  margin-top: 5vh;
-  margin-left: auto;
-  margin-right: auto; */
+.ServiceNav {
+  width: 100%;
+  text-align: center;
 }
+
+.MenuItem {
+  padding : 10px;
+}
+
+.MenuItem:hover {
+  border-right : 3px solid #3b2479;
+  font-weight: 600;
+}
+
+.MenuItem > a {
+  font-size : 15px;
+}
+
+.MenuItem > a:hover {
+  color : #3b2479;
+}
+
+/* .mainStyle {
+
+} */
 
 .keywordDiv {
-  /* width: 10vw;
-  margin-top: 5vh;
-  margin-left: auto;
-  margin-right: auto; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 30px 0;
 }
 
-.ideaRight {
-  /* width: 70vw;
-  height: 100%;
-  float: left;
-  margin-left: 5vw;
-  margin-right: 0; */
+.keywordInput {
+  border: 3px solid #3b2479;
+  outline: 0;
+  width: 50%;
+  height: 35px;
+  margin-right: 20px;
+  padding: 5px;
 }
 
-.ideaInput {
-  /* margin-top: 10vh;
-  width: 60vw; */
+.buttonStyle {
+  display: flex;
+  box-sizing: border-box;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  margin: 0;
+  background: #3b2479;
+  overflow: visible;
+  text-transform: none;
+  border: 2px solid #3b2479;
+  border-radius: 18px;
+  color: #fff;
+  padding: 4px 22px;
+  font-size: 18px;
+  line-height: 24px;
+  -webkit-transition-property: color,background-color,border-color,box-shadow;
+  transition-property: color,background-color,border-color,box-shadow;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  font-weight: bold;
+}
+
+.buttonStyle > svg {
+  fill: #fff;
+  stroke: #fff;
+}
+
+.buttonStyle:hover {
+  background: #7D4CDB;
+  border:3px solid #7D4CDB;
+}
+
+.keywordResult {
+  border: 1px solid #3b2479;
+  background: transparent;
+  padding: 5px 10px;
+  border-radius : 5px;
+}
+
+.BlogIdeaBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top : 1px solid #ededed;
+  padding: 30px 0;
+}
+
+.IdeaInput {
+  border: 3px solid #7D4CDB;
+  outline: 0;
+  width: 48%;
+  height: 35px;
+  margin-right: 20px;
+  padding: 5px;
+
 }
 
 .ideaInput1 {

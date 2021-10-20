@@ -16,7 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "../style/Idea.css";
 import "react-table-v6/react-table.css";
 
-import { Grid, Box, ResponsiveContext } from "grommet";
+import { Grid, Box, Button } from "grommet";
+import { Search } from "grommet-icons";
 
 const LanguageDetect = require("languagedetect");
 
@@ -29,7 +30,7 @@ class Idea extends Component {
       isStart: false,
       outputKr: ["a", "b", "c", "d", "e"],
       outputEn: ["a", "b", "c", "d", "e"],
-      input: " ",
+      input: "",
       keyword: "",
       keywordOutput: [],
     };
@@ -271,78 +272,84 @@ class Idea extends Component {
       <Box className='ideaMain'>
         <Grid
           fill
-          rows={this.props.sizes !== 'small' ? (["auto", "flex"]) : (["auto", "auto"])}
-          columns={this.props.sizes !== 'small' ? (["auto", "flex"]):(["auto"])}
-          areas={this.props.sizes !== 'small' ? 
-          ([
-            { name: "sideMenu", start: [0, 1], end: [0, 1] },
-            { name: "main", start: [1, 0], end: [1, 1] },
-          ]):
-          ([
-            { name: "sideMenu", start: [0, 0], end: [0, 0] },
-            { name: "main", start: [0, 1], end: [0, 1] },
-          ])}
-        > 
+          rows={
+            this.props.sizes !== "small" ? ["auto", "flex"] : ["auto", "auto"]
+          }
+          columns={this.props.sizes !== "small" ? ["auto", "flex"] : ["auto"]}
+          areas={
+            this.props.sizes !== "small"
+              ? [
+                  { name: "sideMenu", start: [0, 1], end: [0, 1] },
+                  { name: "main", start: [1, 0], end: [1, 1] },
+                ]
+              : [
+                  { name: "sideMenu", start: [0, 0], end: [0, 0] },
+                  { name: "main", start: [0, 1], end: [0, 1] },
+                ]
+          }
+        >
           <Box
-          gridArea="sideMenu"
-          justify="center"
-          align="center"
-          background='#fff'
-          width='small'
-          className="SiderStyle"
+            gridArea='sideMenu'
+            // justify='center'
+            align='center'
+            background='#fff'
+            width='small'
+            className='SiderStyle'
           >
-            <div className='ideaLink'>
-              <Link to='/idea'>
-                <p>블로그 아이디어</p>
-              </Link>
-              <Link to='/name'>
-                <p>블로그 개요</p>
-              </Link>
-              <Link to='/title'>
-                <p>블로그 제목</p>
-              </Link>
-              <Link to='/intro'>
-                <p>블로그 도입부</p>
-              </Link>
-              <Link to='/follow'>
-                <p>블로그 이어쓰기</p>
-              </Link>
-              <Link to='/save'>
-                <p>최근 저장 기록</p>
-              </Link>
+            <div className='ServiceNav'>
+              <div className="MenuItem">
+                <Link to='/idea'>블로그 아이디어</Link>
+              </div>
+              <div className="MenuItem">
+                <Link to='/name'>블로그 개요</Link>
+              </div>
+              <div className="MenuItem">
+                <Link to='/title'>블로그 제목</Link>
+              </div>
+              <div className="MenuItem">
+                <Link to='/intro'>블로그 도입부</Link>
+              </div>
+              <div className="MenuItem">
+                <Link to='/follow'>블로그 이어쓰기</Link>
+              </div>
+              <div className="MenuItem">
+                <Link to='/save'>최근 저장 기록</Link>
+              </div>
             </div>
           </Box>
-          <Box
-          gridArea="main"
+          <Box 
+          gridArea='main'
+          //justify='center'
+          align='center'
+          className="mainStyle"
           >
             <div className='keywordDiv'>
-              <div>
-                <input value={this.state.keyword} onChange={this.handleState} />
-                <button className='start' onClick={this.requestkeywords}>
-                  키워드 검색
-                </button>
+                <input 
+                type="text"
+                name="keyword"
+                placeholder="블로그에 필요한 키워드를 입력해주세요!" 
+                value={this.state.keyword} 
+                onChange={this.handleState} className="keywordInput"/>
+                <button className="buttonStyle" onClick={this.requestkeywords}><Search/></button>
               </div>
               {this.state.keywordOutput.map((data, i) => {
                 return (
-                  <button key={i} onClick={this.handle} value={data}>
+                  <button className="keywordResult" key={i} onClick={this.handle} value={data}>
                     {data}
                   </button>
                 );
               })}
-            </div>
-            <div>
-              <div className='ideaInput'>
-                <p>블로그 아이디어</p>
+
+            <div className="BlogIdeaBox">
                 <input
-                  className='ideaInput1'
+                  type="text"
+                  name="idea"
+                  placeholder="결과로 나온 블로그 키워드를 하나 선택해주세요!"
+                  className='IdeaInput'
                   value={this.state.input}
                   onChange={this.handle}
                 />
-                <br />
-                <button className='start' onClick={this.requestcontents}>
-                  create
-                </button>
-              </div>
+                <Button primary label="글쓰기" onClick={this.requestcontents}/>
             </div>
             {this.state.isStart && (
               <div className='ideaOutput'>
