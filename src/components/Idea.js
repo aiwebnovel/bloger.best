@@ -18,8 +18,8 @@ import "react-table-v6/react-table.css";
 
 import styled from "styled-components";
 
-import { Grid, Box, Button } from "grommet";
-import { Search, Apps} from "grommet-icons";
+import { Grid, Box} from "grommet";
+import { Apps, Search, Configure } from "grommet-icons";
 
 const LanguageDetect = require("languagedetect");
 
@@ -47,7 +47,6 @@ class Idea extends Component {
 
   handleSider() {
     this.setState({ isSider: !this.state.isSider });
-    console.log("test", this.state.isSider);
   }
 
   async handle(e) {
@@ -298,24 +297,24 @@ class Idea extends Component {
           }
         >
           {this.state.isSider ? (
-              <Box
-                gridArea='sideMenu'
-                // justify='center'
-                align='center'
-                background='#fff'
-                className='SiderStyle'
-                animation={
-                  this.props.sizes !== "small"
-                    ? [
-                        { type: "fadeIn", duration: 300 },
-                        { type: "slideRight", size: "xlarge", duration: 150 },
-                      ]
-                    : [
-                        { type: "fadeIn", duration: 300 },
-                        { type: "slideDown", size: "small", duration: 300 },
-                      ]
-                }
-              >
+            <Box
+              gridArea='sideMenu'
+              // justify='center'
+              align='center'
+              background='#fff'
+              className='SiderStyle'
+              animation={
+                this.props.sizes !== "small"
+                  ? [
+                      { type: "fadeIn", duration: 300 },
+                      { type: "slideRight", size: "xlarge", duration: 150 },
+                    ]
+                  : [
+                      { type: "fadeIn", duration: 300 },
+                      { type: "slideDown", size: "small", duration: 300 },
+                    ]
+              }
+            >
               <div className='IconBox' onClick={this.handleSider}>
                 <Apps
                   color='#fff'
@@ -326,16 +325,15 @@ class Idea extends Component {
                   <b>Menu</b>
                 </p>
               </div>
-                <div className='ServiceNav'>
-                  <MenuItem to='/idea'>블로그 아이디어</MenuItem>
-                  <MenuItem to='/name'>블로그 개요</MenuItem>
-                  <MenuItem to='/title'>블로그 제목</MenuItem>
-                  <MenuItem to='/intro'>블로그 도입부</MenuItem>
-                  <MenuItem to='/follow'>블로그 이어쓰기</MenuItem>
-                  <MenuItem to='/save'>최근 저장 기록</MenuItem>
-                </div>
-              </Box>
-            
+              <div className='ServiceNav'>
+                <MenuItem to='/idea'>블로그 아이디어</MenuItem>
+                <MenuItem to='/name'>블로그 개요</MenuItem>
+                <MenuItem to='/title'>블로그 제목</MenuItem>
+                <MenuItem to='/intro'>블로그 도입부</MenuItem>
+                <MenuItem to='/follow'>블로그 이어쓰기</MenuItem>
+                <MenuItem to='/save'>최근 저장 기록</MenuItem>
+              </div>
+            </Box>
           ) : (
             <div className='IconBox' onClick={this.handleSider}>
               <Apps color='#fff' size='medium' style={{ marginRight: "5px" }} />
@@ -347,76 +345,81 @@ class Idea extends Component {
 
           <Box
             gridArea='main'
-            justify="center"
+            justify='center'
             // justify={this.props.sizes !== 'small'? 'center' : 'start'}
             align='center'
             className='mainStyle'
           >
-            <div className='keywordDiv'>
-              <input
-                type='text'
-                name='keyword'
-                placeholder='블로그에 필요한 키워드를 입력해주세요!'
-                value={this.state.keyword}
-                onChange={this.handleState}
-                className='keywordInput'
-              />
-              <button className='buttonStyle' onClick={this.requestkeywords}>
-                <Search />
-              </button>
-            </div>
-            {this.state.keywordOutput.map((data, i) => {
-              return (
-                <button
-                  className='keywordResult'
-                  key={i}
-                  onClick={this.handle}
-                  value={data}
-                >
-                  {data}
+            <div className='KeyContainer'>
+              <div className="keywordDiv">
+                <input
+                  type='text'
+                  name='keyword'
+                  placeholder='블로그에 필요한 키워드를 입력해주세요!'
+                  value={this.state.keyword}
+                  onChange={this.handleState}
+                  className='keywordInput'
+                />
+                <button className='buttonStyle' onClick={this.requestkeywords}>
+                  <Search />
                 </button>
-              );
-            })}
-
-            <div className='BlogIdeaBox'>
-              <input
-                type='text'
-                name='idea'
-                placeholder='결과로 나온 블로그 키워드를 하나 선택해주세요!'
-                className='IdeaInput'
-                value={this.state.input}
-                onChange={this.handle}
-              />
-              <Button primary label='글쓰기' onClick={this.requestcontents} />
-            </div>
-            {this.state.isStart && (
-              <div className='ideaOutput'>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>{this.state.outputKr[0]}</td>
-                      <td>{this.state.outputEn[0]}</td>
-                      <td className='hover'>
-                        <CopyToClipboard text={this.state.outputKr[0]}>
-                          <img
-                            alt='copy'
-                            src={copyicon}
-                            className='reseticon'
-                          />
-                        </CopyToClipboard>
-                        <button
-                          name='0'
-                          onClick={this.savecontents}
-                          className='save'
-                        >
-                          save
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
-            )}
+              {this.state.keywordOutput.map((data, i) => {
+                return (
+                  <button
+                    className='keywordResult'
+                    key={i}
+                    onClick={this.handle}
+                    value={data}
+                  >
+                    {data}
+                  </button>
+                );
+              })}
+            </div>
+            <div className='IdeaContainer'>
+              <div className='BlogIdeaBox'>
+                <input
+                  type='text'
+                  name='idea'
+                  placeholder='결과로 나온 블로그 키워드를 하나 선택해주세요!'
+                  className='IdeaInput'
+                  value={this.state.input}
+                  onChange={this.handle}
+                />
+                <button className='buttonStyle' onClick={this.requestcontents}>
+                <Configure/>
+                </button>
+              </div>
+              {this.state.isStart && (
+                <div className='ideaOutput'>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>{this.state.outputKr[0]}</td>
+                        <td>{this.state.outputEn[0]}</td>
+                        <td className='hover'>
+                          <CopyToClipboard text={this.state.outputKr[0]}>
+                            <img
+                              alt='copy'
+                              src={copyicon}
+                              className='reseticon'
+                            />
+                          </CopyToClipboard>
+                          <button
+                            name='0'
+                            onClick={this.savecontents}
+                            className='save'
+                          >
+                            save
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           </Box>
         </Grid>
         {this.state.loading && (

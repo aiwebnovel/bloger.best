@@ -30,58 +30,76 @@
   height: 80vh;
 }
 
-.keywordDiv {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.KeyContainer, .IdeaContainer {
   width: 100%;
+  display: flex;
+  justify-content: center;
   padding: 30px 0;
 }
 
-.keywordInput {
-  
+.keywordDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  height: 40px;
+  padding: 5px 8px;
+  background-color: #fff;
+  transition: all 200ms ease-in-out;
   border: 3px solid #3b2479;
-  outline: 0;
-  width: 50%;
-  height: 35px;
-  margin-right: 20px;
-  padding: 5px;
 }
+
+/* 
+.keywordDiv:hover {
+  border: 3px solid #55D4BC;
+} */
+
+.keywordInput, .IdeaInput {
+  background-color: transparent;
+  border:0;
+  outline: 0;
+  word-wrap: break-word;
+  width: 80%;
+  font-size: 0.9rem;
+  
+}
+
+.keywordInput > svg {
+  fill: #3b2479;
+  stroke: #3b2479;
+}
+
+
+
+
+.BlogIdeaBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  height: 40px;
+  padding: 5px 8px;
+  background-color: #fff;
+  transition: all 200ms ease-in-out;
+  border: 3px solid #7D4CDB;
+}
+
+/* .BlogIdeaBox:hover {
+  border: 3px solid #C4FCEF;
+} */
+
 
 .buttonStyle {
-  display: flex;
-  box-sizing: border-box;
-  cursor: pointer;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  margin: 0;
-  background: #3b2479;
-  overflow: visible;
+  background: transparent;
   text-transform: none;
-  border: 2px solid #3b2479;
-  border-radius: 18px;
-  color: #fff;
-  padding: 4px 22px;
-  font-size: 18px;
-  line-height: 24px;
-  -webkit-transition-property: color,background-color,border-color,box-shadow;
-  transition-property: color,background-color,border-color,box-shadow;
-  -webkit-transition-duration: 0.1s;
-  transition-duration: 0.1s;
-  -webkit-transition-timing-function: ease-in-out;
-  transition-timing-function: ease-in-out;
-  font-weight: bold;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  height: 100%;
+  border-left : 1px solid #f2f2f2;
+  padding-left : 5px;
 }
 
-.buttonStyle > svg {
-  fill: #fff;
-  stroke: #fff;
-}
-
-.buttonStyle:hover {
-  background: #7D4CDB;
-  border:2px solid #7D4CDB;
-}
 
 .keywordResult {
   border: 1px solid #3b2479;
@@ -90,24 +108,7 @@
   border-radius : 5px;
 }
 
-.BlogIdeaBox {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top : 1px solid #ededed;
-  padding: 30px 0;
-}
 
-.IdeaInput {
-  border: 3px solid #7D4CDB;
-  outline: 0;
-  width: 48%;
-  height: 35px;
-  margin-right: 20px;
-  padding: 5px;
-
-}
 
 
 @media screen and (max-width: 768px) {
@@ -125,4 +126,13 @@
   .mainStyle {
     justify-content: baseline;
   }
+}
+
+@media screen and (max-width: 680px){
+
+  .keywordDiv, .BlogIdeaBox {
+    width: 80%;
+  }
+
+
 }

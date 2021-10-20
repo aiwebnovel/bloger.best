@@ -1,22 +1,21 @@
 import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import ReactTable from "react-table-v6";
 import axios from "axios";
 import { Spinner } from "react-loading-io";
 import { authService, firebaseInstance } from "../public/firebaseConfig";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import * as config from "../config";
-import reseticon from "../public/reset.png";
-import trashicon from "../public/trash.jpg";
+
 import copyicon from "../public/copy.png";
-import { ToastContainer, toast } from "react-toastify";
-import ProgressBar from "@ramonak/react-progress-bar";
-import Modal from "./Modal";
-import facebookicon from "../public/facebook.png";
-import googleicon from "../public/google.png";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../style/Idea.css";
-import "react-table-v6/react-table.css";
+
+import "../style/Name.css";
+import styled from "styled-components";
+
+import { Grid, Box} from "grommet";
+import { Apps, Search, Configure } from "grommet-icons";
+
 const LanguageDetect = require("languagedetect");
 
 class Name extends Component {
@@ -31,12 +30,18 @@ class Name extends Component {
       input: " ",
       keyword: "",
       keywordOutput: [],
+      isSider: false,
     };
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
     this.savecontents = this.savecontents.bind(this);
     this.handleState = this.handleState.bind(this);
     this.requestkeywords = this.requestkeywords.bind(this);
+    this.handleSider = this.handleSider.bind(this);
+  }
+
+  handleSider() {
+    this.setState({ isSider: !this.state.isSider });
   }
 
   async handle(e) {
@@ -267,9 +272,78 @@ class Name extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div class="ideaMain">
-          <div class="ideaLeft">
+      <Box className='ideaMain'>
+    <Grid
+          fill
+          rows={
+            this.props.sizes !== "small" ? ["auto", "flex"] : ["auto", "auto"]
+          }
+          columns={this.props.sizes !== "small" ? ["auto", "flex"] : ["auto"]}
+          areas={
+            this.props.sizes !== "small"
+              ? [
+                  { name: "sideMenu", start: [0, 1], end: [0, 1] },
+                  { name: "main", start: [1, 0], end: [1, 1] },
+                ]
+              : [
+                  { name: "sideMenu", start: [0, 0], end: [0, 0] },
+                  { name: "main", start: [0, 1], end: [0, 1] },
+                ]
+          }
+        >
+           {this.state.isSider ? (
+            <Box
+              gridArea='sideMenu'
+              // justify='center'
+              align='center'
+              background='#fff'
+              className='SiderStyle'
+              animation={
+                this.props.sizes !== "small"
+                  ? [
+                      { type: "fadeIn", duration: 300 },
+                      { type: "slideRight", size: "xlarge", duration: 150 },
+                    ]
+                  : [
+                      { type: "fadeIn", duration: 300 },
+                      { type: "slideDown", size: "small", duration: 300 },
+                    ]
+              }
+            >
+              <div className='IconBox' onClick={this.handleSider}>
+                <Apps
+                  color='#fff'
+                  size='medium'
+                  style={{ marginRight: "5px" }}
+                />
+                <p>
+                  <b>Menu</b>
+                </p>
+              </div>
+              <div className='ServiceNav'>
+                <MenuItem to='/idea'>블로그 아이디어</MenuItem>
+                <MenuItem to='/name'>블로그 개요</MenuItem>
+                <MenuItem to='/title'>블로그 제목</MenuItem>
+                <MenuItem to='/intro'>블로그 도입부</MenuItem>
+                <MenuItem to='/follow'>블로그 이어쓰기</MenuItem>
+                <MenuItem to='/save'>최근 저장 기록</MenuItem>
+              </div>
+            </Box>
+          ) : (
+            <div className='IconBox' onClick={this.handleSider}>
+              <Apps color='#fff' size='medium' style={{ marginRight: "5px" }} />
+              <p>
+                <b>Menu</b>
+              </p>
+            </div>
+          )}
+
+          <Box
+            gridArea='main'
+            justify='center'
+            // justify={this.props.sizes !== 'small'? 'center' : 'start'}
+            align='center'
+            className='mainStyle'>
             <div class="keywordDiv">
               <div class="">
                 <input
@@ -289,17 +363,6 @@ class Name extends Component {
                 );
               })}
             </div>
-            <div class="ideaLink">
-              <Link to="/idea">블로그 아이디어</Link> <br /> <br />
-              <Link to="/name">블로그 개요</Link> <br /> <br />
-              <Link to="/title">블로그 제목</Link> <br /> <br />
-              <Link to="/intro">블로그 도입부</Link> <br /> <br />
-              <Link to="/follow">블로그 이어쓰기</Link> <br /> <br />
-              <br /> <br />
-              <Link to="/save">최근 저장 기록</Link> <br /> <br />
-            </div>
-          </div>
-          <div class="ideaRight">
             <div class="ideaInput">
               <p>블로그 개요</p>
               <input
@@ -356,16 +419,30 @@ class Name extends Component {
                 </table>
               </div>
             ) : null}
-          </div>
-        </div>
-        {this.state.loading ? (
+          </Box>
+        </Grid>
+        {this.state.loading && (
           <div class="loading">
             <Spinner size="8px" color="#3b2479" />
           </div>
-        ) : null}
-      </Fragment>
+        )}
+      </Box>
     );
   }
 }
 
 export default Name;
+
+const MenuItem = styled(Link)`
+  display: block;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 200ms ease-in-out;
+
+  &:hover,
+  &:focus {
+    background-color: #f9f9f9;
+    font-weight: 600;
+  }
+`;
