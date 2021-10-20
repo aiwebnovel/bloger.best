@@ -16,8 +16,10 @@ import "react-toastify/dist/ReactToastify.css";
 import "../style/Idea.css";
 import "react-table-v6/react-table.css";
 
+import styled from 'styled-components'
+
 import { Grid, Box, Button } from "grommet";
-import { Search } from "grommet-icons";
+import { Search, Menu } from "grommet-icons";
 
 const LanguageDetect = require("languagedetect");
 
@@ -33,12 +35,20 @@ class Idea extends Component {
       input: "",
       keyword: "",
       keywordOutput: [],
+      isSider: true,
+      mobileSider: false,
     };
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
     this.savecontents = this.savecontents.bind(this);
     this.handleState = this.handleState.bind(this);
     this.requestkeywords = this.requestkeywords.bind(this);
+    this.handleSider = this.handleSider.bind(this);
+  }
+
+  handleSider() {
+    this.setState({ isSider: !this.state.isSider });
+    console.log('test', this.state.isSider);
   }
 
   async handle(e) {
@@ -288,68 +298,81 @@ class Idea extends Component {
                 ]
           }
         >
-          <Box
-            gridArea='sideMenu'
-            // justify='center'
-            align='center'
-            background='#fff'
-            width='small'
-            className='SiderStyle'
+          <div
+            className='IconBox'
+            onClick={this.handleSider}
           >
-            <div className='ServiceNav'>
-              <div className="MenuItem">
-                <Link to='/idea'>블로그 아이디어</Link>
+            <Menu
+              color='#fff'
+              size='medium'
+              style={{ cursor: "pointer", marginRight:'5px' }}
+            />
+            <p>
+              <b>Menu</b>
+            </p>
+          </div>
+          {this.state.isSider && (
+            <Box
+              gridArea='sideMenu'
+              // justify='center'
+              align='center'
+              background='#fff'
+              width='small'
+              className='SiderStyle'
+            >
+              <div className='ServiceNav'>
+                  <MenuItem to='/idea'>블로그 아이디어</MenuItem>
+                  <MenuItem to='/name'>블로그 개요</MenuItem>
+                  <MenuItem to='/title'>블로그 제목</MenuItem>
+                  <MenuItem to='/intro'>블로그 도입부</MenuItem>
+                  <MenuItem to='/follow'>블로그 이어쓰기</MenuItem>
+                  <MenuItem to='/save'>최근 저장 기록</MenuItem>
               </div>
-              <div className="MenuItem">
-                <Link to='/name'>블로그 개요</Link>
-              </div>
-              <div className="MenuItem">
-                <Link to='/title'>블로그 제목</Link>
-              </div>
-              <div className="MenuItem">
-                <Link to='/intro'>블로그 도입부</Link>
-              </div>
-              <div className="MenuItem">
-                <Link to='/follow'>블로그 이어쓰기</Link>
-              </div>
-              <div className="MenuItem">
-                <Link to='/save'>최근 저장 기록</Link>
-              </div>
-            </div>
-          </Box>
-          <Box 
-          gridArea='main'
-          //justify='center'
-          align='center'
-          className="mainStyle"
+            </Box>
+          )}
+
+          <Box
+            gridArea='main'
+            //justify='center'
+            align='center'
+            className='mainStyle'
           >
             <div className='keywordDiv'>
-                <input 
-                type="text"
-                name="keyword"
-                placeholder="블로그에 필요한 키워드를 입력해주세요!" 
-                value={this.state.keyword} 
-                onChange={this.handleState} className="keywordInput"/>
-                <button className="buttonStyle" onClick={this.requestkeywords}><Search/></button>
-              </div>
-              {this.state.keywordOutput.map((data, i) => {
-                return (
-                  <button className="keywordResult" key={i} onClick={this.handle} value={data}>
-                    {data}
-                  </button>
-                );
-              })}
+              <input
+                type='text'
+                name='keyword'
+                placeholder='블로그에 필요한 키워드를 입력해주세요!'
+                value={this.state.keyword}
+                onChange={this.handleState}
+                className='keywordInput'
+              />
+              <button className='buttonStyle' onClick={this.requestkeywords}>
+                <Search />
+              </button>
+            </div>
+            {this.state.keywordOutput.map((data, i) => {
+              return (
+                <button
+                  className='keywordResult'
+                  key={i}
+                  onClick={this.handle}
+                  value={data}
+                >
+                  {data}
+                </button>
+              );
+            })}
 
-            <div className="BlogIdeaBox">
-                <input
-                  type="text"
-                  name="idea"
-                  placeholder="결과로 나온 블로그 키워드를 하나 선택해주세요!"
-                  className='IdeaInput'
-                  value={this.state.input}
-                  onChange={this.handle}
-                />
-                <Button primary label="글쓰기" onClick={this.requestcontents}/>
+            <div className='BlogIdeaBox'>
+              <input
+                type='text'
+                name='idea'
+                placeholder='결과로 나온 블로그 키워드를 하나 선택해주세요!'
+                className='IdeaInput'
+                value={this.state.input}
+                onChange={this.handle}
+              />
+              <Button primary label='글쓰기' onClick={this.requestcontents} />
             </div>
             {this.state.isStart && (
               <div className='ideaOutput'>
@@ -392,3 +415,17 @@ class Idea extends Component {
 }
 
 export default Idea;
+
+const MenuItem = styled(Link)`
+  display: block;
+  padding : 10px;
+  cursor: pointer;
+  font-size : 15px;
+  transition: all 200ms ease-in-out;
+
+  &:hover, &:focus {
+    background-color : #f9f9f9;
+     font-weight: 600;
+   }
+
+`

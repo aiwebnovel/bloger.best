@@ -1,5 +1,6 @@
 .ideaMain {
   height: 80vh;
+  background-color: #f9f9f9;
 } 
 
 .SiderStyle {
@@ -9,28 +10,20 @@
 .ServiceNav {
   width: 100%;
   text-align: center;
+  padding-top : 30px;
 }
-
-.MenuItem {
-  padding : 10px;
+ 
+.IconBox {
+  background-color: #3b2479;
+  color: #fff;
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
 }
-
-.MenuItem:hover {
-  border-right : 3px solid #3b2479;
-  font-weight: 600;
-}
-
-.MenuItem > a {
-  font-size : 15px;
-}
-
-.MenuItem > a:hover {
-  color : #3b2479;
-}
-
-/* .mainStyle {
-
-} */
 
 .keywordDiv {
   display: flex;
@@ -41,6 +34,7 @@
 }
 
 .keywordInput {
+  
   border: 3px solid #3b2479;
   outline: 0;
   width: 50%;
