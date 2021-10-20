@@ -47,6 +47,7 @@ class Header extends Component {
 
   isChecked = () => {
     this.setState({ isChecked: !this.state.isChecked });
+    console.log(this.isChecked);
   };
 
   isOpen = () => {
@@ -88,7 +89,7 @@ class Header extends Component {
 
   async requestProfile() {
     let user = await localStorage.getItem("token");
-
+    console.log('test',user);
     if (user !== null) {
       axios
         .get(`${config.SERVER_URL}/profile`, {

@@ -16,10 +16,10 @@ import "react-toastify/dist/ReactToastify.css";
 import "../style/Idea.css";
 import "react-table-v6/react-table.css";
 
-import styled from 'styled-components'
+import styled from "styled-components";
 
 import { Grid, Box, Button } from "grommet";
-import { Search, Menu } from "grommet-icons";
+import { Search, Apps} from "grommet-icons";
 
 const LanguageDetect = require("languagedetect");
 
@@ -35,8 +35,7 @@ class Idea extends Component {
       input: "",
       keyword: "",
       keywordOutput: [],
-      isSider: true,
-      mobileSider: false,
+      isSider: false,
     };
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
@@ -48,7 +47,7 @@ class Idea extends Component {
 
   handleSider() {
     this.setState({ isSider: !this.state.isSider });
-    console.log('test', this.state.isSider);
+    console.log("test", this.state.isSider);
   }
 
   async handle(e) {
@@ -298,42 +297,58 @@ class Idea extends Component {
                 ]
           }
         >
-          <div
-            className='IconBox'
-            onClick={this.handleSider}
-          >
-            <Menu
-              color='#fff'
-              size='medium'
-              style={{ cursor: "pointer", marginRight:'5px' }}
-            />
-            <p>
-              <b>Menu</b>
-            </p>
-          </div>
-          {this.state.isSider && (
-            <Box
-              gridArea='sideMenu'
-              // justify='center'
-              align='center'
-              background='#fff'
-              width='small'
-              className='SiderStyle'
-            >
-              <div className='ServiceNav'>
+          {this.state.isSider ? (
+              <Box
+                gridArea='sideMenu'
+                // justify='center'
+                align='center'
+                background='#fff'
+                className='SiderStyle'
+                animation={
+                  this.props.sizes !== "small"
+                    ? [
+                        { type: "fadeIn", duration: 300 },
+                        { type: "slideRight", size: "xlarge", duration: 150 },
+                      ]
+                    : [
+                        { type: "fadeIn", duration: 300 },
+                        { type: "slideDown", size: "small", duration: 300 },
+                      ]
+                }
+              >
+              <div className='IconBox' onClick={this.handleSider}>
+                <Apps
+                  color='#fff'
+                  size='medium'
+                  style={{ marginRight: "5px" }}
+                />
+                <p>
+                  <b>Menu</b>
+                </p>
+              </div>
+                <div className='ServiceNav'>
                   <MenuItem to='/idea'>블로그 아이디어</MenuItem>
                   <MenuItem to='/name'>블로그 개요</MenuItem>
                   <MenuItem to='/title'>블로그 제목</MenuItem>
                   <MenuItem to='/intro'>블로그 도입부</MenuItem>
                   <MenuItem to='/follow'>블로그 이어쓰기</MenuItem>
                   <MenuItem to='/save'>최근 저장 기록</MenuItem>
-              </div>
-            </Box>
+                </div>
+              </Box>
+            
+          ) : (
+            <div className='IconBox' onClick={this.handleSider}>
+              <Apps color='#fff' size='medium' style={{ marginRight: "5px" }} />
+              <p>
+                <b>Menu</b>
+              </p>
+            </div>
           )}
 
           <Box
             gridArea='main'
-            //justify='center'
+            justify="center"
+            // justify={this.props.sizes !== 'small'? 'center' : 'start'}
             align='center'
             className='mainStyle'
           >
@@ -418,14 +433,14 @@ export default Idea;
 
 const MenuItem = styled(Link)`
   display: block;
-  padding : 10px;
+  padding: 10px;
   cursor: pointer;
-  font-size : 15px;
+  font-size: 15px;
   transition: all 200ms ease-in-out;
 
-  &:hover, &:focus {
-    background-color : #f9f9f9;
-     font-weight: 600;
-   }
-
-`
+  &:hover,
+  &:focus {
+    background-color: #f9f9f9;
+    font-weight: 600;
+  }
+`;
