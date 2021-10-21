@@ -1,25 +1,20 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import { Link } from "react-router-dom";
-import ReactTable from "react-table-v6";
+
 import axios from "axios";
 import { Spinner } from "react-loading-io";
 import { authService, firebaseInstance } from "../public/firebaseConfig";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import * as config from "../config";
-import copyicon from "../public/copy.png";
 import { toast } from "react-toastify";
-import ProgressBar from "@ramonak/react-progress-bar";
-import Modal from "./Modal";
-import facebookicon from "../public/facebook.png";
-import googleicon from "../public/google.png";
-import "react-toastify/dist/ReactToastify.css";
+
 import "../style/Idea.css";
 import "react-table-v6/react-table.css";
 
 import styled from "styled-components";
 
-import { Grid, Box} from "grommet";
-import { Apps, Search, Configure } from "grommet-icons";
+import { Grid, Box } from "grommet";
+import { Apps, Search, Configure, Copy } from "grommet-icons";
 
 const LanguageDetect = require("languagedetect");
 
@@ -29,13 +24,14 @@ class Idea extends Component {
     this.state = {
       loginModalOpen: false,
       loading: false,
-      isStart: false,
+      isOutput: false,
       outputKr: ["a", "b", "c", "d", "e"],
       outputEn: ["a", "b", "c", "d", "e"],
       input: "",
       keyword: "",
       keywordOutput: [],
       isSider: false,
+      copied: false,
     };
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
@@ -44,6 +40,16 @@ class Idea extends Component {
     this.requestkeywords = this.requestkeywords.bind(this);
     this.handleSider = this.handleSider.bind(this);
   }
+
+
+  onCopied = () => {
+    if (this.state.outputKr[0] !== "") {
+      this.setState({ copied: true });
+      toast.success('Copied!');
+    } else {
+      toast.warn("복사할 내용이 없어요!😭");
+    }
+  };
 
   handleSider() {
     this.setState({ isSider: !this.state.isSider });
@@ -66,7 +72,7 @@ class Idea extends Component {
 
       if (time !== undefined && time !== null && time !== "") {
         const timeD = -(Date.parse(time) - date.getTime());
-        console.log(timeD);
+        //console.log(timeD);
         if (timeD < 6500) {
           toast.error(
             `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`,
@@ -164,14 +170,14 @@ class Idea extends Component {
           }
         });
     }
-    this.setState({ isStart: true });
+    this.setState({ isOutput: true });
   }
 
   async requestkeywords() {
-    if (localStorage.getItem("token") !== undefined) {
+    if (localStorage.getItem("token") !== null) {
       let keyword = this.state.keyword;
-      console.log(this.state.keyword);
-      console.log(keyword);
+      //console.log(this.state.keyword);
+      //console.log(keyword);
       if (keyword === " " || keyword === "") {
         toast.error(`키워드를 입력해 주세요!`, {
           position: "top-right",
@@ -225,9 +231,12 @@ class Idea extends Component {
   }
 
   async savecontents(e) {
-    if (localStorage.getItem("token") !== undefined) {
+    
+    if (localStorage.getItem("token") !== null) {
+      
       let story = this.state.outputKr[Number(e.target.name)];
-      this.setState({ loading: true });
+      // this.setState({ loading: true });
+      console.log('story', story);
       await axios
         .post(
           `${config.SERVER_URL}/blog/save`,
@@ -240,7 +249,8 @@ class Idea extends Component {
           }
         )
         .then(async (response) => {
-          this.setState({ loading: false });
+          // this.setState({ loading: false });
+            toast.success('저장되었습니다!');
         })
         .catch((error) => {
           //console.log(error);
@@ -256,8 +266,7 @@ class Idea extends Component {
               progress: undefined,
             });
             localStorage.removeItem("token");
-          } else {
-            if (error.response.status === 403) {
+          } else if (error.response.status === 403) {
               this.setState({ loading: false });
               toast.error(`더 이상 저장할 수 없습니다`, {
                 position: "top-right",
@@ -268,11 +277,12 @@ class Idea extends Component {
                 draggable: true,
                 progress: undefined,
               });
+            } else {
+              toast.error('저장에 실패했습니다!');
             }
-          }
         });
     }
-    this.setState({ isStart: true });
+    this.setState({ isOutput: true });
   }
 
   render() {
@@ -351,7 +361,7 @@ class Idea extends Component {
             className='mainStyle'
           >
             <div className='KeyContainer'>
-              <div className="keywordDiv">
+              <div className='keywordDiv'>
                 <input
                   type='text'
                   name='keyword'
@@ -364,19 +374,37 @@ class Idea extends Component {
                   <Search />
                 </button>
               </div>
-              {this.state.keywordOutput.map((data, i) => {
-                return (
-                  <button
-                    className='keywordResult'
-                    key={i}
-                    onClick={this.handle}
-                    value={data}
-                  >
-                    {data}
-                  </button>
-                );
-              })}
+              {this.state.keywordOutput && (
+              <div className='resultBox'>
+                <Grid
+                  columns={
+                    this.props.sizes !== "small"
+                      ? { count: 6, size: "auto" }
+                      : { count: 3, size: "auto" }
+                  }
+                  gap='small'
+                >
+                  {this.state.keywordOutput.map((data, i) => {
+                    return (
+                      <button
+                        className='keywordResult'
+                        key={`key${i}`}
+                        onClick={this.handle}
+                        value={data}
+                      >
+                        {data}
+                      </button>
+                    );
+                  })}
+                </Grid>
+              </div>
+               )}
             </div>
+            {this.state.loading ? (
+          <div className='loading'>
+            <Spinner size={200} color='#3b2479' />
+          </div>
+            ) :(
             <div className='IdeaContainer'>
               <div className='BlogIdeaBox'>
                 <input
@@ -388,45 +416,36 @@ class Idea extends Component {
                   onChange={this.handle}
                 />
                 <button className='buttonStyle' onClick={this.requestcontents}>
-                <Configure/>
+                  <Configure />
                 </button>
               </div>
-              {this.state.isStart && (
-                <div className='ideaOutput'>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>{this.state.outputKr[0]}</td>
-                        <td>{this.state.outputEn[0]}</td>
-                        <td className='hover'>
-                          <CopyToClipboard text={this.state.outputKr[0]}>
-                            <img
-                              alt='copy'
-                              src={copyicon}
-                              className='reseticon'
-                            />
-                          </CopyToClipboard>
-                          <button
-                            name='0'
-                            onClick={this.savecontents}
-                            className='save'
-                          >
-                            save
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              )}
+              <div className='IdeaResultBox'>
+                {this.state.isOutput && (
+                  <div className='ideaOutput'>
+                    <div className="outputKo">{this.state.outputKr[0]}</div>
+                    <div className="outputEn">{this.state.outputEn[0]}</div>
+                    <div className='Btns'>
+                      <CopyToClipboard 
+                      text={this.state.outputKr[0]}
+                      onCopy={this.onCopied}
+                      >
+                        <Copy style={{cursor:'pointer'}}/>
+                      </CopyToClipboard>
+                      <button
+                        name='0'
+                        onClick={this.savecontents}
+                        className='save'
+                      >
+                        save
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
+            )}
           </Box>
         </Grid>
-        {this.state.loading && (
-          <div className='loading'>
-            <Spinner size={200} color='#3b2479' />
-          </div>
-        )}
       </Box>
     );
   }

@@ -89,14 +89,13 @@ class Header extends Component {
 
   async requestProfile() {
     let user = await localStorage.getItem("token");
-    console.log('test',user);
     if (user !== null) {
       axios
         .get(`${config.SERVER_URL}/profile`, {
           headers: { authentication: user },
         })
         .then((response) => {
-          console.log(user);
+        
           this.setState({ user: true });
           this.setState({ userName: response.data.name });
           this.setState({ userToken: response.data.token });

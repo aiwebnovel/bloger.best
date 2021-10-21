@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../style/Name.css";
 import styled from "styled-components";
 
-import { Grid, Box} from "grommet";
+import { Grid, Box } from "grommet";
 import { Apps, Search, Configure } from "grommet-icons";
 
 const LanguageDetect = require("languagedetect");
@@ -273,7 +273,7 @@ class Name extends Component {
   render() {
     return (
       <Box className='ideaMain'>
-    <Grid
+        <Grid
           fill
           rows={
             this.props.sizes !== "small" ? ["auto", "flex"] : ["auto", "auto"]
@@ -291,7 +291,7 @@ class Name extends Component {
                 ]
           }
         >
-           {this.state.isSider ? (
+          {this.state.isSider ? (
             <Box
               gridArea='sideMenu'
               // justify='center'
@@ -343,15 +343,18 @@ class Name extends Component {
             justify='center'
             // justify={this.props.sizes !== 'small'? 'center' : 'start'}
             align='center'
-            className='mainStyle'>
-            <div class="keywordDiv">
-              <div class="">
+            className='mainStyle'
+          >
+            <div className='KeyContainer'>
+              <div className='keywordDiv'>
                 <input
-                  class=""
+                  name='keyword'
+                  placeholder='블로그에 필요한 키워드를 입력해주세요!'
                   value={this.state.keyword}
                   onChange={this.handleState}
+                  className='keywordInput'
                 />
-                <button class="start" onClick={this.requestkeywords}>
+                <button className='start' onClick={this.requestkeywords}>
                   키워드 검색
                 </button>
               </div>
@@ -363,20 +366,20 @@ class Name extends Component {
                 );
               })}
             </div>
-            <div class="ideaInput">
-              <p>블로그 개요</p>
+
+            <div className='ideaInput'>
               <input
-                class="ideaInput1"
+                className='ideaInput1'
                 value={this.state.input}
                 onChange={this.handle}
               />
               <br />
-              <button class="start" onClick={this.requestcontents}>
+              <button className='start' onClick={this.requestcontents}>
                 create
               </button>
             </div>
             {this.state.isStart ? (
-              <div class="ideaOutput">
+              <div className='ideaOutput'>
                 <table>
                   <tbody>
                     <tr>
@@ -402,14 +405,14 @@ class Name extends Component {
                           );
                         })}
                       </td>
-                      <td class="hover">
+                      <td className='hover'>
                         <CopyToClipboard text={this.state.outputKr[0]}>
-                          <img src={copyicon} class="reseticon" />
+                          <img src={copyicon} alt="copy" className='reseticon' />
                         </CopyToClipboard>
                         <button
-                          name="0"
+                          name='0'
                           onClick={this.savecontents}
-                          className="save"
+                          className='save'
                         >
                           save
                         </button>
@@ -422,8 +425,8 @@ class Name extends Component {
           </Box>
         </Grid>
         {this.state.loading && (
-          <div class="loading">
-            <Spinner size="8px" color="#3b2479" />
+          <div className='loading'>
+            <Spinner size='8px' color='#3b2479' />
           </div>
         )}
       </Box>
