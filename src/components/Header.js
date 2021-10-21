@@ -81,10 +81,10 @@ class Header extends Component {
   closeMenu(event) {
     event.preventDefault();
 
-    if (!this.dropdownMenu.contains(event.target)) {
+    // if (!this.dropdownMenu.contains(event.target)) {
       this.setState({ showMenu: false });
       document.removeEventListener("click", this.closeMenu);
-    }
+    // } 
   }
 
   async requestProfile() {
@@ -271,11 +271,11 @@ class Header extends Component {
           </div>
         </Modal>
 
-        {this.state.showMenu ? (
+        {this.state.showMenu && (
           <div
-            ref={(element) => {
-              this.dropdownMenu = element;
-            }}
+            // ref={(element) => {
+            //   this.dropdownMenu = element;
+            // }}
           >
             <div className='afterLogin'>
               <div className='Username'>
@@ -297,7 +297,7 @@ class Header extends Component {
               </div>
             </div>
           </div>
-        ) : null}
+        )}
 
         <ResponsiveContext.Consumer>
           {(size) =>

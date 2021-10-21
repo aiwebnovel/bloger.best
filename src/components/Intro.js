@@ -15,7 +15,7 @@ import Modal from "./Modal";
 import facebookicon from "../public/facebook.png";
 import googleicon from "../public/google.png";
 import "react-toastify/dist/ReactToastify.css";
-import "../style/Idea.css";
+import "../style/Main.css";
 import "react-table-v6/react-table.css";
 const LanguageDetect = require("languagedetect");
 

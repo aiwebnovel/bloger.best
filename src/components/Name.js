@@ -10,11 +10,11 @@ import copyicon from "../public/copy.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import "../style/Name.css";
+import "../style/Main.css";
 import styled from "styled-components";
 
 import { Grid, Box } from "grommet";
-import { Apps, Search, Configure } from "grommet-icons";
+import { Apps, Search, Configure, Copy } from "grommet-icons";
 
 const LanguageDetect = require("languagedetect");
 
@@ -24,13 +24,15 @@ class Name extends Component {
     this.state = {
       loginModalOpen: false,
       loading: false,
-      isStart: false,
-      outputKr: ["a", "b", "c", "d", "e"],
+      isOutput: false,
+      // outputKr: ["a", "b", "c", "d", "e"],
+      outputKr: {},
       outputEn: ["a", "b", "c", "d", "e"],
-      input: " ",
+      input: "",
       keyword: "",
       keywordOutput: [],
       isSider: false,
+      copied: false,
     };
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
@@ -39,6 +41,15 @@ class Name extends Component {
     this.requestkeywords = this.requestkeywords.bind(this);
     this.handleSider = this.handleSider.bind(this);
   }
+
+  onCopied = () => {
+    if (this.state.outputKr[0] !== "") {
+      this.setState({ copied: true });
+      toast.success('Copied!');
+    } else {
+      toast.warn("복사할 내용이 없어요!😭");
+    }
+  };
 
   handleSider() {
     this.setState({ isSider: !this.state.isSider });
@@ -53,7 +64,8 @@ class Name extends Component {
   }
 
   async savecontents(e) {
-    if (localStorage.getItem("token") !== undefined) {
+    if (localStorage.getItem("token") !== null) {
+      console.log('test', this.state.outputKr);
       let story = this.state.outputKr[Number(e.target.name)];
 
       this.setState({ loading: true });
@@ -101,11 +113,11 @@ class Name extends Component {
           }
         });
     }
-    this.setState({ isStart: true });
+    this.setState({ isOutput: true });
   }
 
   async requestcontents() {
-    if (localStorage.getItem("token") !== undefined) {
+    if (localStorage.getItem("token") !== null) {
       let story = this.state.input;
       const date = new Date();
       let time = localStorage.getItem("time");
@@ -172,8 +184,10 @@ class Name extends Component {
             );
           }
           for (let i = 0; i < response.data.length; i++) {
+          
             await resK.push(response.data[i][0]);
             await resE.push(response.data[i][1]);
+        
           }
           this.setState({ outputKr: resK });
           this.setState({ outputEn: resE });
@@ -210,11 +224,11 @@ class Name extends Component {
           }
         });
     }
-    this.setState({ isStart: true });
+    this.setState({ isOutput: true });
   }
 
   async requestkeywords() {
-    if (localStorage.getItem("token") !== undefined) {
+    if (localStorage.getItem("token") !== null) {
       let keyword = this.state.keyword;
       console.log(this.state.keyword);
       console.log(keyword);
@@ -348,66 +362,94 @@ class Name extends Component {
             <div className='KeyContainer'>
               <div className='keywordDiv'>
                 <input
+                  type='text'
                   name='keyword'
                   placeholder='블로그에 필요한 키워드를 입력해주세요!'
                   value={this.state.keyword}
                   onChange={this.handleState}
                   className='keywordInput'
                 />
-                <button className='start' onClick={this.requestkeywords}>
-                  키워드 검색
+                <button className='buttonStyle' onClick={this.requestkeywords}>
+                  <Search />
                 </button>
               </div>
-              {this.state.keywordOutput.map((data, i) => {
-                return (
-                  <button key={i} onClick={this.handle} value={data}>
-                    {data}
-                  </button>
-                );
-              })}
+              {this.state.keywordOutput && (
+                <div className='resultBox'>
+                  <Grid
+                    columns={
+                      this.props.sizes !== "small"
+                        ? { count: 6, size: "auto" }
+                        : { count: 3, size: "auto" }
+                    }
+                    gap='small'
+                  >
+                    {this.state.keywordOutput.map((data, i) => {
+                      return (
+                        <button  
+                        className='keywordResult'
+                        key={`key${i}`} 
+                        onClick={this.handle} value={data}
+                        >
+                          {data}
+                        </button>
+                      );
+                    })}
+                  </Grid>
+                </div>
+              )}
             </div>
 
-            <div className='ideaInput'>
-              <input
-                className='ideaInput1'
-                value={this.state.input}
-                onChange={this.handle}
-              />
-              <br />
-              <button className='start' onClick={this.requestcontents}>
-                create
-              </button>
-            </div>
-            {this.state.isStart ? (
-              <div className='ideaOutput'>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        1.
-                        {this.state.outputKr[0].split("\n").map((line) => {
+            {this.state.loading ? (
+              <div className='loading'>
+                <Spinner size={200} color='#3b2479' />
+              </div>
+            ) : (
+              <div className='IdeaContainer'>
+                <div className='BlogIdeaBox'>
+                  <input
+                    type='text'
+                    name='idea'
+                    placeholder='결과로 나온 블로그 키워드를 하나 선택해주세요!'
+                    className='IdeaInput'
+                    value={this.state.input}
+                    onChange={this.handle}
+                  />
+                  <button
+                    className='buttonStyle'
+                    onClick={this.requestcontents}
+                  >
+                    <Configure />
+                  </button>
+                </div>
+
+                <div className='IdeaResultBox'>
+                  {this.state.isOutput && (
+                    <div className='ideaOutput'>
+                      <div className="outputKo">    
+                      📌 {this.state.outputKr[0].split("\n").map((line) => {
                           return (
-                            <span>
+                            <p>
                               {line}
-                              <br />
-                            </span>
+                            </p>
                           );
                         })}
-                      </td>
-                      <td>
-                        1.
-                        {this.state.outputEn[0].split("\n").map((line) => {
+                      </div>
+
+                      <div className="outputEn">
+                      📌 {this.state.outputEn[0].split("\n").map((line) => {
                           return (
-                            <span>
+                            <p>
                               {line}
-                              <br />
-                            </span>
+                            </p>
                           );
                         })}
-                      </td>
-                      <td className='hover'>
-                        <CopyToClipboard text={this.state.outputKr[0]}>
-                          <img src={copyicon} alt="copy" className='reseticon' />
+                      </div>
+                      <div className='Btns'>
+                        <CopyToClipboard 
+                        text={this.state.outputKr[0]}
+                        onCopy={this.onCopied}
+                        >
+                          <Copy style={{cursor:'pointer'}}/>
                         </CopyToClipboard>
                         <button
                           name='0'
@@ -416,19 +458,14 @@ class Name extends Component {
                         >
                           save
                         </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            ) : null}
+            )}
           </Box>
         </Grid>
-        {this.state.loading && (
-          <div className='loading'>
-            <Spinner size='8px' color='#3b2479' />
-          </div>
-        )}
       </Box>
     );
   }

@@ -8,7 +8,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import * as config from "../config";
 import { toast } from "react-toastify";
 
-import "../style/Idea.css";
+import "../style/Main.css";
 import "react-table-v6/react-table.css";
 
 import styled from "styled-components";
