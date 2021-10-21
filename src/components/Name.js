@@ -340,6 +340,7 @@ class Name extends Component {
                 <MenuItem to='/name'>블로그 개요</MenuItem>
                 <MenuItem to='/title'>블로그 제목</MenuItem>
                 <MenuItem to='/intro'>블로그 도입부</MenuItem>
+                <MenuItem to='/domain'>블로그 도메인</MenuItem>
                 <MenuItem to='/follow'>블로그 이어쓰기</MenuItem>
                 <MenuItem to='/save'>최근 저장 기록</MenuItem>
               </div>
