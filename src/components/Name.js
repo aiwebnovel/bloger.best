@@ -10,12 +10,12 @@ import copyicon from "../public/copy.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import "../style/Main.css";
+import "../style/MainLong.css";
 import styled from "styled-components";
 
 import { Grid, Box } from "grommet";
 import { Apps, Search, Configure, Copy } from "grommet-icons";
-
+ 
 const LanguageDetect = require("languagedetect");
 
 class Name extends Component {
@@ -27,7 +27,7 @@ class Name extends Component {
       isOutput: false,
       // outputKr: ["a", "b", "c", "d", "e"],
       outputKr: {},
-      outputEn: ["a", "b", "c", "d", "e"],
+      outputEn: {},
       input: "",
       keyword: "",
       keywordOutput: [],
@@ -68,7 +68,7 @@ class Name extends Component {
       console.log('test', this.state.outputKr);
       let story = this.state.outputKr[Number(e.target.name)];
 
-      this.setState({ loading: true });
+      // this.setState({ loading: true });
       await axios
         .post(
           `${config.SERVER_URL}/blog/save`,
@@ -81,7 +81,8 @@ class Name extends Component {
           }
         )
         .then(async (response) => {
-          this.setState({ loading: false });
+           // this.setState({ loading: false });
+           toast.success('저장되었습니다!');
         })
         .catch((error) => {
           //console.log(error);
@@ -97,8 +98,7 @@ class Name extends Component {
               progress: undefined,
             });
             localStorage.removeItem("token");
-          } else {
-            if (error.response.status === 403) {
+          } else if (error.response.status === 403) {
               this.setState({ loading: false });
               toast.error(`더 이상 저장할 수 없습니다`, {
                 position: "top-right",
@@ -109,8 +109,10 @@ class Name extends Component {
                 draggable: true,
                 progress: undefined,
               });
+            }else {
+              toast.error('저장에 실패했습니다!');
             }
-          }
+          
         });
     }
     this.setState({ isOutput: true });
@@ -230,8 +232,7 @@ class Name extends Component {
   async requestkeywords() {
     if (localStorage.getItem("token") !== null) {
       let keyword = this.state.keyword;
-      console.log(this.state.keyword);
-      console.log(keyword);
+  
       if (keyword === " " || keyword === "") {
         toast.error(`키워드를 입력해 주세요!`, {
           position: "top-right",
@@ -364,7 +365,7 @@ class Name extends Component {
                 <input
                   type='text'
                   name='keyword'
-                  placeholder='블로그에 필요한 키워드를 입력해주세요!'
+                  placeholder='블로그 개요에 필요한 키워드를 입력해주세요!'
                   value={this.state.keyword}
                   onChange={this.handleState}
                   className='keywordInput'
@@ -409,7 +410,7 @@ class Name extends Component {
                   <input
                     type='text'
                     name='idea'
-                    placeholder='결과로 나온 블로그 키워드를 하나 선택해주세요!'
+                    placeholder='결과로 나온 키워드를 하나 선택해주세요!'
                     className='IdeaInput'
                     value={this.state.input}
                     onChange={this.handle}

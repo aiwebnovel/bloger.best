@@ -64,7 +64,7 @@ class Idea extends Component {
   }
 
   async requestcontents() {
-    if (localStorage.getItem("token") !== undefined) {
+    if (localStorage.getItem("token") !== null) {
       let story = this.state.input;
 
       const date = new Date();
@@ -365,7 +365,7 @@ class Idea extends Component {
                 <input
                   type='text'
                   name='keyword'
-                  placeholder='블로그에 필요한 키워드를 입력해주세요!'
+                  placeholder='블로그 아이디어에 필요한 키워드를 입력해주세요!'
                   value={this.state.keyword}
                   onChange={this.handleState}
                   className='keywordInput'
@@ -410,7 +410,7 @@ class Idea extends Component {
                 <input
                   type='text'
                   name='idea'
-                  placeholder='결과로 나온 블로그 키워드를 하나 선택해주세요!'
+                  placeholder='결과로 나온 키워드를 하나 선택해주세요!'
                   className='IdeaInput'
                   value={this.state.input}
                   onChange={this.handle}
