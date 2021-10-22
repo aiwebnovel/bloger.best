@@ -50,6 +50,7 @@
 
 .TitleTag > h4 {
   font-size : 0.9em;
+  text-align: center;
 }
 
 .outputContainer{
@@ -80,10 +81,17 @@
 
 .progressNbtn {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
 
+.HeaderBtns {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
 
 .CreateButtonStyle {
   border: 1px solid #55d4bc;
@@ -95,8 +103,14 @@
   padding: 5px 10px;
   border-radius: 10px;
   width: 70px;
+  transition: all 200ms ease-in-out;
 }
 
+.CreateButtonStyle:hover {
+  border: 1px solid #C4FCEF;
+  background-color: #C4FCEF;
+  color: #55d4bc;
+}
 
 @media screen and (max-width: 768px) {
 
@@ -116,17 +130,12 @@
   .outputHeader {
     display: flex;
     justify-content: center;
-    text-align: center;
   }
 
   .TitleTag {
     border-left:0;
     border-top : 5px solid #55d4bc;
     width: 70%;
-  }
-
-  .progressNbtn {
-    flex-direction: column;
   }
 
   .outputContainer, .loading {

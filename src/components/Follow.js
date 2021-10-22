@@ -40,7 +40,7 @@ class Follow extends Component {
   }
 
   onCopied = () => {
-    if (this.state.outputKr[0] !== "") {
+    if (this.state.outputKr !== "") {
       this.setState({ copied: true });
       toast.success("Copied!");
     } else {
@@ -93,7 +93,7 @@ class Follow extends Component {
   }
 
   async requestcontents() {
-    if (localStorage.getItem("token") !== undefined) {
+    if (localStorage.getItem("token") !== null) {
       let story = String(this.state.outputKr).trim();
 
       this.setState({ outputKr: story });
@@ -290,8 +290,8 @@ class Follow extends Component {
             className='mainStyle'
           >
             <div className='outputHeader'>
-              <div className="TitleTag">
-              <h4>블로그 이어쓰기</h4>
+              <div className='TitleTag'>
+                <h4>블로그 이어쓰기</h4>
                 <div className='progressNbtn'>
                   <ProgressBar
                     completed={this.state.tempLength}
@@ -301,35 +301,44 @@ class Follow extends Component {
                     margin='20px 0'
                     isLabelVisible={false}
                   />
+                <div className="HeaderBtns">
                   <button
                     className='CreateButtonStyle'
                     onClick={this.requestcontents}
                   >
                     Create
                   </button>
+                                    
+                  <CopyToClipboard
+                    text={this.state.outputKr}
+                    onCopy={this.onCopied}
+                  >
+                    <button className='CreateButtonStyle'>Copy</button>
+                  </CopyToClipboard>
+                </div>
                 </div>
               </div>
             </div>
             <div className='outputContainer'>
-            {this.state.loading ? (
-              <div className='loading'>
-                <Spinner size={200} color='#3b2479' />
-              </div>
-            ) : (
-              <>
-                <textarea
-                  className='output'
-                  value={this.state.outputKr}
-                  onChange={this.handle}
-                  placeholder='블로그에 올릴 글을 써보세요!'
-                />
-                <textarea
-                  className='output_right'
-                  value={this.state.outputEn}
-                  readOnly
-                />
-              </>
-            )}
+              {this.state.loading ? (
+                <div className='loading'>
+                  <Spinner size={200} color='#3b2479' />
+                </div>
+              ) : (
+                <>
+                  <textarea
+                    className='output'
+                    value={this.state.outputKr}
+                    onChange={this.handle}
+                    placeholder='블로그에 올릴 글을 써보세요!'
+                  />
+                  <textarea
+                    className='output_right'
+                    value={this.state.outputEn}
+                    readOnly
+                  />
+                </>
+              )}
             </div>
           </Box>
         </Grid>

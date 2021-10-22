@@ -23,7 +23,7 @@ class Intro extends Component {
     this.state = {
       loginModalOpen: false,
       loading: false,
-      isStart: false,
+      isOutput: false,
       outputKr: {},
       outputEn: {},
       input: "",
@@ -110,7 +110,7 @@ class Intro extends Component {
           }
         });
     }
-    this.setState({ isStart: true });
+    this.setState({ isOutput: true });
   }
 
   async requestcontents() {
@@ -219,7 +219,7 @@ class Intro extends Component {
           }
         });
     }
-    this.setState({ isStart: true });
+    this.setState({ isOutput: true });
   }
 
   async requestkeywords() {
@@ -415,7 +415,7 @@ class Intro extends Component {
                 </button>
               </div>
               <div className='IdeaResultBox'>
-                {this.state.isStart && (
+                {this.state.isOutput && (
                   <div className='ideaOutput'>
                     <div className="outputKo">{this.state.outputKr[0]}</div>
                     <div className="outputEn">{this.state.outputEn[0]}</div>
