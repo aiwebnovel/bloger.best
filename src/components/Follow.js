@@ -1,21 +1,22 @@
 import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import ReactTable from "react-table-v6";
+
 import axios from "axios";
 import { Spinner } from "react-loading-io";
 import { authService, firebaseInstance } from "../public/firebaseConfig";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import * as config from "../config";
-import reseticon from "../public/reset.png";
-import trashicon from "../public/trash.jpg";
-import copyicon from "../public/copy.png";
-import { ToastContainer, toast } from "react-toastify";
+
+import { toast } from "react-toastify";
 import ProgressBar from "@ramonak/react-progress-bar";
-import Modal from "./Modal";
-import facebookicon from "../public/facebook.png";
-import googleicon from "../public/google.png";
+
 import "react-toastify/dist/ReactToastify.css";
-import "react-table-v6/react-table.css";
+import "../style/Follow.css";
+import styled from "styled-components";
+
+import { Grid, Box } from "grommet";
+import { Apps, Configure, Copy } from "grommet-icons";
+
 const LanguageDetect = require("languagedetect");
 
 class Follow extends Component {
@@ -29,10 +30,26 @@ class Follow extends Component {
       outputEn: "",
       isHuman: true,
       tempLength: 0,
+      isSider: false,
+      copied: false,
     };
     this.signIn = this.signIn.bind(this);
     this.handle = this.handle.bind(this);
     this.requestcontents = this.requestcontents.bind(this);
+    this.handleSider = this.handleSider.bind(this);
+  }
+
+  onCopied = () => {
+    if (this.state.outputKr[0] !== "") {
+      this.setState({ copied: true });
+      toast.success("Copied!");
+    } else {
+      toast.warn("복사할 내용이 없어요!😭");
+    }
+  };
+
+  handleSider() {
+    this.setState({ isSider: !this.state.isSider });
   }
 
   async handle(e) {
@@ -84,8 +101,6 @@ class Follow extends Component {
         tempLength:
           ((this.state.outputKr.length - this.state.outputLength) * 100) / 100,
       });
-      console.log(story.length);
-      console.log(story);
       if (this.state.tempLength < 100) {
         toast.error(`추가 내용을 더 입력해 주세요!`, {
           position: "top-right",
@@ -200,58 +215,141 @@ class Follow extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div class="ideaMain">
-          <div class="ideaLeft">
-            <div class="ideaLink">
-              <Link to="/idea">블로그 아이디어</Link> <br /> <br />
-              <Link to="/name">블로그 개요</Link> <br /> <br />
-              <Link to="/title">블로그 제목</Link> <br /> <br />
-              <Link to="/intro">블로그 도입부</Link> <br /> <br />
-              <Link to="/follow">블로그 이어쓰기</Link> <br /> <br />
-              <br /> <br />
-              <Link to="/save">최근 저장 기록</Link> <br /> <br />
+      <Box className='ideaMain'>
+        <Grid
+          fill
+          rows={
+            this.props.sizes !== "small" ? ["auto", "flex"] : ["auto", "auto"]
+          }
+          columns={this.props.sizes !== "small" ? ["auto", "flex"] : ["auto"]}
+          areas={
+            this.props.sizes !== "small"
+              ? [
+                  { name: "sideMenu", start: [0, 0], end: [0, 0] },
+                  { name: "main", start: [1, 0], end: [1, 0] },
+                ]
+              : [
+                  { name: "sideMenu", start: [0, 0], end: [0, 0] },
+                  { name: "main", start: [0, 1], end: [0, 1] },
+                ]
+          }
+        >
+          {this.state.isSider ? (
+            <Box
+              gridArea='sideMenu'
+              // justify='center'
+              align='center'
+              background='#fff'
+              className='SiderStyle'
+              animation={
+                this.props.sizes !== "small"
+                  ? [
+                      { type: "fadeIn", duration: 300 },
+                      { type: "slideRight", size: "xlarge", duration: 150 },
+                    ]
+                  : [
+                      { type: "fadeIn", duration: 300 },
+                      { type: "slideDown", size: "small", duration: 300 },
+                    ]
+              }
+            >
+              <div className='IconBox' onClick={this.handleSider}>
+                <Apps
+                  color='#fff'
+                  size='medium'
+                  style={{ marginRight: "5px" }}
+                />
+                <p>
+                  <b>Menu</b>
+                </p>
+              </div>
+              <div className='ServiceNav'>
+                <MenuItem to='/idea'>블로그 아이디어</MenuItem>
+                <MenuItem to='/name'>블로그 개요</MenuItem>
+                <MenuItem to='/title'>블로그 제목</MenuItem>
+                <MenuItem to='/intro'>블로그 도입부</MenuItem>
+                <MenuItem to='/domain'>블로그 도메인</MenuItem>
+                <MenuItem to='/follow'>블로그 이어쓰기</MenuItem>
+                <MenuItem to='/save'>최근 저장 기록</MenuItem>
+              </div>
+            </Box>
+          ) : (
+            <div className='IconBox' onClick={this.handleSider}>
+              <Apps color='#fff' size='medium' style={{ marginRight: "5px" }} />
+              <p>
+                <b>Menu</b>
+              </p>
             </div>
-          </div>
-          <div class="ideaRight">
-            <div class="ideaInput">
-              <p>블로그 이어쓰기</p>
-              <div class="ideaText">
+          )}
+
+          <Box
+            gridArea='main'
+            background='#f9f9f9'
+            justify='center'
+            //align='center'
+            className='mainStyle'
+          >
+            <div className='outputHeader'>
+              <div className="TitleTag">
+              <h4>블로그 이어쓰기</h4>
+                <div className='progressNbtn'>
+                  <ProgressBar
+                    completed={this.state.tempLength}
+                    bgColor='#55d4bc'
+                    width='220px'
+                    height='8px'
+                    margin='20px 0'
+                    isLabelVisible={false}
+                  />
+                  <button
+                    className='CreateButtonStyle'
+                    onClick={this.requestcontents}
+                  >
+                    Create
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className='outputContainer'>
+            {this.state.loading ? (
+              <div className='loading'>
+                <Spinner size={200} color='#3b2479' />
+              </div>
+            ) : (
+              <>
                 <textarea
-                  class="ideaInput2"
+                  className='output'
                   value={this.state.outputKr}
                   onChange={this.handle}
+                  placeholder='블로그에 올릴 글을 써보세요!'
                 />
                 <textarea
-                  class="ideaOutput1"
+                  className='output_right'
                   value={this.state.outputEn}
                   readOnly
                 />
-              </div>
-              <br />
-              <div class="progress">
-                <ProgressBar
-                  completed={this.state.tempLength}
-                  height="8px"
-                  isLabelVisible={false}
-                />
-              </div>
-              <br />
-              <button class="start" onClick={this.requestcontents}>
-                create
-              </button>
+              </>
+            )}
             </div>
-          </div>
-        </div>
-        <br />
-        {this.state.loading ? (
-          <div class="loading">
-            <Spinner size="8px" color="#3b2479" />
-          </div>
-        ) : null}
-      </Fragment>
+          </Box>
+        </Grid>
+      </Box>
     );
   }
 }
 
 export default Follow;
+
+const MenuItem = styled(Link)`
+  display: block;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 200ms ease-in-out;
+
+  &:hover,
+  &:focus {
+    background-color: #f9f9f9;
+    font-weight: 600;
+  }
+`;

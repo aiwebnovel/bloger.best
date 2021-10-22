@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+
+.ideaMain {
+  background-color: #f9f9f9;
+} 
+
+.SiderStyle {
+  width: 220px;
+  box-shadow: 2px 3px 8px #EDEDED;
+}
+
+.ServiceNav {
+  width: 100%;
+  text-align: center;
+  padding : 30px 0;
+}
+ 
+.IconBox {
+  background-color: #3b2479;
+  color: #fff;
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.mainStyle {
+  height: 100vh;
+  overflow:hidden;
+}
+
+
+.outputHeader {
+  padding: 30px;
+}
+
+.TitleTag {
+  background: #fff;
+  border-left: 5px solid #55d4bc;
+  box-shadow: 1px 1px 2px rgb(0 0 0 / 25%);
+  padding: 15px 10px;
+  min-width: 300px;
+  width: 350px;
+}
+
+.TitleTag > h4 {
+  font-size : 0.9em;
+}
+
+.outputContainer{
+  width:100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.output, .output_right{
+  border-radius: 10px;
+  height: 50vh;
+  resize: none;
+  border:0;
+  outline: none;
+  width: 45%;
+   background-color: #f9f9f9;
+  /*box-shadow: 2px 3px 8px #DaDaDa; */
+  background-color: #ffff;
+  box-shadow: 1px 1px 2px rgb(0 0 0 / 25%);
+  padding: 15px;
+  font-size : 1rem;
+}
+
+.output::placeholder {
+  font-size : 1rem;
+}
+
+
+.progressNbtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.CreateButtonStyle {
+  border: 1px solid #55d4bc;
+  background-color: #55d4bc;
+  color : #fff;
+  text-transform: none;
+  outline: 0;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 10px;
+  width: 70px;
+}
+
+
+@media screen and (max-width: 768px) {
+
+  .SiderStyle {
+    width: 100%;
+    overflow: scroll;
+  }
+
+  .ServiceNav {
+    padding: 0;
+  }
+
+  .mainStyle {
+    justify-content: baseline;
+  }
+
+  .outputHeader {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .TitleTag {
+    border-left:0;
+    border-top : 5px solid #55d4bc;
+    width: 70%;
+  }
+
+  .progressNbtn {
+    flex-direction: column;
+  }
+
+  .outputContainer, .loading {
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+    overflow: hidden;
+  }
+
+  .output, .output_right {
+    width: 70%;
+    font-size: 0.95rem;
+    margin-bottom : 15px;
+  }
+
+}
