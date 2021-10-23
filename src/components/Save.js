@@ -1,4 +1,4 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
@@ -7,7 +7,6 @@ import { authService, firebaseInstance } from "../public/firebaseConfig";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import * as config from "../config";
 
-import copyicon from "../public/copy.png";
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +14,7 @@ import "../style/Save.css";
 import styled from "styled-components";
 
 import { Grid, Box } from "grommet";
-import { Apps, Search, Configure, Copy } from "grommet-icons";
+import { Apps } from "grommet-icons";
 
 const LanguageDetect = require("languagedetect");
 
@@ -25,19 +24,10 @@ class Save extends Component {
     this.state = {
       loading: false,
       isOutput: false,
-      output: {
-        0: { content: "" },
-        1: { content: "" },
-        2: { content: "" },
-        3: { content: "" },
-        4: { content: "" },
-        5: { content: "" },
-        6: { content: "" },
-        7: { content: "" },
-        8: { content: "" },
-        9: { content: "" },
-      },
+      output: [],
+
       isSider: false,
+      copied: false,
     };
     this.requestcontents = this.requestcontents.bind(this);
     this.handleSider = this.handleSider.bind(this);
@@ -57,14 +47,28 @@ class Save extends Component {
   }
 
   async requestcontents() {
+    let user = await localStorage.getItem("token");
     if (localStorage.getItem("token") !== null) {
       this.setState({ loading: true });
       await axios
-        .get(`${config.SERVER_URL}/blog/load`, {
-          headers: { authentication: localStorage.getItem("token") },
+        // .get(`${config.SERVER_URL}/blog/load`, {
+        //   headers: { authentication: localStorage.getItem("token") },
+        // })
+        .get("https://appplatform.cafe24.com:5000/api/v1/blog/load", {
+          headers: { authentication: user },
         })
         .then(async (response) => {
+          //console.log('data', response);
           await this.setState({ output: response.data.save });
+          console.log("output", this.state.output);
+
+          // const length = Object.keys(this.state.output).length;
+
+          // for(let i = 0; i< length; i++) {
+          //   console.log(Object.keys(this.state.output));
+          //   console.log(this.state.output[i])
+
+          // }
           this.setState({ loading: false });
         })
         .catch((error) => {
@@ -169,111 +173,179 @@ class Save extends Component {
             <div className='SaveContainer'>
               <h4>최근 저장 기록</h4>
               {this.state.isOutput && (
-                  <div className='saveFrame'>
-                    <div className='saveBox'>
-                      <p>1</p>
-                      <p>{this.state.output[0]["category"]}</p>
-                      <p>{this.state.output[0]["content"]}</p>
-                      <p>
-                        <CopyToClipboard
-                          text={this.state.output[0]["content"]}
-                          onCopy={this.onCopied}
-                        >
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
+                <div className='saveFrame'>
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[0]["category"]}
                     </div>
-                    <div className='saveBox'>
-                      <p>2</p>
-                      <p>{this.state.output[1]["category"]}</p>
-                      <p>{this.state.output[1]["content"]}</p>
-                      <p>
-                        <CopyToClipboard text={this.state.output[1]["content"]}>
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
+                    <div className='Content'>
+                      {this.state.output[0]["content"]}
                     </div>
-                    <div className='saveBox'>
-                      <p>3</p>
-                      <p>{this.state.output[2]["category"]}</p>
-                      <p>{this.state.output[2]["content"]}</p>
-                      <p>
-                        <CopyToClipboard text={this.state.output[2]["content"]}>
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
-                    </div>
-                    <div className='saveBox'>
-                      <p>4</p>
-                      <p>{this.state.output[3]["category"]}</p>
-                      <p>{this.state.output[3]["content"]}</p>
-                      <p>
-                        <CopyToClipboard text={this.state.output[3]["content"]}>
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
-                    </div>
-                    <div className='saveBox'>
-                      <p>5</p>
-                      <p>{this.state.output[4]["category"]}</p>
-                      <p>{this.state.output[4]["content"]}</p>
-                      <p>
-                        <CopyToClipboard text={this.state.output[4]["content"]}>
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
-                    </div>
-                    <div className='saveBox'>
-                      <p>6</p>
-                      <p>{this.state.output[5]["category"]}</p>
-                      <p>{this.state.output[5]["content"]}</p>
-                      <p>
-                        <CopyToClipboard text={this.state.output[5]["content"]}>
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
-                    </div>
-                    <div className='saveBox'>
-                      <p>7</p>
-                      <p>{this.state.output[6]["category"]}</p>
-                      <p>{this.state.output[6]["content"]}</p>
-                      <p>
-                        <CopyToClipboard text={this.state.output[6]["content"]}>
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
-                    </div>
-                    <div className='saveBox'>
-                      <p>8</p>
-                      <p>{this.state.output[7]["category"]}</p>
-                      <p>{this.state.output[7]["content"]}</p>
-                      <p>
-                        <CopyToClipboard text={this.state.output[7]["content"]}>
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
-                    </div>
-                    <div className='saveBox'>
-                      <p>9</p>
-                      <p>{this.state.output[8]["category"]}</p>
-                      <p>{this.state.output[8]["content"]}</p>
-                      <p>
-                        <CopyToClipboard text={this.state.output[8]["content"]}>
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
-                    </div>
-                    <div className='saveBox'>
-                      <p>10</p>
-                      <p>{this.state.output[9]["category"]}</p>
-                      <p>{this.state.output[9]["content"]}</p>
-                      <p>
-                        <CopyToClipboard text={this.state.output[9]["content"]}>
-                          <Copy />
-                        </CopyToClipboard>
-                      </p>
-                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[0]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
                   </div>
+
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[1]["category"]}
+                    </div>
+                    <div className='Content'>
+                      {this.state.output[1]["content"]}
+                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[1]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
+                  </div>
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[2]["category"]}
+                    </div>
+                    <div className='Content'>
+                      {this.state.output[2]["content"]}
+                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[2]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
+                  </div>
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[3]["category"]}
+                    </div>
+                    <div className='Content'>
+                      {this.state.output[3]["content"]}
+                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[3]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
+                  </div>
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[4]["category"]}
+                    </div>
+                    <div className='Content'>
+                      {this.state.output[4]["content"]}
+                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[4]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
+                  </div>
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[5]["category"]}
+                    </div>
+                    <div className='Content'>
+                      {this.state.output[5]["content"]}
+                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[5]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
+                  </div>
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[6]["category"]}
+                    </div>
+                    <div className='Content'>
+                      {this.state.output[6]["content"]}
+                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[6]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
+                  </div>
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[7]["category"]}
+                    </div>
+                    <div className='Content'>
+                      {this.state.output[7]["content"]}
+                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[7]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
+                  </div>
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[8]["category"]}
+                    </div>
+                    <div className='Content'>
+                      {this.state.output[8]["content"]}
+                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[8]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
+                  </div>
+                  <div className='saveBox'>
+                    <div className='Category'>
+                      {this.state.output[9]["category"]}
+                    </div>
+                    <div className='Content'>
+                      {this.state.output[9]["content"]}
+                    </div>
+
+                    <CopyToClipboard
+                      text={this.state.output[9]["content"]}
+                      onCopy={this.onCopied}
+                    >
+                      <div className='copyButton'>
+                        <button className='CopyButtonStyle'>copy</button>
+                      </div>
+                    </CopyToClipboard>
+                  </div>
+                </div>
               )}
             </div>
           </Box>

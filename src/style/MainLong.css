@@ -108,6 +108,7 @@
 
 .resultBox {
   padding: 30px ;
+  
 }
 
 .IdeaResultBox {
@@ -120,6 +121,7 @@
   background:#fff;
   padding: 5px 8px;
   border-radius : 5px;
+  cursor: pointer;
 }
 
 .ideaOutput {

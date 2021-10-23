@@ -71,7 +71,7 @@ class Name extends Component {
       // this.setState({ loading: true });
       await axios
         .post(
-          `${config.SERVER_URL}/blog/save`,
+          `https://appplatform.cafe24.com:5000/api/v1/blog/save`,
           {
             story: story,
             category: "name",
@@ -160,7 +160,7 @@ class Name extends Component {
       this.setState({ loading: true });
       await axios
         .post(
-          `${config.SERVER_URL}/blog/name`,
+          `https://appplatform.cafe24.com:5000/api/v1/blog/name`,
           {
             story: story,
           },
@@ -430,7 +430,7 @@ class Name extends Component {
                       <div className="outputKo">    
                       📌 {this.state.outputKr[0].split("\n").map((line) => {
                           return (
-                            <p>
+                            <p key={`key_${line}`}>
                               {line}
                             </p>
                           );
@@ -440,7 +440,7 @@ class Name extends Component {
                       <div className="outputEn">
                       📌 {this.state.outputEn[0].split("\n").map((line) => {
                           return (
-                            <p>
+                            <p key={`key_${line}`} > 
                               {line}
                             </p>
                           );

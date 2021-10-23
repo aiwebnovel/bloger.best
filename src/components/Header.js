@@ -47,7 +47,7 @@ class Header extends Component {
 
   isChecked = () => {
     this.setState({ isChecked: !this.state.isChecked });
-    console.log(this.isChecked);
+    //console.log(this.isChecked);
   };
 
   isOpen = () => {
@@ -91,7 +91,10 @@ class Header extends Component {
     let user = await localStorage.getItem("token");
     if (user !== null) {
       axios
-        .get(`${config.SERVER_URL}/profile`, {
+        // .get(`${config.SERVER_URL}/profile`, {
+        //   headers: { authentication: user },
+        // })
+        .get('https://appplatform.cafe24.com:5000/api/v1/profile',{
           headers: { authentication: user },
         })
         .then((response) => {
@@ -164,7 +167,7 @@ class Header extends Component {
           this.setState({ user: true });
           toast.success(`로그인 되었습니다!`);
           this.requestProfile();
-          console.log('test',user);
+          //console.log('test',user);
         })
         .catch((error) => {
           let errorCode = error.code;
