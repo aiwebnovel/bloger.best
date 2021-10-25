@@ -11,7 +11,8 @@ import { toast } from "react-toastify";
 import ProgressBar from "@ramonak/react-progress-bar";
 
 import "react-toastify/dist/ReactToastify.css";
-import "../style/Follow.css";
+import "../style/Common.css";
+import "../style/Extra.css";
 import styled from "styled-components";
 
 import { Grid, Box } from "grommet";
@@ -150,7 +151,10 @@ class Follow extends Component {
           //console.log(error);
           if (error.response.status === 412) {
             this.setState({ loading: false });
-            toast.error(`로그인이 필요합니다!`);
+            toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
+              style:{backgroundColor:'#fff', color:'#000'},
+               progressStyle:{backgroundColor:'#7D4CDB'}
+              }); 
             localStorage.removeItem("token");
           } else {
             if (error.response.status === 403) {
@@ -159,7 +163,13 @@ class Follow extends Component {
             }
           }
         });
+    }else {
+      toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
+        style:{backgroundColor:'#fff', color:'#000'},
+         progressStyle:{backgroundColor:'#7D4CDB'}
+        }); 
     }
+    this.setState({ loading: false });
   }
 
   render() {
@@ -189,7 +199,8 @@ class Follow extends Component {
               // justify='center'
               align='center'
               background='#fff'
-              className='SiderStyle'
+              width={this.props.sizes !== 'small' ? "small" : '100%'}
+              style={{boxShadow: '2px 3px 8px #EDEDED'}}
               animation={
                 this.props.sizes !== "small"
                   ? [
@@ -270,9 +281,7 @@ class Follow extends Component {
             </div>
             <div className='outputContainer'>
               {this.state.loading ? (
-                <div className='loading'>
                   <Spinner size={200} color='#3b2479' />
-                </div>
               ) : (
                 <>
                   <textarea

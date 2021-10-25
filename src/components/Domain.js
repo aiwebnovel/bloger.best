@@ -10,7 +10,8 @@ import * as config from "../config";
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import "../style/MainLong.css";
+import "../style/Common.css";
+import "../style/Extra.css";
 import styled from "styled-components";
 
 import { Grid, Box } from "grommet";
@@ -25,8 +26,6 @@ class Domain extends Component {
       loginModalOpen: false,
       loading: false,
       isOutput: false,
-      // outputKr: ["a", "b", "c", "d", "e"],
-      // outputEn: ["a", "b", "c", "d", "e"],
       outputKr: {},
       outputEn: {},
       desc: "",
@@ -68,32 +67,14 @@ class Domain extends Component {
         console.log(timeD);
         if (timeD < 6500) {
           toast.error(
-            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`,
-            {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            }
-          );
+            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`);
           return;
         }
       }
       localStorage.setItem("time", date);
 
       if (story.desc === "" || story.keyword === "") {
-        toast.error(`공백인 칸이 있습니다!`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(`공백인 칸이 있습니다!`);
         return;
       }
       this.setState({ loading: true });
@@ -106,17 +87,7 @@ class Domain extends Component {
           let resE = [];
           if (response.data[2] >= 2) {
             toast.error(
-              `결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요`,
-              {
-                position: "top-right",
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              }
-            );
+              `결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요`);
           }
           for (let i = 0; i < response.data.length; i++) {
             await resK.push(response.data[i][0]);
@@ -124,6 +95,7 @@ class Domain extends Component {
           }
           this.setState({ outputKr: resK });
           this.setState({ outputEn: resE });
+          this.setState({ isOutput: true });
 
           this.setState({ loading: false });
         })
@@ -131,33 +103,25 @@ class Domain extends Component {
           //console.log(error);
           if (error.response.status === 412) {
             this.setState({ loading: false });
-            toast.error(`로그인이 필요합니다!`, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
+              style:{backgroundColor:'#fff', color:'#000'},
+               progressStyle:{backgroundColor:'#7D4CDB'}
+              });
             localStorage.removeItem("token");
           } else {
             if (error.response.status === 403) {
               this.setState({ loading: false });
-              toast.error(`토큰이 부족합니다!`, {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
+              toast.error(`토큰이 부족합니다!`);
             }
           }
         });
+    }else {
+      toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
+        style:{backgroundColor:'#fff', color:'#000'},
+         progressStyle:{backgroundColor:'#7D4CDB'}
+        });
     }
-    this.setState({ isOutput: true });
+    this.setState({ loading: false });
   }
 
   async savecontents(e) {
@@ -239,7 +203,8 @@ class Domain extends Component {
               // justify='center'
               align='center'
               background='#fff'
-              className='SiderStyle'
+              width={this.props.sizes !== 'small' ? "small" : '100%'}
+              style={{boxShadow: '2px 3px 8px #EDEDED'}}
               animation={
                 this.props.sizes !== "small"
                   ? [
@@ -297,11 +262,8 @@ class Domain extends Component {
                   value={this.state.keyword}
                   // onChange={this.handleState}
                   onChange={this.handle}
-                  className='keywordInput'
+                  className='keywordInputDomain'
                 />
-                {/* <button className='buttonStyle' onClick={this.requestcontents}>
-                  <Search />
-                </button> */}
               </div>
             </div>
             <div className='BlogIdeaBox'>
@@ -319,9 +281,7 @@ class Domain extends Component {
             </div>
 
             {this.state.loading ? (
-              <div className='loading'>
                 <Spinner size={200} color='#3b2479' />
-              </div>
             ) : (
               <div className='IdeaResultBox'>
                 {this.state.isOutput && (

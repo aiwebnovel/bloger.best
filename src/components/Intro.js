@@ -9,7 +9,7 @@ import * as config from "../config";
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import "../style/MainLong.css";
+import "../style/Common.css";
 import styled from "styled-components";
 
 import { Grid, Box } from "grommet";
@@ -84,14 +84,9 @@ class Intro extends Component {
           //console.log(error);
           if (error.response.status === 412) {
             this.setState({ loading: false });
-            toast.error(`로그인이 필요합니다!`, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
+            toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
+              style:{backgroundColor:'#fff', color:'#000'},
+               progressStyle:{backgroundColor:'#7D4CDB'}
             });
             localStorage.removeItem("token");
           } else if (error.response.status === 403) {
@@ -109,7 +104,7 @@ class Intro extends Component {
             toast.error("저장에 실패했습니다!");
           }
         });
-    }
+    } 
     this.setState({ isOutput: true });
   }
 
@@ -124,32 +119,14 @@ class Intro extends Component {
         console.log(timeD);
         if (timeD < 6500) {
           toast.error(
-            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`,
-            {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            }
-          );
+            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`);
           return;
         }
       }
       localStorage.setItem("time", date);
 
-      if (story === " " || story === " ") {
-        toast.error(`주제를 입력해 주세요!`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+      if (story === " " || story === "") {
+        toast.error(`주제를 입력해 주세요!`);
         return;
       }
       this.setState({ loading: true });
@@ -168,17 +145,7 @@ class Intro extends Component {
           let resE = [];
           if (response.data[2] >= 2) {
             toast.error(
-              `결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요`,
-              {
-                position: "top-right",
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              }
-            );
+              `결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요`);
           }
           for (let i = 0; i < response.data.length; i++) {
             await resK.push(response.data[i][0]);
@@ -186,6 +153,7 @@ class Intro extends Component {
           }
           this.setState({ outputKr: resK });
           this.setState({ outputEn: resE });
+          this.setState({ isOutput: true });
 
           this.setState({ loading: false });
         })
@@ -193,15 +161,10 @@ class Intro extends Component {
           //console.log(error);
           if (error.response.status === 412) {
             this.setState({ loading: false });
-            toast.error(`로그인이 필요합니다!`, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
+              style:{backgroundColor:'#fff', color:'#000'},
+               progressStyle:{backgroundColor:'#7D4CDB'}
+              }); 
             localStorage.removeItem("token");
           } else {
             if (error.response.status === 403) {
@@ -218,8 +181,13 @@ class Intro extends Component {
             }
           }
         });
+    }else {
+      toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
+        style:{backgroundColor:'#fff', color:'#000'},
+         progressStyle:{backgroundColor:'#7D4CDB'}
+        }); 
     }
-    this.setState({ isOutput: true });
+    this.setState({ loading: false });
   }
 
   async requestkeywords() {
@@ -227,15 +195,7 @@ class Intro extends Component {
       let keyword = this.state.keyword;
      
       if (keyword === " " || keyword === "") {
-        toast.error(`키워드를 입력해 주세요!`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(`키워드를 입력해 주세요!`);
         return;
       }
       this.setState({ loading: true });
@@ -252,27 +212,20 @@ class Intro extends Component {
           //console.log(error);
           if (error.response.status === 412) {
             this.setState({ loading: false });
-            toast.error(`로그인이 필요합니다!`, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
+              style:{backgroundColor:'#fff', color:'#000'},
+               progressStyle:{backgroundColor:'#7D4CDB'}
+              });
+
             localStorage.removeItem("token");
           } else {
-            toast.error(`맞는 키워드가 없습니다`, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            toast.error(`맞는 키워드가 없습니다`);
           }
+        });
+    }else {
+      toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
+        style:{backgroundColor:'#fff', color:'#000'},
+         progressStyle:{backgroundColor:'#7D4CDB'}
         });
     }
     this.setState({ loading: false });
@@ -305,7 +258,8 @@ class Intro extends Component {
               // justify='center'
               align='center'
               background='#fff'
-              className='SiderStyle'
+              width={this.props.sizes !== 'small' ? "small" : '100%'}
+              style={{boxShadow: '2px 3px 8px #EDEDED'}}
               animation={
                 this.props.sizes !== "small"
                   ? [
@@ -355,7 +309,7 @@ class Intro extends Component {
             className='mainStyle'
           >
             <div className='KeyContainer'>
-              <div className='keywordDiv'>
+              <div className='keywordDiv-long'>
                 <input
                   type='text'
                   name='keyword'
@@ -374,14 +328,14 @@ class Intro extends Component {
                     columns={
                       this.props.sizes !== "small"
                         ? { count: 6, size: "auto" }
-                        : { count: 3, size: "auto" }
+                        : { count: 4, size: "auto" }
                     }
                     gap='small'
                   >
                     {this.state.keywordOutput.map((data, i) => {
                       return (
                         <button
-                          className='keywordResult'
+                          className='keywordResult-long'
                           key={`key${i}`}
                           onClick={this.handle}
                           value={data}
@@ -396,9 +350,7 @@ class Intro extends Component {
             </div>
 
             {this.state.loading ? (
-              <div className='loading'>
                 <Spinner size={200} color='#3b2479' />
-              </div>
             ) : (
             <div className='IdeaContainer'>
               <div className='BlogIdeaBox'>
@@ -417,8 +369,8 @@ class Intro extends Component {
               <div className='IdeaResultBox'>
                 {this.state.isOutput && (
                   <div className='ideaOutput'>
-                    <div className="outputKo">{this.state.outputKr[0]}</div>
-                    <div className="outputEn">{this.state.outputEn[0]}</div>
+                    <div className="outputKo-long">{this.state.outputKr[0]}</div>
+                    <div className="outputEn-long">{this.state.outputEn[0]}</div>
                     <div className='Btns'>
                     <CopyToClipboard 
                       text={this.state.outputKr[0]}

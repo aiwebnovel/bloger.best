@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 import { Spinner } from "react-loading-io";
@@ -8,9 +8,10 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import * as config from "../config";
 
 import { toast } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
-import "../style/Save.css";
+
+import "../style/Common.css";
+import "../style/Extra.css";
 import styled from "styled-components";
 
 import { Grid, Box } from "grommet";
@@ -80,7 +81,7 @@ class Save extends Component {
           }
         });
     }else {
-      window.location.href='/'
+      window.location.href='/'      
     } 
     this.setState({ isOutput: true });
   }
@@ -116,7 +117,8 @@ class Save extends Component {
               // justify='center'
               align='center'
               background='#fff'
-              className='SiderStyle'
+              width={this.props.sizes !== 'small' ? "small" : '100%'}
+              style={{boxShadow: '2px 3px 8px #EDEDED'}}
               animation={
                 this.props.sizes !== "small"
                   ? [
