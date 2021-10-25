@@ -293,7 +293,7 @@ class Header extends Component {
                   margin='5px 0'
                 />
                 <span>{this.state.userToken} token</span>
-                <p>{localStorage.getItem("plan")}</p>
+                <p>{localStorage.getItem("plan") === 'undefined' ? 'Guest' : localStorage.getItem("plan")}</p>
               </div>
               <div className='logout'>
                 <Button primary label='logout' onClick={this.signOut}></Button>

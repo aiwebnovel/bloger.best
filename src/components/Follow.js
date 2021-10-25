@@ -102,27 +102,11 @@ class Follow extends Component {
           ((this.state.outputKr.length - this.state.outputLength) * 100) / 100,
       });
       if (this.state.tempLength < 100) {
-        toast.error(`추가 내용을 더 입력해 주세요!`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(`${ 100-this.state.tempLength}자를 더 입력해 주세요!`);
         return;
       }
       if (story === " " || story === "" || story === "undefined") {
-        toast.error(`내용을 입력해 주세요!`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(`내용을 입력해 주세요!`);
         return;
       }
       const date = new Date();
@@ -132,17 +116,7 @@ class Follow extends Component {
         console.log(timeD);
         if (timeD < 6500) {
           toast.error(
-            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`,
-            {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            }
-          );
+            `${7 - Math.ceil(timeD / 1000)}초 이후에 다시 시도해 주세요`);
           return;
         }
       }
@@ -161,7 +135,7 @@ class Follow extends Component {
         .then(async (response) => {
           if (response.data[2] >= 2) {
             toast.error(
-              `결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요`);
+              `AI가 만든 결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요`);
               this.setState({ loading: false });
           } else {
           this.setState({
@@ -176,28 +150,12 @@ class Follow extends Component {
           //console.log(error);
           if (error.response.status === 412) {
             this.setState({ loading: false });
-            toast.error(`로그인이 필요합니다!`, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            toast.error(`로그인이 필요합니다!`);
             localStorage.removeItem("token");
           } else {
             if (error.response.status === 403) {
               this.setState({ loading: false });
-              toast.error(`토큰이 부족합니다!`, {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
+              toast.error(`토큰이 부족합니다!`);
             }
           }
         });

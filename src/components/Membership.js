@@ -19,13 +19,14 @@ class Membership extends Component {
       showMenu: false,
       plan: "free",
       free: "currunt",
-      basic: "결제하기",
-      premium: "change",
+      basic: "가입하기",
+      premium: "가입하기",
       cardNum: "",
       buyerName: "",
       idNum: "",
       cardExpire: "",
       cardCvc: "",
+
       cardPwd: "",
       Price: "",
     };
@@ -62,26 +63,16 @@ class Membership extends Component {
             this.setState({ showMenu: true });
           })
           .catch(async (error) => {
-            toast.error(`로그인이 필요합니다.`, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            toast.info(`로그인이 필요합니다!`, {
+              style:{backgroundColor:'#fff', color:'#000'},
+               progressStyle:{backgroundColor:'#7D4CDB'}
+              });
           });
       } else {
-        toast.error(`로그인이 필요합니다.`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.info(`로그인이 필요합니다!`, {
+          style:{backgroundColor:'#fff', color:'#000'},
+           progressStyle:{backgroundColor:'#7D4CDB'}
+          });
       }
     });
   };
@@ -341,7 +332,7 @@ class Membership extends Component {
             close={this.closeModal}
             title='Payment'
           >
-            {localStorage.getItem("isBill") !== "true" ? (
+            {localStorage.getItem("isBill") !== true ? (
               <>
                 <div className='creditCard'>
                   <CreditCardInput
@@ -411,9 +402,9 @@ class Membership extends Component {
                     - <b>*******</b>
                   </span>
                 </div>
-                <div className='PriceBox'>
+                {/* <div className='PriceBox'>
                   <p>₩{this.state.Price}</p>
-                </div>
+                </div> */}
                 <div style={payButton}>
                   <button
                     className='creditCardButton'

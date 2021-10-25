@@ -111,9 +111,10 @@
 .changeButton {
  
   background-color: #5600E8;
-  color: #ffffff;
+  border: 1px solid #5600e8;
+  color: #fff;
   border-radius: 10px;
-
+  padding: 5px 8px;
   text-align: center;
   cursor: pointer;
   
