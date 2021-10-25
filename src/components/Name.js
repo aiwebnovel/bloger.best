@@ -71,7 +71,7 @@ class Name extends Component {
       // this.setState({ loading: true });
       await axios
         .post(
-          `https://appplatform.cafe24.com:5000/api/v1/blog/save`,
+          `${config.SERVER_URL}/blog/save`,
           {
             story: story,
             category: "name",
@@ -342,7 +342,7 @@ class Name extends Component {
                 <MenuItem to='/intro'>블로그 도입부</MenuItem>
                 <MenuItem to='/domain'>블로그 도메인</MenuItem>
                 <MenuItem to='/follow'>블로그 이어쓰기</MenuItem>
-                <MenuItem to='/save'>최근 저장 기록</MenuItem>
+                {localStorage.getItem("token") && <MenuItem to='/save'>최근 저장 기록</MenuItem>}
               </div>
             </Box>
           ) : (

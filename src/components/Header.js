@@ -91,10 +91,7 @@ class Header extends Component {
     let user = await localStorage.getItem("token");
     if (user !== null) {
       axios
-        // .get(`${config.SERVER_URL}/profile`, {
-        //   headers: { authentication: user },
-        // })
-        .get('https://appplatform.cafe24.com:5000/api/v1/profile',{
+        .get(`${config.SERVER_URL}/profile`, {
           headers: { authentication: user },
         })
         .then((response) => {
@@ -140,6 +137,7 @@ class Header extends Component {
     this.setState({ showMenu: false });
     document.removeEventListener("click", this.closeMenu);
     await authService.signOut();
+    window.location.reload();
   }
 
   async signIn(event) {

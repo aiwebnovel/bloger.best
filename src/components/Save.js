@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import axios from "axios";
 import { Spinner } from "react-loading-io";
@@ -48,14 +48,11 @@ class Save extends Component {
 
   async requestcontents() {
     let user = await localStorage.getItem("token");
-    if (localStorage.getItem("token") !== null) {
+    if (user !== null) {
       this.setState({ loading: true });
       await axios
-        // .get(`${config.SERVER_URL}/blog/load`, {
-        //   headers: { authentication: localStorage.getItem("token") },
-        // })
-        .get("https://appplatform.cafe24.com:5000/api/v1/blog/load", {
-          headers: { authentication: user },
+        .get(`${config.SERVER_URL}/blog/load`, {
+          headers: { authentication: localStorage.getItem("token") },
         })
         .then(async (response) => {
           //console.log('data', response);
@@ -72,21 +69,19 @@ class Save extends Component {
           this.setState({ loading: false });
         })
         .catch((error) => {
+          
           if (error.response.status === 412) {
             this.setState({ loading: false });
-            toast.error(`로그인이 필요합니다!`, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
+            toast.info(`로그인이 필요합니다!`, {
+              icon:'🙅‍♀️',
+              progressStyle: { backgroundColor: "#7D4CDB" },
             });
             localStorage.removeItem("token");
           }
         });
-    }
+    }else {
+      window.location.href='/'
+    } 
     this.setState({ isOutput: true });
   }
 
