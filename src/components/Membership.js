@@ -217,6 +217,7 @@ class Membership extends Component {
             <div className='DecoBox'></div>
           </Box>
 
+
           <Box
             className='MobileCardContainer'
             justify='center'
