@@ -19,7 +19,7 @@ class Footer extends Component {
           </a>
           <br />
           <a
-            href="https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b"
+            href="https://appplatform.notion.site/e658644587444247a00af2d05dd69b30"
             class="email"
           >
             {" "}

@@ -204,7 +204,7 @@ class Membership extends Component {
             <span class="price2">0</span>
             <span class="price3">/mo</span>
           </div>
-          <a class="pricebutton" onClick={this.openModal} name="free 0">
+          <a className="pricebutton" onClick={this.openModal} name="free 0">
             {this.state.free}
           </a>
           <p>✔ 무제한 사용</p>
