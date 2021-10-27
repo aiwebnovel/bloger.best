@@ -30,7 +30,7 @@ class Footer extends Component {
             <div className="InfoBox">
               <p><b>정책</b></p>   
               <a target="_blank" rel="noreferrer" href="https://www.notion.so/appplatform/d99f247a66d141bbbdf227739861a0a2"><p>개인정보 처리방침</p></a>
-              <a target="_blank" rel="noreferrer" href="https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b"> <p>이용약관</p></a>
+              <a target="_blank" rel="noreferrer" href="https://appplatform.notion.site/e658644587444247a00af2d05dd69b30"> <p>이용약관</p></a>
               <a href="mailto:support@appplatform.co.kr">support@appplatform.co.kr </a>
             </div>
   
