@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import CreditCardInput from "react-credit-card-input";
 import { authService, firebaseInstance } from "../public/firebaseConfig";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../style/Membership.css";
 import Modal from "./Modal";
 import * as config from "../config";
+
+import styled from "styled-components";
+import { Box, Grid, Text } from "grommet";
 
 class Membership extends Component {
   constructor(props) {
@@ -16,13 +19,14 @@ class Membership extends Component {
       showMenu: false,
       plan: "free",
       free: "currunt",
-      basic: "결제하기",
-      premium: "change",
+      basic: "가입하기",
+      premium: "가입하기",
       cardNum: "",
       buyerName: "",
       idNum: "",
       cardExpire: "",
       cardCvc: "",
+
       cardPwd: "",
       Price: "",
     };
@@ -59,26 +63,16 @@ class Membership extends Component {
             this.setState({ showMenu: true });
           })
           .catch(async (error) => {
-            toast.error(`로그인이 필요합니다.`, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            toast.info(`로그인이 필요합니다!`, {
+              style:{backgroundColor:'#fff', color:'#000'},
+               progressStyle:{backgroundColor:'#7D4CDB'}
+              });
           });
       } else {
-        toast.error(`로그인이 필요합니다.`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.info(`로그인이 필요합니다!`, {
+          style:{backgroundColor:'#fff', color:'#000'},
+           progressStyle:{backgroundColor:'#7D4CDB'}
+          });
       }
     });
   };
@@ -93,7 +87,7 @@ class Membership extends Component {
 
   async requestBill() {
     let user = await localStorage.getItem("token");
-    if (user !== undefined) {
+    if (user !== null) {
       const now = new Date();
       const option = {
         arsUseYn: "N",
@@ -119,20 +113,31 @@ class Membership extends Component {
       axios
         .post(`https://api.innopay.co.kr/api/regAutoCardBill`, option)
         .then((response) => {
-          console.log(response.data);
-          if (response.data.resultCode === "0000") {
+          let data = response.data;
+          //  console.log('test',data);
+          if (data.resultCode === "F113") {
+            toast.error(`error : ${data.resultMsg}!`);
+          }
+          if (data.resultCode === "9999") {
+            toast.error(
+              "해당 카드 번호로 3회 실패된 이력이 있어 다음 날 요청 가능합니다😭"
+            );
+          }
+
+          if (data.resultCode === "0000") {
             axios
               .post(
                 `${config.SERVER_URL}/pay/blog`,
                 {
-                  billKey: response.data.billKey,
+                  billKey: data.billKey,
                   plan: this.state.plan,
                   name: this.state.buyerName,
                 },
                 { headers: { authentication: user } }
               )
               .then((response) => {
-                console.log(response);
+                console.log("response", response);
+                toast.success("결제가 완료 됐습니다!");
                 this.closeModal();
               })
               .catch((error) => {
@@ -152,7 +157,7 @@ class Membership extends Component {
 
   async changeBill() {
     let user = await localStorage.getItem("token");
-    if (user !== undefined) {
+    if (user !== null) {
       axios
         .put(
           `${config.SERVER_URL}/pay/blog`,
@@ -174,7 +179,7 @@ class Membership extends Component {
   async requestProfile() {
     let user = await localStorage.getItem("token");
 
-    if (user !== undefined) {
+    if (user !== null) {
       axios
         .get(`${config.SERVER_URL}/profile`, {
           headers: { authentication: user },
@@ -196,146 +201,246 @@ class Membership extends Component {
 
   render() {
     return (
-      <div class="pricingDiv">
-        <div class="pricing">
-          <h3 class="priceTitle">Free</h3>
-          <div class="priceDiv">
-            <span class="price1">₩</span>
-            <span class="price2">0</span>
-            <span class="price3">/mo</span>
-          </div>
-          <a class="pricebutton" onClick={this.openModal} name="free 0">
-            {this.state.free}
-          </a>
-          <p>✔ 무제한 사용</p>
-          <p>
-            ✔ 블로그 아이디어, 개요, 제목, 도입부,
-            <br /> 이어쓰기
-          </p>
-          <p>✔ 인공지능 결과 저장</p>
-          <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
-        </div>
+      <>
+        <Box
+          width='100%'
+          height={this.props.sizes !== "small" ? "100vh" : "100%"}
+          background='#f9f9f9'
+          direction='column'
+          justify='evenly'
+          align='center'
+          overflow='scroll'
+          pad='large'
+        >
+          <Box justify='center' align='center' pad='large'>
+            <h1 className='MenuMark'>Membership</h1>
+            <div className='DecoBox'></div>
+          </Box>
 
-        <div class="pricing">
-          <h3 class="priceTitle">annual</h3>
-          <div class="priceDiv">
-            <span class="price1">₩</span>
-            <span class="price2">45,000</span>
-            <span class="price3">/mo</span>
-            <br />
-          </div>
+          <Box
+            className='MobileCardContainer'
+            justify='center'
+            align='center'
+            direction='row-responsive'
+          >
+            <Grid
+              columns={
+                this.props.sizes !== "small"
+                  ? {
+                      count: 3,
+                      size: "auto",
+                    }
+                  : "100%"
+              }
+              gap='small'
+            >
+              <Card>
+                <div className='CardTitle'>
+                  <h2>Free</h2>
+                </div>
+                <div className='CardPrice'>
+                  <Text size='2xl' color='#000' weight='bold'>
+                    ₩0
+                  </Text>
+                  <Text size='small' color='dark-3'>
+                    /month
+                  </Text>
+                </div>
+                <div style={{ textAlign: "center", padding: "20px" }}>
+                  <button
+                    className='PriceButton'
+                    onClick={this.openModal}
+                    name='free 0'
+                  >
+                    {this.state.free}
+                  </button>
+                </div>
+                <div className='CardContent'>
+                  <p>✔ 무제한 사용</p>
+                  <p>✔ 블로그 아이디어, 이어쓰기</p>
+                  <p>✔ 개요, 제목, 도입부,</p>
+                  <p>✔ 인공지능 결과 저장</p>
+                  <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
+                </div>
+              </Card>
 
-          <a class="pricebutton" onClick={this.openModal} name="basic 45000">
-            {this.state.basic}
-          </a>
-          <p>✔ 무제한 사용</p>
-          <p>
-            ✔ 블로그 아이디어, 개요, 제목, 도입부,
-            <br /> 이어쓰기
-          </p>
-          <p>✔ 인공지능 결과 저장</p>
-          <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
-        </div>
+              <Card>
+                <div className='CardTitle'>
+                  <h2>Annual</h2>
+                </div>
+                <div className='CardPrice'>
+                  <Text size='xlarge' color='#000' weight='bold'>
+                    ₩45,000
+                  </Text>
+                  <Text size='small' color='dark-3'>
+                    /month
+                  </Text>
+                </div>
+                <div style={{ textAlign: "center", padding: "20px" }}>
+                  <button
+                    className='PriceButton'
+                    onClick={this.openModal}
+                    name='Annual 10000'
+                  >
+                    {this.state.basic}
+                  </button>
+                </div>
+                <div className='CardContent'>
+                  <p>✔ 무제한 사용</p>
+                  <p>✔ 블로그 아이디어, 이어쓰기</p>
+                  <p>✔ 개요, 제목, 도입부,</p>
+                  <p>✔ 인공지능 결과 저장</p>
+                  <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
+                </div>
+              </Card>
 
-        <div class="pricing">
-          <h3 class="priceTitle">enterprise</h3>
-          <div class="priceDiv">
-            <span class="price2">Custom</span>
-          </div>
-          <a href="mailto:support@appplatform.co.kr" class="pricebutton">
-            문의하기
-          </a>
-          <p>✔ 무제한 사용</p>
-          <p>
-            ✔ 블로그 아이디어, 개요, 제목, 도입부,
-            <br /> 이어쓰기
-          </p>
-          <p>✔ 인공지능 결과 저장</p>
-          <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
-          <p>✔ 기업 맞춤형 플랜 제공</p>
-        </div>
+              <Card>
+                <div className='CardTitle'>
+                  <h2>Enterprise</h2>
+                </div>
+                <div className='CardPrice'>
+                  <Text size='xlarge' color='#000' weight='bold'>
+                    ₩30,000
+                  </Text>
+                  <Text size='small' color='dark-3'>
+                    /month
+                  </Text>
+                </div>
+                <div style={{ textAlign: "center", padding: "20px" }}>
+                  <button
+                    className='PriceButton'
+                    onClick={this.openModal}
+                    name='Enterprise 30000'
+                  >
+                    {this.state.premium}
+                  </button>
+                </div>
+                <div className='CardContent'>
+                  <p>✔ 무제한 사용</p>
+                  <p>✔ 블로그 아이디어, 이어쓰기</p>
+                  <p>✔ 개요, 제목, 도입부,</p>
+                  <p>✔ 인공지능 결과 저장</p>
+                  <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
+                  <p>✔ 기업 맞춤형 플랜 제공</p>
+                </div>
+              </Card>
+            </Grid>
+          </Box>
 
-        <Modal open={this.state.showMenu} close={this.closeModal} title="Price">
-          {localStorage.getItem("isBill") !== "true" && this.state.Price > 0 ? (
-            <div class="creditCard">
-              <CreditCardInput
-                cardNumberInputProps={{
-                  value: this.state.cardNum,
-                  onChange: this.handleChange,
-                  name: "cardNum",
-                }}
-                cardExpiryInputProps={{
-                  value: this.state.cardExpire,
-                  onChange: this.handleChange,
-                  name: "cardExpire",
-                }}
-                cardCVCInputProps={{
-                  value: this.state.cardCvc,
-                  onChange: this.handleChange,
-                  name: "cardCvc",
-                }}
-                fieldClassName="input"
-              />
-              <div class="creditCardDiv">
-                <span>비밀번호</span>
-                <input
-                  class="creditCardPwd"
-                  value={this.state.cardPwd}
-                  onChange={this.handleNumber}
-                  name="cardPwd"
-                  maxLength="2"
-                ></input>
-                <span>**</span>
+          <Modal
+            open={this.state.showMenu}
+            close={this.closeModal}
+            title='Payment'
+          >
+            {localStorage.getItem("isBill") !== true ? (
+              <>
+                <div className='creditCard'>
+                  <CreditCardInput
+                    cardNumberInputProps={{
+                      value: this.state.cardNum,
+                      onChange: this.handleChange,
+                      name: "cardNum",
+                    }}
+                    cardExpiryInputProps={{
+                      value: this.state.cardExpire,
+                      onChange: this.handleChange,
+                      name: "cardExpire",
+                      onError: (err) => toast.error(err),
+                    }}
+                    cardCVCInputProps={{
+                      value: this.state.cardCvc,
+                      onChange: this.handleChange,
+                      name: "cardCvc",
+                      onError: (err) => toast.error(err),
+                    }}
+                    fieldClassName='input'
+                    fieldStyle={{
+                      width: "100%",
+                    }}
+                    containerStyle={{
+                      borderBottom: "1px solid #ededed",
+                    }}
+                  />
+                </div>
+
+                <div className='ElementBox'>
+                  <p>이름</p>
+                  <input
+                    className='LabelElement'
+                    value={this.state.buyerName}
+                    onChange={this.handleChange}
+                    name='buyerName'
+                    maxLength='4'
+                  ></input>
+                </div>
+
+                <div className='ElementBox'>
+                  <p>비밀번호</p>
+                  <input
+                    className='PwElement'
+                    value={this.state.cardPwd}
+                    onChange={this.handleNumber}
+                    name='cardPwd'
+                    maxLength='2'
+                  ></input>
+                  <span>
+                    <b>**</b>
+                  </span>
+                </div>
+
+                <div className='ElementBox'>
+                  <p>주민번호</p>
+                  <input
+                    className='BuyerElement'
+                    value={this.state.idNum}
+                    onChange={this.handleNumber}
+                    name='idNum'
+                    maxLength='6'
+                  ></input>
+                  <span>
+                    {" "}
+                    - <b>*******</b>
+                  </span>
+                </div>
+                {/* <div className='PriceBox'>
+                  <p>₩{this.state.Price}</p>
+                </div> */}
+                <div style={payButton}>
+                  <button
+                    className='creditCardButton'
+                    onClick={this.requestBill}
+                  >
+                    결제하기
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div style={payButton}>
+                <button className='changeButton' onClick={this.changeBill}>
+                  플랜 바꾸기
+                </button>
               </div>
-              <div class="creditCardDiv">
-                <span>주민번호</span>
-                <input
-                  class="creditCardPwd"
-                  value={this.state.idNum}
-                  onChange={this.handleNumber}
-                  name="idNum"
-                  maxLength="6"
-                ></input>
-                <span>-*******</span>
-              </div>
-              <div class="creditCardDiv">
-                <span>이름</span>
-                <input
-                  class="creditCardPwd"
-                  value={this.state.buyerName}
-                  onChange={this.handleChange}
-                  name="buyerName"
-                  maxLength="4"
-                ></input>
-              </div>
-
-              <a class="creditCardButton" onClick={this.requestBill}>
-                {this.state.Price}원 결제하기
-              </a>
-            </div>
-          ) : (
-            <div class="creditCard">
-              <a class="changeButton" onClick={this.changeBill}>
-                플랜 바꾸기
-              </a>
-            </div>
-          )}
-        </Modal>
-
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable
-          pauseOnHover
-        />
-      </div>
+            )}
+          </Modal>
+        </Box>
+      </>
     );
   }
 }
 
 export default Membership;
+
+const Card = styled.div`
+  text-align: center;
+  height: 100%;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 5px 6px 8px rgba(0, 0, 0, 0.16);
+  border-radius: 15px;
+  /* border : 1px solid #ededed; */
+`;
+
+const payButton = {
+  textAlign: "center",
+  paddingTop: "15px",
+};

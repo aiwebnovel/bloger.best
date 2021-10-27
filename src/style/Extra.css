@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+/* domain */
+.keywordInputDomain {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  word-wrap: break-word;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+/* Follow */
+
+.outputHeader {
+  padding: 30px;
+}
+
+.TitleTag {
+  background: #fff;
+  border-left: 5px solid #55d4bc;
+  box-shadow: 1px 1px 2px rgb(0 0 0 / 25%);
+  padding: 15px 10px;
+  min-width: 300px;
+  width: 350px;
+}
+
+.TitleTag > h4 {
+  font-size : 0.9em;
+  text-align: center;
+}
+
+.outputContainer{
+  width:100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.output, .output_right{
+  border-radius: 10px;
+  height: 50vh;
+  resize: none;
+  border:0;
+  outline: none;
+  width: 45%;
+   background-color: #f9f9f9;
+  /*box-shadow: 2px 3px 8px #DaDaDa; */
+  background-color: #ffff;
+  box-shadow: 1px 1px 2px rgb(0 0 0 / 25%);
+  padding: 15px;
+  font-size : 1rem;
+}
+
+.output::placeholder {
+  font-size : 1rem;
+}
+
+
+.progressNbtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.HeaderBtns {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.CreateButtonStyle {
+  border: 1px solid #55d4bc;
+  background-color: #55d4bc;
+  color : #fff;
+  text-transform: none;
+  outline: 0;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 10px;
+  width: 70px;
+  transition: all 200ms ease-in-out;
+}
+
+.CreateButtonStyle:hover {
+  border: 1px solid #C4FCEF;
+  background-color: #C4FCEF;
+  color: #55d4bc;
+}
+
+/* save */
+
+
+.SaveContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 30px;
+}
+
+
+.SaveContainer > h4 {
+  padding: 10px;
+}
+
+
+.saveFrame {
+  box-shadow: 2px 3px 8px #ededed;
+  height: 80vh;
+  overflow: scroll;
+  background-color: #fff;
+  border-left: 5px solid #55d4bc;
+  /* 
+  padding: 15px 20px;
+  */
+}
+
+.saveBox {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: baseline;
+  font-size: 0.9em;
+  padding: 10px;
+}
+
+.Category {
+  padding:5px;
+  font-weight: 600;
+}
+
+.Content {
+  /* padding: 5px 8px; */
+  padding: 10px;
+  border-left : 1px solid #ededed;
+  width: 100%;
+}
+
+.copyButton {
+  padding: 0 5px;
+}
+
+.CopyButtonStyle {
+  border: 1px solid #55d4bc;
+  background-color: #55d4bc;
+  color : #fff;
+  text-transform: none;
+  outline: 0;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 10px;
+  width: 70px;
+  transition: all 200ms ease-in-out;
+}
+
+.CopyButtonStyle:hover {
+  border: 1px solid #C4FCEF;
+  background-color: #C4FCEF;
+  color: #55d4bc;
+}
+
+
+@media screen and (max-width: 768px) {
+  .outputHeader {
+    display: flex;
+    justify-content: center;
+  }
+
+  .TitleTag {
+    border-left:0;
+    border-top : 5px solid #55d4bc;
+    width: 70%;
+  }
+
+  .outputContainer, .loading {
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+    overflow: hidden;
+  }
+
+  .output, .output_right {
+    width: 80%;
+    font-size: 0.95rem;
+    margin-bottom : 15px;
+  }
+
+
+}
+
+@media screen and (max-width: 680px){
+  .SaveContainer {
+    padding: 0 20px;
+}
+
+.saveFrame {
+    border-top: 5px solid #55d4bc;
+    border-left:0;
+}
+
+.saveBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+
+.Content {
+    /* padding: 5px 8px; */
+    border-top: 1px solid #ededed;
+    border-left:0;
+}
+ 
+
+}

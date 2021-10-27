@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Header from '../components/Header.js';
-import Landingp from '../components/Landing.js';
+import Home from '../components/Landing.js';
 import Footer from '../components/Footer.js';
-
+import { ResponsiveContext } from "grommet";
 
 const Landing = () => {
+  const size = useContext(ResponsiveContext);
+
+
   return (
     <div>
       <Header/>
-      <Landingp/>
+      <Home sizes={size}/>
       <Footer/>
     </div>
   );
