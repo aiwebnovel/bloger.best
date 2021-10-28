@@ -242,9 +242,6 @@ class Membership extends Component {
                   <Text size='2xl' color='#000' weight='bold'>
                     ₩0
                   </Text>
-                  <Text size='small' color='dark-3'>
-                    /month
-                  </Text>
                 </div>
                 <div style={{ textAlign: "center", padding: "20px" }}>
                   {/* <button
@@ -273,7 +270,7 @@ class Membership extends Component {
                     ₩30,000
                   </Text>
                   <Text size='small' color='dark-3'>
-                    /month
+                    /월(정기결제)
                   </Text>
                 </div>
                 <div style={{ textAlign: "center", padding: "20px" }}>

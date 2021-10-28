@@ -108,7 +108,8 @@
 
 .saveFrame {
   box-shadow: 2px 3px 8px #ededed;
-  height: 80vh;
+  /* height: 80vh; */
+  max-height: 500px;
   overflow: scroll;
   background-color: #fff;
   border-left: 5px solid #55d4bc;
@@ -199,6 +200,7 @@
 .saveFrame {
     border-top: 5px solid #55d4bc;
     border-left:0;
+  
 }
 
 .saveBox{
