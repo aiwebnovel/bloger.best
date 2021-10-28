@@ -19,8 +19,8 @@ class Membership extends Component {
       showMenu: false,
       plan: "free",
       free: "currunt",
-      basic: "가입하기",
       premium: "가입하기",
+      enterprise: "문의하기",
       cardNum: "",
       buyerName: "",
       idNum: "",
@@ -247,18 +247,18 @@ class Membership extends Component {
                   </Text>
                 </div>
                 <div style={{ textAlign: "center", padding: "20px" }}>
-                  <button
+                  {/* <button
                     className='PriceButton'
                     onClick={this.openModal}
                     name='free 0'
                   >
                     {this.state.free}
-                  </button>
+                  </button> */}
                 </div>
                 <div className='CardContent'>
-                  <p>✔ 무제한 사용</p>
+                  <p>✔ 10회까지 이용 가능</p>
                   <p>✔ 블로그 아이디어, 이어쓰기</p>
-                  <p>✔ 개요, 제목, 도입부,</p>
+                  <p>✔ 블로그 개요, 제목, 도입부</p>
                   <p>✔ 인공지능 결과 저장</p>
                   <p>✔ 지속적인 업데이트: 인공지능 품질 향상</p>
                 </div>
@@ -266,11 +266,11 @@ class Membership extends Component {
 
               <Card>
                 <div className='CardTitle'>
-                  <h2>Annual</h2>
+                  <h2>Premium</h2>
                 </div>
                 <div className='CardPrice'>
                   <Text size='xlarge' color='#000' weight='bold'>
-                    ₩45,000
+                    ₩30,000
                   </Text>
                   <Text size='small' color='dark-3'>
                     /month
@@ -280,9 +280,9 @@ class Membership extends Component {
                   <button
                     className='PriceButton'
                     onClick={this.openModal}
-                    name='Annual 10000'
+                    name='Premium 30000'
                   >
-                    {this.state.basic}
+                    {this.state.premium}
                   </button>
                 </div>
                 <div className='CardContent'>
@@ -300,19 +300,19 @@ class Membership extends Component {
                 </div>
                 <div className='CardPrice'>
                   <Text size='xlarge' color='#000' weight='bold'>
-                    ₩30,000
-                  </Text>
-                  <Text size='small' color='dark-3'>
-                    /month
+                    가격 협의
                   </Text>
                 </div>
                 <div style={{ textAlign: "center", padding: "20px" }}>
                   <button
                     className='PriceButton'
-                    onClick={this.openModal}
-                    name='Enterprise 30000'
+                    onClick={()=> {toast.info('✉️ support@appplatform.co.kr로 문의주세요.',{
+                      style:{backgroundColor:'#fff', color:'#000'},
+                       progressStyle:{backgroundColor:'#7D4CDB'}
+                      })}}
+                    name='Enterprise noprice'
                   >
-                    {this.state.premium}
+                    {this.state.enterprise}
                   </button>
                 </div>
                 <div className='CardContent'>
@@ -408,7 +408,8 @@ class Membership extends Component {
                 <div style={payButton}>
                   <button
                     className='creditCardButton'
-                    onClick={this.requestBill}
+                    //onClick={this.requestBill}
+                    onClick={()=> {toast.warn('🛠 공사 중 입니다!')}}
                   >
                     결제하기
                   </button>
